@@ -24,11 +24,16 @@
 }
 
 - (void)loginWithUser:(NSDictionary *)userInfo {
-    NSLog(@"%@", userInfo);
     [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"token"] forKey:@"CSRFToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"user"][@"_id"] forKey:@"User"];
+    [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"user"][@"token"] forKey:@"UserToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.user = userInfo[@"user"][@"_id"];
+}
+
+- (void)logout {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"CSRFToken"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserToken"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

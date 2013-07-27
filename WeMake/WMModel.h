@@ -10,7 +10,16 @@
 
 @interface WMModel : NSObject
 + (WMModel *)sharedInstance;
+
+//authentication
 - (void)signUp:(NSDictionary *)userInfo success:(void (^)(void))success failure:(void (^)(BOOL))failure;
 - (void)login:(NSString *)username password:(NSString *)password success:(void (^)(void))success failure:(void (^)(void))failure;
+- (void)loginWithAuthenticationTokenSuccess:(void (^)(void))success failure:(void (^)(void))failure;
 
+//relationships
+- (void)follow:(int)user success:(void (^)(void))success failure:(void (^)(void))failure;
+- (void)unfollow:(int)user success:(void (^)(void))success failure:(void (^)(void))failure;
+
+//uploads
+- (void)uploadURL:(NSURL *)url;
 @end

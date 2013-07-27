@@ -678,7 +678,7 @@
         CGAffineTransform transform = CGAffineTransformMakeRotation(-M_PI_2);
         image = [image imageByApplyingTransform:transform];
         if (isFrontCamera)
-            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(-1, 1), -720, kCameraViewOffset)];
+            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(-1, 1), -720, kCameraViewOffset*2.5)];
         else
             image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(.66,  .66), 0, kCameraViewOffset*2.5)];
         

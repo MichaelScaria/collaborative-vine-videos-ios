@@ -24,7 +24,15 @@
 //        else  NSLog(@"failed");
 //        
 //    }];
-    //[[WMModel sharedInstance] login:@"michaelscaria" password:@"password"];
+    
+//    [[WMModel sharedInstance] signUp:@{@"name": @"Michael Scaria", @"username" : @"michaelscaria", @"password" : @"password"} success:^{
+//        NSLog(@"Suc");
+//    }failure:^(BOOL usernameTaken){
+//        if (usernameTaken) NSLog(@"taken");
+//        else  NSLog(@"failed");
+//        
+//    }];
+    [[WMModel sharedInstance] login:@"michaelscaria" password:@"password" success:nil failure:nil];
 
     return YES;
 }
@@ -49,7 +57,15 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 //     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    if (![WMSession sharedInstance].user || ![[NSUserDefaults standardUserDefaults] objectForKey:@"CSRFToken"]) {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"UserToken"]) {
+        [[WMModel sharedInstance] loginWithAuthenticationTokenSuccess:^{
+            //[[WMModel sharedInstance] follow:1 success:nil failure:nil];
+            [[WMModel sharedInstance] uploadURL:nil];
+        }failure:^{
+            [(WMRootViewController *)self.window.rootViewController presentLoginView];
+        }];
+    }
+    else {
         [(WMRootViewController *)self.window.rootViewController presentLoginView];
     }
 }
