@@ -392,7 +392,7 @@
     [self.videoPreviewView addSubview:topOverlay];
     UIView *bottomOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, screenSize.height, 320, (screenSize.height - 320)/2 + kCameraViewOffset)];
     bottomOverlay.tag = 12;
-    bottomOverlay.backgroundColor = [UIColor colorWithWhite:0 alpha:.9];
+    bottomOverlay.backgroundColor = [UIColor colorWithWhite:0 alpha:1];
     [self.videoPreviewView addSubview:bottomOverlay];
     
     [UIView animateWithDuration:.5 animations:^{
@@ -678,9 +678,9 @@
         CGAffineTransform transform = CGAffineTransformMakeRotation(-M_PI_2);
         image = [image imageByApplyingTransform:transform];
         if (isFrontCamera)
-            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(-1, 1), -720, 0)];
+            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(-1, 1), -720, kCameraViewOffset)];
         else
-            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(.66,  .66), 0, -20)];
+            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(.66,  .66), 0, kCameraViewOffset*2.5)];
         
         
         dispatch_async(dispatch_get_main_queue(), ^{
