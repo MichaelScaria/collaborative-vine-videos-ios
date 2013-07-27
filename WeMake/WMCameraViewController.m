@@ -23,7 +23,7 @@
 #define kColorDark [UIColor colorWithRed:.37 green:.16 blue:.45 alpha:1]
 
 #define kTimeInterval 0.05
-#define kTotalVideoTime 5.0
+#define kTotalVideoTime 2.0
 
 @interface WMCameraViewController ()
 @property (readwrite) CMVideoCodecType videoType;
@@ -35,7 +35,7 @@
 @synthesize videoPreviewView, context;
 @synthesize videoType, recording;
 
-@synthesize flipButton, gridButton, focusButton, progress, touches, device;
+@synthesize flipButton, gridButton, focusButton, progress, touches, device, delegate;
 
 - (void)viewDidLoad
 {
@@ -73,32 +73,10 @@
     AVCaptureAudioDataOutput *audioOut = [[AVCaptureAudioDataOutput alloc] init];
 	[audioOut setSampleBufferDelegate:self queue:dispatch_queue_create("com.michaelscaria.VidLab Audio", DISPATCH_QUEUE_SERIAL)];
     
-    NSDictionary *videoCleanApertureSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                [NSNumber numberWithInt:320], AVVideoCleanApertureWidthKey,
-                                                [NSNumber numberWithInt:320], AVVideoCleanApertureHeightKey,
-                                                [NSNumber numberWithInt:10], AVVideoCleanApertureHorizontalOffsetKey,
-                                                [NSNumber numberWithInt:10], AVVideoCleanApertureVerticalOffsetKey,
-                                                nil];
-    
-    
-    NSDictionary *videoAspectRatioSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              [NSNumber numberWithInt:3], AVVideoPixelAspectRatioHorizontalSpacingKey,
-                                              [NSNumber numberWithInt:3],AVVideoPixelAspectRatioVerticalSpacingKey,
-                                              nil];
-    
-    
-    
-    NSDictionary *codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   [NSNumber numberWithInt:960000], AVVideoAverageBitRateKey,
-                                   [NSNumber numberWithInt:1],AVVideoMaxKeyFrameIntervalKey,
-                                   videoCleanApertureSettings, AVVideoCleanApertureKey,
-                                   //videoAspectRatioSettings, AVVideoPixelAspectRatioKey,
-                                   //AVVideoProfileLevelH264Main30, AVVideoProfileLevelKey,
-                                   nil];
     
     avCaptureSession = [[AVCaptureSession alloc] init];
     [avCaptureSession beginConfiguration];
-    [avCaptureSession setSessionPreset:AVCaptureSessionPreset640x480];
+//    [avCaptureSession setSessionPreset:AVCaptureSessionPreset1280x720];
     if ([avCaptureSession canAddInput:videoIn]) [avCaptureSession addInput:videoIn];
     if ([avCaptureSession canAddInput:audioIn]) [avCaptureSession addInput:audioIn];
     if ([avCaptureSession canAddOutput:videoOut]) [avCaptureSession addOutput:videoOut];
@@ -469,12 +447,15 @@
         if (error)
             NSLog(@"saveMovieToCameraRoll-Error:%@", error.localizedDescription);
         else{
-            //[self.delegate uploadVideoData:[NSData dataWithContentsOfURL:<#(NSURL *)#>]]
+            [self.delegate previewVideo:assetURL];
             [self removeFile:movieURL];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"Movie saved!");
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             self.flipButton.enabled = YES;
             self.focusButton.enabled = YES;
+            secondsElapsed = 0;
+            progress.progress = 0.0;
         });
         dispatch_async(movieWritingQueue, ^{
             recordingWillBeStopped = NO;
@@ -507,9 +488,6 @@
                     if (![assetWriterAudioIn appendSampleBuffer:sampleBuffer]) NSLog(@"writeSampleBuffer-Error:%@", assetWriter.error.localizedDescription);
                 }
             }
-        }
-		else {
-            
         }
 	}
 }
@@ -567,36 +545,37 @@
 		bitsPerPixel = 11.4; // This bitrate matches the quality produced by AVCaptureSessionPresetHigh.
 	
 	bitsPerSecond = numPixels * bitsPerPixel;
-	
+    
 #warning check this later
     NSDictionary *videoCleanApertureSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                [NSNumber numberWithInt:320], AVVideoCleanApertureWidthKey,
-                                                [NSNumber numberWithInt:320], AVVideoCleanApertureHeightKey,
-                                                [NSNumber numberWithInt:10], AVVideoCleanApertureHorizontalOffsetKey,
-                                                [NSNumber numberWithInt:10], AVVideoCleanApertureVerticalOffsetKey,
+                                                @320, AVVideoCleanApertureWidthKey,
+                                                @320, AVVideoCleanApertureHeightKey,
+                                                @10, AVVideoCleanApertureHorizontalOffsetKey,
+                                                @10, AVVideoCleanApertureVerticalOffsetKey,
                                                 nil];
     
     
     NSDictionary *videoAspectRatioSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              [NSNumber numberWithInt:3], AVVideoPixelAspectRatioHorizontalSpacingKey,
-                                              [NSNumber numberWithInt:3],AVVideoPixelAspectRatioVerticalSpacingKey,
+                                              @3, AVVideoPixelAspectRatioHorizontalSpacingKey,
+                                              @3,AVVideoPixelAspectRatioVerticalSpacingKey,
                                               nil];
     
     
     
     NSDictionary *codecSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [NSNumber numberWithInteger:bitsPerSecond], AVVideoAverageBitRateKey,
-                                   [NSNumber numberWithInt:1],AVVideoMaxKeyFrameIntervalKey,
+                                   @1,AVVideoMaxKeyFrameIntervalKey,
                                    videoCleanApertureSettings, AVVideoCleanApertureKey,
                                    videoAspectRatioSettings, AVVideoPixelAspectRatioKey,
-                                   AVVideoProfileLevelH264Main30, AVVideoProfileLevelKey,
+                                   //AVVideoProfileLevelH264Main30, AVVideoProfileLevelKey, - this is bad
                                    nil];
     
     NSDictionary *videoCompressionSettings = [NSDictionary dictionaryWithObjectsAndKeys:
                                    AVVideoCodecH264, AVVideoCodecKey,
                                    codecSettings,AVVideoCompressionPropertiesKey,
-                                   [NSNumber numberWithInt:320], AVVideoWidthKey,
-                                   [NSNumber numberWithInt:320], AVVideoHeightKey,
+                                              AVVideoScalingModeResizeAspectFill,AVVideoScalingModeKey,
+                                   @320, AVVideoWidthKey,
+                                   @320, AVVideoHeightKey,
                                    nil];
 	if ([assetWriter canApplyOutputSettings:videoCompressionSettings forMediaType:AVMediaTypeVideo]) {
 		assetWriterVideoIn = [[AVAssetWriterInput alloc] initWithMediaType:AVMediaTypeVideo outputSettings:videoCompressionSettings];
@@ -630,7 +609,6 @@
         
 		recordingWillBeStarted = YES;
         
-		// recordingDidStart is called from captureOutput:didOutputSampleBuffer:fromConnection: once the asset writer is setup
         
 		// Remove the file if one with the same name already exists
 		[self removeFile:movieURL];
@@ -646,8 +624,16 @@
 {
 	dispatch_async(movieWritingQueue, ^{
 		
-		if ( recordingWillBeStopped || (self.recording == NO) )
-			return;
+		if (recordingWillBeStopped || (self.recording == NO)) {
+            NSLog(@"recordingWillBeStopped%d", recordingWillBeStopped);
+            NSLog(@"self.recording%d", self.recording);
+            NSLog(@"RETURNED");
+            return;
+        }
+        else {
+            NSLog(@"NOT RETURNED");
+        }
+			
 		
 		recordingWillBeStopped = YES;
         readyToRecordVideo = NO;
@@ -660,6 +646,17 @@
         }];
         
 	});
+}
+
+- (void)pauseRecording
+{
+	paused = YES;
+    discontinued= YES;
+}
+
+- (void)resumeRecording
+{
+	paused = NO;
 }
 
 #pragma mark Capture
@@ -681,9 +678,9 @@
         CGAffineTransform transform = CGAffineTransformMakeRotation(-M_PI_2);
         image = [image imageByApplyingTransform:transform];
         if (isFrontCamera)
-            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(-1.75, 1.75), -400, 0)];
+            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(-1, 1), -720, 0)];
         else
-            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(1.5, 1.5), 0, -20)];
+            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(.66,  .66), 0, -20)];
         
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -825,17 +822,6 @@
 {
 	if ( !avCaptureSession.isRunning )
 		[avCaptureSession startRunning];
-}
-
-- (void)pauseRecording
-{
-	paused = YES;
-    discontinued= YES;
-}
-
-- (void)resumeRecording
-{
-	paused = NO;
 }
 
 

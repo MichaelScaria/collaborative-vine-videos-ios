@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9E07960B1788983000550CD5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E07960A1788983000550CD5 /* AVFoundation.framework */; };
 		9E1F784E17A0CAB7001DC68E /* WMUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1F784D17A0CAB7001DC68E /* WMUploadViewController.m */; };
+		9E1F785117A1E35C001DC68E /* WMReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1F785017A1E35C001DC68E /* WMReviewViewController.m */; };
+		9E1F785317A1FB23001DC68E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E1F785217A1FB23001DC68E /* MediaPlayer.framework */; };
 		9E34B433179140720052E780 /* UIImage+WeMake.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E34B432179140720052E780 /* UIImage+WeMake.m */; };
 		9E39E119178040CB00E403A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E39E118178040CB00E403A4 /* Foundation.framework */; };
 		9E39E11B178040CB00E403A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E39E11A178040CB00E403A4 /* CoreGraphics.framework */; };
@@ -75,6 +77,9 @@
 		9E07960A1788983000550CD5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9E1F784C17A0CAB7001DC68E /* WMUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMUploadViewController.h; sourceTree = "<group>"; };
 		9E1F784D17A0CAB7001DC68E /* WMUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMUploadViewController.m; sourceTree = "<group>"; };
+		9E1F784F17A1E35C001DC68E /* WMReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMReviewViewController.h; sourceTree = "<group>"; };
+		9E1F785017A1E35C001DC68E /* WMReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMReviewViewController.m; sourceTree = "<group>"; };
+		9E1F785217A1FB23001DC68E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		9E34B431179140720052E780 /* UIImage+WeMake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WeMake.h"; sourceTree = "<group>"; };
 		9E34B432179140720052E780 /* UIImage+WeMake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WeMake.m"; sourceTree = "<group>"; };
 		9E39E115178040CB00E403A4 /* WeMake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeMake.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +146,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E1F785317A1FB23001DC68E /* MediaPlayer.framework in Frameworks */,
 				9E8709A4178E48F200FB6A46 /* MobileCoreServices.framework in Frameworks */,
 				9E8709A2178E488700FB6A46 /* AssetsLibrary.framework in Frameworks */,
 				9E5E23AA178945CD00E0CA0B /* ImageIO.framework in Frameworks */,
@@ -200,6 +206,7 @@
 		9E39E117178040CB00E403A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E1F785217A1FB23001DC68E /* MediaPlayer.framework */,
 				9E8709A3178E48F200FB6A46 /* MobileCoreServices.framework */,
 				9E8709A1178E488700FB6A46 /* AssetsLibrary.framework */,
 				9E5E23A9178945CD00E0CA0B /* ImageIO.framework */,
@@ -230,6 +237,8 @@
 				9E1F784D17A0CAB7001DC68E /* WMUploadViewController.m */,
 				9E99B7FB17928C090034B1C9 /* WMCameraViewController.h */,
 				9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */,
+				9E1F784F17A1E35C001DC68E /* WMReviewViewController.h */,
+				9E1F785017A1E35C001DC68E /* WMReviewViewController.m */,
 				9E8B72E71785932C0053F5D6 /* WMLoginViewController.h */,
 				9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */,
 				9E34B4301791403F0052E780 /* Categories */,
@@ -433,6 +442,7 @@
 				9E39E1651780423200E403A4 /* AFHTTPClient.m in Sources */,
 				9E1F784E17A0CAB7001DC68E /* WMUploadViewController.m in Sources */,
 				9E39E16C1780423200E403A4 /* AFXMLRequestOperation.m in Sources */,
+				9E1F785117A1E35C001DC68E /* WMReviewViewController.m in Sources */,
 				9E8B72E5178592350053F5D6 /* WMRootViewController.m in Sources */,
 				9E39E12F178040CB00E403A4 /* WMViewController.m in Sources */,
 				9E39E150178040FA00E403A4 /* WMModel.m in Sources */,

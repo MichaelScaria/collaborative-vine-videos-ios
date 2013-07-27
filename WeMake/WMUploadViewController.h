@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WMViewController.h"
-@protocol WMUploadViewControllerDelegate <NSObject>
-- (void)display:(void (^)(void))completion;
-- (void)hide:(void (^)(void))completion;
-@end
-@interface WMUploadViewController : UIViewController <WMViewControllerDelegate>
-@property (nonatomic, strong) id <WMUploadViewControllerDelegate>delegate;
+
+#import "WMCameraViewController.h"
+#import "WMReviewViewController.h"
+
+@interface WMUploadViewController : UIViewController <WMViewControllerDelegate, WMCameraViewControllerDelegate, WMReviewViewControllerDelegate> {
+    WMCameraViewController *cameraViewController;
+    WMReviewViewController *reviewViewController;
+}
 @end

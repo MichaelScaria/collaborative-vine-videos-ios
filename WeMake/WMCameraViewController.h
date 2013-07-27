@@ -14,10 +14,11 @@
 #import <CoreImage/CoreImage.h>
 #import <ImageIO/ImageIO.h>
 
-#import "WMViewController.h"
-#import "WMUploadViewController.h"
+@protocol WMCameraViewControllerDelegate
+- (void)previewVideo:(NSURL *)url;
+@end
 
-@interface WMCameraViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate, WMUploadViewControllerDelegate> {
+@interface WMCameraViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
     AVCaptureSession *avCaptureSession;
     CIContext *coreImageContext;
     CIImage *maskImage;
@@ -63,6 +64,8 @@
 @property (nonatomic, strong) NSMutableArray *touches;
 @property (nonatomic, strong) AVCaptureDevice *device;
 @property (strong, nonatomic) EAGLContext *context;
+@property (nonatomic, strong) id <WMCameraViewControllerDelegate>delegate;
+
 @property (nonatomic,retain) IBOutlet GLKView *videoPreviewView;
 @property (strong, nonatomic) IBOutlet UIButton *flipButton;
 @property (strong, nonatomic) IBOutlet UIButton *focusButton;
@@ -74,4 +77,7 @@
 - (IBAction)focus:(UIButton *)sender;
 - (IBAction)grid:(UIButton *)sender;
 - (IBAction)flip:(UIButton *)sender;
+
+- (void)display:(void (^)(void))completion;
+- (void)hide:(void (^)(void))completion;
 @end
