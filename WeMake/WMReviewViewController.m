@@ -7,7 +7,6 @@
 //
 
 #import "WMReviewViewController.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 
 
 @interface WMReviewViewController ()

@@ -16,6 +16,7 @@
 //#define kRootURL @"http://wemake.herokuapp.com/api"
 
 #define kAppSecret @"MSwDp9CIMLzQ"
+#define BOUNDARY @"AaB03x"
 
 @implementation WMModel
 
@@ -135,10 +136,11 @@
 #pragma mark Uploads
 
 - (void)uploadURL:(NSURL *)url {
-    NSString *mediaurl = @"assets-library://asset/asset.MOV?id=8D8BD837-CE62-464A-A048-5C8691BED5E1&ext=MOV";
+    NSString *mediaurl = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mov"];
 
-    NSData *postData = [self generatePostDataForData:[NSData dataWithContentsOfURL:[NSURL URLWithString:mediaurl]]];
+    NSData *postData = [self generatePostDataForData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:mediaurl]]];
     NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+    NSLog(@"%@", postLength);
     
     // Setup the request:
     NSMutableURLRequest *uploadRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/videos", kRootURL]] cachePolicy: NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
@@ -166,28 +168,101 @@
 }
 
 #pragma mark Helpers
+- (NSData *)generatePostDataForData:(NSData *)uploadData {
+    NSMutableData *body = [NSMutableData data];
+    NSDictionary *dictionary = @{@"movie": uploadData, @"qwerty" : @"2"};
+    for (NSString *key in dictionary) {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
+        id value = [dictionary objectForKey:key];
+        
+        if ([value isKindOfClass:[NSData class]]) {
+            [body appendData: [[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"movie.mov\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+        } else {
+            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        if ([value isKindOfClass:[NSData class]]) {
+            
+            
+            [body appendData:value];
+            
+        } else {
+            [body appendData:[value dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+        
+        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
+    return body;
+}
 
-- (NSData *)generatePostDataForData:(NSData *)uploadData
+/*- (NSData *)generatePostDataForData:(NSData *)uploadData
 {
-    // Generate the post header:
-    NSString *post = [NSString stringWithCString:"--AaB03x\r\nContent-Disposition: form-data; name=\"upload[file]\"; filename=\"somefile\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n" encoding:NSASCIIStringEncoding];
+//    // Generate the post header:
+//    NSString *post = [NSString stringWithCString:"--AaB03x\r\nContent-Disposition: form-data; name=\"upload[file]\"; filename=\"movie.mov\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n" encoding:NSASCIIStringEncoding];
+//    
+//    // Get the post header int ASCII format:
+//    NSData *postHeaderData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+//    
+//    // Generate the mutable data variable:
+//    NSMutableData *postData = [[NSMutableData alloc] initWithLength:[postHeaderData length] ];
+//    [postData setData:postHeaderData];
+//    
+//    // Add the image:
+//    [postData appendData: uploadData];
+//    
+//    // Add the closing boundry:
+//    [postData appendData: [@"\r\n--AaB03x--" dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES]];
+//    [postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"qwerty\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//    [postData appendData:[@"2" dataUsingEncoding:NSUTF8StringEncoding]];
+//    [postData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    // Return the post data:
+//    return postData;
     
-    // Get the post header int ASCII format:
+//    NSMutableData *body = [NSMutableData data];
+    NSString *post = [NSString stringWithCString:"--AaB03x\r\nContent-Disposition: form-data; name=\"upload[file]\"; filename=\"movie.mov\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n" encoding:NSASCIIStringEncoding];
     NSData *postHeaderData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    
-    // Generate the mutable data variable:
     NSMutableData *postData = [[NSMutableData alloc] initWithLength:[postHeaderData length] ];
     [postData setData:postHeaderData];
-    
-    // Add the image:
     [postData appendData: uploadData];
-    
-    // Add the closing boundry:
-    [postData appendData: [@"\r\n--AaB03x--" dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES]];
-    
-    // Return the post data:
+    [postData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"qwerty\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postData appendData:[@"2" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postData appendData:[[NSString stringWithFormat:@"--AaB03x--\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
     return postData;
-}
+    
+//    for (NSString *key in dictionary) {
+//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
+//        id value = [dictionary objectForKey:key];
+//        
+//        if ([value isKindOfClass:[NSData class]]) {
+//            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"photo.jpg\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+//        } else {
+//            [body appendData:
+//             [[NSString stringWithFormat:
+//               @"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key]
+//              dataUsingEncoding:NSUTF8StringEncoding]];
+//        }
+//        
+//        if ([value isKindOfClass:[NSData class]]) {
+//            
+//            
+//            [body appendData:value];
+//            
+//        } else if ([value isKindOfClass:[NSNumber class]]) {
+//            [body appendData:[[value stringValue] dataUsingEncoding:NSUTF8StringEncoding]];
+//            
+//        } else {
+//            [body appendData:[value dataUsingEncoding:NSUTF8StringEncoding]];
+//        }
+//        
+//        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
+//    
+//    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
+}*/
 
 
 @end

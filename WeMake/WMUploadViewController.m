@@ -53,7 +53,7 @@
         UIScrollView *scrollView = (UIScrollView *)self.view;
         [scrollView scrollRectToVisible:CGRectMake(320, 0, 320, 1) animated:YES];
         reviewViewController.url = url;
-        [[WMModel sharedInstance] uploadURL:url];
+        //[[WMModel sharedInstance] uploadURL:url];
     });
 }
 

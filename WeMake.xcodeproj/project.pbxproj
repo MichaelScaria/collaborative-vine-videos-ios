@@ -48,6 +48,7 @@
 		9E8B72E91785932C0053F5D6 /* WMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */; };
 		9E8B72EB17861D040053F5D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8B72EA17861D040053F5D6 /* QuartzCore.framework */; };
 		9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */; };
+		9EBC0AB417A4A4D8009901BB /* test.mov in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC0AB317A4A4D8009901BB /* test.mov */; };
 		9ED093991782AC0800EA1D90 /* WMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E128178040CB00E403A4 /* WMAppDelegate.m */; };
 		9ED0939A1782AC0800EA1D90 /* WMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E12E178040CB00E403A4 /* WMViewController.m */; };
 		9ED0939E1782AC0800EA1D90 /* WMModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E14F178040FA00E403A4 /* WMModel.m */; };
@@ -139,6 +140,7 @@
 		9E8B72EA17861D040053F5D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9E99B7FB17928C090034B1C9 /* WMCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCameraViewController.h; sourceTree = "<group>"; };
 		9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCameraViewController.m; sourceTree = "<group>"; };
+		9EBC0AB317A4A4D8009901BB /* test.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +243,7 @@
 				9E1F785017A1E35C001DC68E /* WMReviewViewController.m */,
 				9E8B72E71785932C0053F5D6 /* WMLoginViewController.h */,
 				9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */,
+				9EBC0AB317A4A4D8009901BB /* test.mov */,
 				9E34B4301791403F0052E780 /* Categories */,
 				9E39E14D178040DB00E403A4 /* Models */,
 				9E39E130178040CB00E403A4 /* Images.xcassets */,
@@ -412,6 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EBC0AB417A4A4D8009901BB /* test.mov in Resources */,
 				9E39E131178040CB00E403A4 /* Images.xcassets in Resources */,
 				9E39E123178040CB00E403A4 /* InfoPlist.strings in Resources */,
 				9E39E12C178040CB00E403A4 /* Main.storyboard in Resources */,
