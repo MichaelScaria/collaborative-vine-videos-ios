@@ -170,7 +170,7 @@
 #pragma mark Helpers
 - (NSData *)generatePostDataForData:(NSData *)uploadData {
     NSMutableData *body = [NSMutableData data];
-    NSDictionary *dictionary = @{@"movie": uploadData, @"qwerty" : @"2"};
+    NSDictionary *dictionary = @{@"movie": uploadData, @"users" : @"2"};
     for (NSString *key in dictionary) {
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
         id value = [dictionary objectForKey:key];
