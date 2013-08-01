@@ -23,11 +23,12 @@
     return sharedInstance;
 }
 
-- (void)loginWithUser:(NSDictionary *)userInfo {
+- (void)loginWithUserInfo:(NSDictionary *)userInfo {
     [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"token"] forKey:@"CSRFToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"user"][@"token"] forKey:@"UserToken"];
+    [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"username"] forKey:@"Username"];
+    [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"password"] forKey:@"Password"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.user = userInfo[@"user"][@"_id"];
+    self.user = userInfo[@"id"];
 }
 
 - (void)logout {

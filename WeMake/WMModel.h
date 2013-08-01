@@ -14,12 +14,16 @@
 //authentication
 - (void)signUp:(NSDictionary *)userInfo success:(void (^)(void))success failure:(void (^)(BOOL))failure;
 - (void)login:(NSString *)username password:(NSString *)password success:(void (^)(void))success failure:(void (^)(void))failure;
-- (void)loginWithAuthenticationTokenSuccess:(void (^)(void))success failure:(void (^)(void))failure;
+//- (void)loginWithAuthenticationTokenSuccess:(void (^)(void))success failure:(void (^)(void))failure;
 
 //relationships
 - (void)follow:(int)user success:(void (^)(void))success failure:(void (^)(void))failure;
 - (void)unfollow:(int)user success:(void (^)(void))success failure:(void (^)(void))failure;
+- (void)fetchFollowersSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;
 
 //uploads
-- (void)uploadURL:(NSURL *)url;
+- (void)uploadURL:(NSURL *)url to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure;
+
+//interactions
+- (void)getNotificationsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;
 @end

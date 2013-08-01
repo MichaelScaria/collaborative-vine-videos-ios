@@ -104,6 +104,7 @@
     [self.flipButton setImage:[UIImage ipMaskedImageNamed:@"Flip" color:(isFrontCamera) ? kColorLight :kColorNeutral] forState:UIControlStateNormal];
     [self.gridButton setImage:[UIImage ipMaskedImageNamed:@"Grid" color:(displayingGrid) ? kColorLight :kColorNeutral] forState:UIControlStateNormal];
     [self.focusButton setImage:[UIImage ipMaskedImageNamed:@"Crosshairs" color:(tapToFocus) ? kColorLight :kColorNeutral] forState:UIControlStateNormal];
+    [self display:nil];
 }
 
 -(void)setupCGContext {
@@ -680,7 +681,7 @@
         if (isFrontCamera)
             image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(-1, 1), -720, kCameraViewOffset*2.5)];
         else
-            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(.66,  .66), 0, kCameraViewOffset*2.5)];
+            image = [image imageByApplyingTransform:CGAffineTransformTranslate(CGAffineTransformMakeScale(.665,  .665), 0, kCameraViewOffset*2.5)];
         
         
         dispatch_async(dispatch_get_main_queue(), ^{

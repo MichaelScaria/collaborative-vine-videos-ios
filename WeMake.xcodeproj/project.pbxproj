@@ -41,9 +41,16 @@
 		9E5E23A6178945B700E0CA0B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E5E23A5178945B700E0CA0B /* GLKit.framework */; };
 		9E5E23A8178945C500E0CA0B /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E5E23A7178945C500E0CA0B /* CoreImage.framework */; };
 		9E5E23AA178945CD00E0CA0B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E5E23A9178945CD00E0CA0B /* ImageIO.framework */; };
+		9E62D2AC17A7541B004F3D0F /* WMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E62D2AB17A75407004F3D0F /* WMTabBarController.m */; };
+		9E6E54A417A979290029E9A6 /* WMNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */; };
+		9E83C21417AA28FE00F7033E /* WMRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21317AA28FE00F7033E /* WMRequest.m */; };
+		9E83C21717AA298800F7033E /* WMInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21617AA298800F7033E /* WMInteraction.m */; };
+		9E83C21A17AA2CBE00F7033E /* WMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21917AA2CBE00F7033E /* WMUser.m */; };
+		9E83C21D17AA2DB900F7033E /* WMVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21C17AA2DB900F7033E /* WMVideo.m */; };
+		9E847B7217A8B18500603C78 /* WMCameraTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E847B7117A8B18500603C78 /* WMCameraTabViewController.m */; };
+		9E847B7617A8BC3C00603C78 /* WMRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E847B7517A8BC3C00603C78 /* WMRequestViewController.m */; };
 		9E8709A2178E488700FB6A46 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8709A1178E488700FB6A46 /* AssetsLibrary.framework */; };
 		9E8709A4178E48F200FB6A46 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8709A3178E48F200FB6A46 /* MobileCoreServices.framework */; };
-		9E8B72E5178592350053F5D6 /* WMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B72E4178592350053F5D6 /* WMRootViewController.m */; };
 		9E8B72E6178592C30053F5D6 /* WMSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B72E2178590510053F5D6 /* WMSession.m */; };
 		9E8B72E91785932C0053F5D6 /* WMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */; };
 		9E8B72EB17861D040053F5D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8B72EA17861D040053F5D6 /* QuartzCore.framework */; };
@@ -129,12 +136,26 @@
 		9E5E23A5178945B700E0CA0B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		9E5E23A7178945C500E0CA0B /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		9E5E23A9178945CD00E0CA0B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		9E62D2AA17A75407004F3D0F /* WMTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMTabBarController.h; sourceTree = "<group>"; };
+		9E62D2AB17A75407004F3D0F /* WMTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMTabBarController.m; sourceTree = "<group>"; };
+		9E6E54A217A979290029E9A6 /* WMNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMNotificationViewController.h; sourceTree = "<group>"; };
+		9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMNotificationViewController.m; sourceTree = "<group>"; };
+		9E83C21217AA28FE00F7033E /* WMRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMRequest.h; sourceTree = "<group>"; };
+		9E83C21317AA28FE00F7033E /* WMRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMRequest.m; sourceTree = "<group>"; };
+		9E83C21517AA298800F7033E /* WMInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMInteraction.h; sourceTree = "<group>"; };
+		9E83C21617AA298800F7033E /* WMInteraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMInteraction.m; sourceTree = "<group>"; };
+		9E83C21817AA2CBE00F7033E /* WMUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMUser.h; sourceTree = "<group>"; };
+		9E83C21917AA2CBE00F7033E /* WMUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMUser.m; sourceTree = "<group>"; };
+		9E83C21B17AA2DB900F7033E /* WMVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMVideo.h; sourceTree = "<group>"; };
+		9E83C21C17AA2DB900F7033E /* WMVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMVideo.m; sourceTree = "<group>"; };
+		9E847B7017A8B18500603C78 /* WMCameraTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCameraTabViewController.h; sourceTree = "<group>"; };
+		9E847B7117A8B18500603C78 /* WMCameraTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCameraTabViewController.m; sourceTree = "<group>"; };
+		9E847B7417A8BC3C00603C78 /* WMRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMRequestViewController.h; sourceTree = "<group>"; };
+		9E847B7517A8BC3C00603C78 /* WMRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMRequestViewController.m; sourceTree = "<group>"; };
 		9E8709A1178E488700FB6A46 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		9E8709A3178E48F200FB6A46 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9E8B72E1178590510053F5D6 /* WMSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMSession.h; sourceTree = "<group>"; };
 		9E8B72E2178590510053F5D6 /* WMSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMSession.m; sourceTree = "<group>"; };
-		9E8B72E3178592350053F5D6 /* WMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMRootViewController.h; sourceTree = "<group>"; };
-		9E8B72E4178592350053F5D6 /* WMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMRootViewController.m; sourceTree = "<group>"; };
 		9E8B72E71785932C0053F5D6 /* WMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLoginViewController.h; sourceTree = "<group>"; };
 		9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMLoginViewController.m; sourceTree = "<group>"; };
 		9E8B72EA17861D040053F5D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -231,21 +252,21 @@
 				9E39E127178040CB00E403A4 /* WMAppDelegate.h */,
 				9E39E128178040CB00E403A4 /* WMAppDelegate.m */,
 				9E39E12A178040CB00E403A4 /* Main.storyboard */,
-				9E8B72E3178592350053F5D6 /* WMRootViewController.h */,
-				9E8B72E4178592350053F5D6 /* WMRootViewController.m */,
+				9E62D2AA17A75407004F3D0F /* WMTabBarController.h */,
+				9E62D2AB17A75407004F3D0F /* WMTabBarController.m */,
 				9E39E12D178040CB00E403A4 /* WMViewController.h */,
 				9E39E12E178040CB00E403A4 /* WMViewController.m */,
-				9E1F784C17A0CAB7001DC68E /* WMUploadViewController.h */,
-				9E1F784D17A0CAB7001DC68E /* WMUploadViewController.m */,
-				9E99B7FB17928C090034B1C9 /* WMCameraViewController.h */,
-				9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */,
-				9E1F784F17A1E35C001DC68E /* WMReviewViewController.h */,
-				9E1F785017A1E35C001DC68E /* WMReviewViewController.m */,
+				9E847B7017A8B18500603C78 /* WMCameraTabViewController.h */,
+				9E847B7117A8B18500603C78 /* WMCameraTabViewController.m */,
+				9E6E54A217A979290029E9A6 /* WMNotificationViewController.h */,
+				9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */,
+				9E847B7317A8BC2400603C78 /* CameraViewControllers */,
 				9E8B72E71785932C0053F5D6 /* WMLoginViewController.h */,
 				9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */,
 				9EBC0AB317A4A4D8009901BB /* test.mov */,
-				9E34B4301791403F0052E780 /* Categories */,
+				9E83C21117AA28EA00F7033E /* Singletons */,
 				9E39E14D178040DB00E403A4 /* Models */,
+				9E34B4301791403F0052E780 /* Categories */,
 				9E39E130178040CB00E403A4 /* Images.xcassets */,
 				9E39E1721780424B00E403A4 /* External */,
 				9E39E11F178040CB00E403A4 /* Supporting Files */,
@@ -284,10 +305,14 @@
 		9E39E14D178040DB00E403A4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9E39E14E178040FA00E403A4 /* WMModel.h */,
-				9E39E14F178040FA00E403A4 /* WMModel.m */,
-				9E8B72E1178590510053F5D6 /* WMSession.h */,
-				9E8B72E2178590510053F5D6 /* WMSession.m */,
+				9E83C21217AA28FE00F7033E /* WMRequest.h */,
+				9E83C21317AA28FE00F7033E /* WMRequest.m */,
+				9E83C21517AA298800F7033E /* WMInteraction.h */,
+				9E83C21617AA298800F7033E /* WMInteraction.m */,
+				9E83C21817AA2CBE00F7033E /* WMUser.h */,
+				9E83C21917AA2CBE00F7033E /* WMUser.m */,
+				9E83C21B17AA2DB900F7033E /* WMVideo.h */,
+				9E83C21C17AA2DB900F7033E /* WMVideo.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -336,6 +361,32 @@
 				9E39E1511780423200E403A4 /* AFNetworking */,
 			);
 			name = External;
+			sourceTree = "<group>";
+		};
+		9E83C21117AA28EA00F7033E /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				9E39E14E178040FA00E403A4 /* WMModel.h */,
+				9E39E14F178040FA00E403A4 /* WMModel.m */,
+				9E8B72E1178590510053F5D6 /* WMSession.h */,
+				9E8B72E2178590510053F5D6 /* WMSession.m */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
+		9E847B7317A8BC2400603C78 /* CameraViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9E1F784C17A0CAB7001DC68E /* WMUploadViewController.h */,
+				9E1F784D17A0CAB7001DC68E /* WMUploadViewController.m */,
+				9E99B7FB17928C090034B1C9 /* WMCameraViewController.h */,
+				9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */,
+				9E1F784F17A1E35C001DC68E /* WMReviewViewController.h */,
+				9E1F785017A1E35C001DC68E /* WMReviewViewController.m */,
+				9E847B7417A8BC3C00603C78 /* WMRequestViewController.h */,
+				9E847B7517A8BC3C00603C78 /* WMRequestViewController.m */,
+			);
+			name = CameraViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,26 +488,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E62D2AC17A7541B004F3D0F /* WMTabBarController.m in Sources */,
 				9E8B72E6178592C30053F5D6 /* WMSession.m in Sources */,
 				9E39E1731780457A00E403A4 /* AFURLConnectionOperation.m in Sources */,
+				9E83C21D17AA2DB900F7033E /* WMVideo.m in Sources */,
+				9E6E54A417A979290029E9A6 /* WMNotificationViewController.m in Sources */,
 				9E39E16D1780423200E403A4 /* UIImageView+AFNetworking.m in Sources */,
 				9E34B433179140720052E780 /* UIImage+WeMake.m in Sources */,
+				9E83C21417AA28FE00F7033E /* WMRequest.m in Sources */,
 				9E39E1671780423200E403A4 /* AFImageRequestOperation.m in Sources */,
 				9E39E1661780423200E403A4 /* AFHTTPRequestOperation.m in Sources */,
 				9E39E1651780423200E403A4 /* AFHTTPClient.m in Sources */,
+				9E847B7617A8BC3C00603C78 /* WMRequestViewController.m in Sources */,
 				9E1F784E17A0CAB7001DC68E /* WMUploadViewController.m in Sources */,
 				9E39E16C1780423200E403A4 /* AFXMLRequestOperation.m in Sources */,
 				9E1F785117A1E35C001DC68E /* WMReviewViewController.m in Sources */,
-				9E8B72E5178592350053F5D6 /* WMRootViewController.m in Sources */,
 				9E39E12F178040CB00E403A4 /* WMViewController.m in Sources */,
 				9E39E150178040FA00E403A4 /* WMModel.m in Sources */,
+				9E83C21A17AA2CBE00F7033E /* WMUser.m in Sources */,
 				9E39E129178040CB00E403A4 /* WMAppDelegate.m in Sources */,
+				9E847B7217A8B18500603C78 /* WMCameraTabViewController.m in Sources */,
 				9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */,
 				9E39E1681780423200E403A4 /* AFJSONRequestOperation.m in Sources */,
 				9E39E125178040CB00E403A4 /* main.m in Sources */,
 				9E39E16A1780423200E403A4 /* AFPropertyListRequestOperation.m in Sources */,
 				9E39E1711780423F00E403A4 /* JSONKit.m in Sources */,
 				9E8B72E91785932C0053F5D6 /* WMLoginViewController.m in Sources */,
+				9E83C21717AA298800F7033E /* WMInteraction.m in Sources */,
 				9E39E1691780423200E403A4 /* AFNetworkActivityIndicatorManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

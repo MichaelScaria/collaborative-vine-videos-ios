@@ -7,25 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WMRootViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <GLKit/GLKit.h>
 
 
-@protocol WMViewControllerDelegate <NSObject>
+//@protocol WMViewControllerDelegate <NSObject>
+//
+//- (void)display:(void (^)(void))completion;
+//- (void)hide:(void (^)(void))completion;
+//@end
 
-- (void)display:(void (^)(void))completion;
-- (void)hide:(void (^)(void))completion;
-@end
-
-@interface WMViewController : WMRootViewController {
+@interface WMViewController : UIViewController {
     CGSize screenSize;
     BOOL recordingView;
 }
 @property (nonatomic, strong) NSArray *posts;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) id <WMViewControllerDelegate>delegate;
-- (IBAction)flipCameraView:(UIButton *)sender;
+//@property (nonatomic, strong) id <WMViewControllerDelegate>delegate;
+//- (IBAction)flipCameraView:(UIButton *)sender;
 
 
 @end

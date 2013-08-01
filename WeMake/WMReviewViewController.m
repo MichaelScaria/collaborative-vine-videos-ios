@@ -8,7 +8,6 @@
 
 #import "WMReviewViewController.h"
 
-
 @interface WMReviewViewController ()
 
 @end
@@ -33,6 +32,8 @@
 }
 
 - (IBAction)next:(id)sender {
+    [player stop];
+    [player.view removeFromSuperview];
     [self.delegate approved];
 }
 

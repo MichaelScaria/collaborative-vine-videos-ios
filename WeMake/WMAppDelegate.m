@@ -10,8 +10,7 @@
 #import "WMSession.h"
 #import "WMModel.h"
 
-#import "WMRootViewController.h"
-
+#import "WMTabBarController.h"
 @implementation WMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -32,8 +31,10 @@
 //        else  NSLog(@"failed");
 //        
 //    }];
-    [[WMModel sharedInstance] login:@"michaelscaria" password:@"password" success:nil failure:nil];
-
+    [[WMModel sharedInstance] login:@"robinjoseph" password:@"password" success:nil failure:nil];
+    //[[NSUserDefaults standardUserDefaults] setObject:@"michaelscaria" forKey:@"Username"];
+    //[[NSUserDefaults standardUserDefaults] setObject:@"password" forKey:@"Password"];
+    
     return YES;
 }
 							
@@ -57,17 +58,21 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 //     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"UserToken"]) {
-        [[WMModel sharedInstance] loginWithAuthenticationTokenSuccess:^{
-            //[[WMModel sharedInstance] follow:1 success:nil failure:nil];
-            [[WMModel sharedInstance] uploadURL:nil];
+    /*NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"Username"];
+    NSString *password = [[NSUserDefaults standardUserDefaults] objectForKey:@"Password"];
+    if (username && password) {
+        [[WMModel sharedInstance] login:username password:password success:^{
+            [[WMModel sharedInstance] follow:1 success:nil failure:nil];
+            [[WMModel sharedInstance] getNotificationsSuccess:^(NSArray *no){
+                NSLog(@"n:%@", no);
+            }failure:nil];
         }failure:^{
-            [(WMRootViewController *)self.window.rootViewController presentLoginView];
+            [(WMTabBarController *)self.window.rootViewController presentLoginView];
         }];
     }
     else {
-        [(WMRootViewController *)self.window.rootViewController presentLoginView];
-    }
+        [(WMTabBarController *)self.window.rootViewController presentLoginView];
+    }*/
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

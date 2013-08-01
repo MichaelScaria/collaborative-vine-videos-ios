@@ -10,7 +10,6 @@
 #import "WMModel.h"
 #import "WMLoginViewController.h"
 //#import "WMCameraViewController.h"
-#import "WMUploadViewController.h"
 
 #define kCameraViewOffset 50.0
 
@@ -20,17 +19,17 @@
 
 @implementation WMViewController
 
-@synthesize posts, scrollView, delegate;
+@synthesize posts, scrollView;
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
-    WMUploadViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"Upload"];
-    if (vc) {
-        self.delegate = vc;
-        [self.view insertSubview:vc.view atIndex:0];
-    }
+//    WMUploadViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"Upload"];
+//    if (vc) {
+//        self.delegate = vc;
+//        [self.view insertSubview:vc.view atIndex:0];
+//    }
 
 }
 
@@ -55,46 +54,43 @@
     self.scrollView.contentSize = CGSizeMake(320, screenSize.height);
 }
 
-- (void)presentLoginView {
-    //[self performSegueWithIdentifier:@"Login" sender:nil];
-}
-
-- (IBAction)flipCameraView:(UIButton *)sender {
-    sender.enabled = NO;
-    if (recordingView) {
-        [UIView animateWithDuration:.5 animations:^{
-            self.scrollView.frame = CGRectMake(0, 0, 320, scrollView.frame.size.height);
-        } completion:nil];
-        
-        [self.delegate hide:^{
-            [UIView animateWithDuration:.2 animations:^{
-                self.scrollView.alpha = .85;
-            } completion:^(BOOL isCompleted){
-                recordingView = NO;
-                sender.enabled = YES;
-            }];
-        }];
-        [sender setTitle:@"Record" forState:UIControlStateNormal];
-    }
-    else {
-        if (!self.delegate) {
-            NSLog(@"nil");
-        }
-        [self.delegate display:^{
-            [UIView animateWithDuration:.65 animations:^{
-                self.scrollView.frame = CGRectMake(scrollView.frame.origin.x, scrollView.frame.size.height, 320, scrollView.frame.size.height);
-            }completion:^(BOOL isCompleted){
-                recordingView = YES;
-                sender.enabled = YES;
-            }];
-        }];
-        [sender setTitle:@"X" forState:UIControlStateNormal];
-        [UIView animateWithDuration:.2 animations:^{
-            self.scrollView.alpha = 0;
-        } completion:nil];
-        
-    }
-}
+//- (IBAction)flipCameraView:(UIButton *)sender {
+//    sender.enabled = NO;
+//    if (recordingView) {
+//        [UIView animateWithDuration:.5 animations:^{
+//            [(UITabBarController *)[self parentViewController] tabBar].frame = CGRectMake(0, 0, 320, scrollView.frame.size.height);
+//        } completion:nil];
+//        
+//        [self.delegate hide:^{
+//            [UIView animateWithDuration:.2 animations:^{
+//                self.scrollView.alpha = .85;
+//            } completion:^(BOOL isCompleted){
+//                recordingView = NO;
+//                sender.enabled = YES;
+//            }];
+//        }];
+//        [sender setTitle:@"Record" forState:UIControlStateNormal];
+//    }
+//    else {
+//        NSLog(@"%@", NSStringFromClass([self.parentViewController class]));
+//        if (!self.delegate) {
+//            NSLog(@"nil");
+//        }
+//        [self.delegate display:^{
+//            [UIView animateWithDuration:.65 animations:^{
+//                [(UITabBarController *)[self parentViewController] tabBar].frame = CGRectMake(scrollView.frame.origin.x, scrollView.frame.size.height, 320, scrollView.frame.size.height);
+//            }completion:^(BOOL isCompleted){
+//                recordingView = YES;
+//                sender.enabled = YES;
+//            }];
+//        }];
+//        [sender setTitle:@"X" forState:UIControlStateNormal];
+//        [UIView animateWithDuration:.2 animations:^{
+//            self.scrollView.alpha = 0;
+//        } completion:nil];
+//        
+//    }
+//}
 
 
 

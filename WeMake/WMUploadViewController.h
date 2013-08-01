@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "WMViewController.h"
-
 #import "WMCameraViewController.h"
 #import "WMReviewViewController.h"
+#import "WMRequestViewController.h"
 
-@interface WMUploadViewController : UIViewController <WMViewControllerDelegate, WMCameraViewControllerDelegate, WMReviewViewControllerDelegate> {
+@interface WMUploadViewController : UIViewController <WMCameraViewControllerDelegate, WMReviewViewControllerDelegate, WMRequestViewControllerDelegate> {
     WMCameraViewController *cameraViewController;
     WMReviewViewController *reviewViewController;
+    WMRequestViewController *requestViewController;
+    
+    NSURL *videoURL;
 }
 @end

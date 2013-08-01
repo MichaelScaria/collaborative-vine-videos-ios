@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong) NSString *user;
 + (WMSession *)sharedInstance;
-- (void)loginWithUser:(NSDictionary *)userInfo;
+- (void)loginWithUserInfo:(NSDictionary *)userInfo;
 - (void)logout;
 @end
