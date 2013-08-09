@@ -25,6 +25,15 @@
     }
 }
 
+- (IBAction)invite:(id)sender {
+    NSString *string = [selectedFollowers componentsJoinedByString:@","];
+    [self.delegate sendToFollowers:string];
+}
+
+- (IBAction)cancel:(id)sender {
+    [self.delegate cancel];
+}
+
 #pragma mark UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -68,8 +77,5 @@
     _inviteButton.enabled = selectedFollowers.count > 0;
 }
 
-- (IBAction)invite:(id)sender {
-    NSString *string = [selectedFollowers componentsJoinedByString:@","];
-    [self.delegate sendToFollowers:string];
-}
+
 @end

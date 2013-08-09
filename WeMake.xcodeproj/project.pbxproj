@@ -69,6 +69,8 @@
 		9ED093A61782AC7100EA1D90 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1601780423200E403A4 /* AFURLConnectionOperation.m */; };
 		9ED093A71782AC7100EA1D90 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1621780423200E403A4 /* AFXMLRequestOperation.m */; };
 		9ED093A81782AC7100EA1D90 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1641780423200E403A4 /* UIImageView+AFNetworking.m */; };
+		9EF9801517B37D6F00FCB950 /* WMNotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF9801417B37D6F00FCB950 /* WMNotificationCell.m */; };
+		9EF9801717B451CA00FCB950 /* test-2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 9EF9801617B451CA00FCB950 /* test-2.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +164,9 @@
 		9E99B7FB17928C090034B1C9 /* WMCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCameraViewController.h; sourceTree = "<group>"; };
 		9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCameraViewController.m; sourceTree = "<group>"; };
 		9EBC0AB317A4A4D8009901BB /* test.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.mov; sourceTree = "<group>"; };
+		9EF9801317B37D6F00FCB950 /* WMNotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMNotificationCell.h; sourceTree = "<group>"; };
+		9EF9801417B37D6F00FCB950 /* WMNotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMNotificationCell.m; sourceTree = "<group>"; };
+		9EF9801617B451CA00FCB950 /* test-2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "test-2.mov"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,10 +265,12 @@
 				9E847B7117A8B18500603C78 /* WMCameraTabViewController.m */,
 				9E6E54A217A979290029E9A6 /* WMNotificationViewController.h */,
 				9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */,
+				9EF9801217B37D4D00FCB950 /* Subclasses */,
 				9E847B7317A8BC2400603C78 /* CameraViewControllers */,
 				9E8B72E71785932C0053F5D6 /* WMLoginViewController.h */,
 				9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */,
 				9EBC0AB317A4A4D8009901BB /* test.mov */,
+				9EF9801617B451CA00FCB950 /* test-2.mov */,
 				9E83C21117AA28EA00F7033E /* Singletons */,
 				9E39E14D178040DB00E403A4 /* Models */,
 				9E34B4301791403F0052E780 /* Categories */,
@@ -389,6 +396,15 @@
 			name = CameraViewControllers;
 			sourceTree = "<group>";
 		};
+		9EF9801217B37D4D00FCB950 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				9EF9801317B37D6F00FCB950 /* WMNotificationCell.h */,
+				9EF9801417B37D6F00FCB950 /* WMNotificationCell.m */,
+			);
+			name = Subclasses;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -469,6 +485,7 @@
 				9EBC0AB417A4A4D8009901BB /* test.mov in Resources */,
 				9E39E131178040CB00E403A4 /* Images.xcassets in Resources */,
 				9E39E123178040CB00E403A4 /* InfoPlist.strings in Resources */,
+				9EF9801717B451CA00FCB950 /* test-2.mov in Resources */,
 				9E39E12C178040CB00E403A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,6 +516,7 @@
 				9E39E1671780423200E403A4 /* AFImageRequestOperation.m in Sources */,
 				9E39E1661780423200E403A4 /* AFHTTPRequestOperation.m in Sources */,
 				9E39E1651780423200E403A4 /* AFHTTPClient.m in Sources */,
+				9EF9801517B37D6F00FCB950 /* WMNotificationCell.m in Sources */,
 				9E847B7617A8BC3C00603C78 /* WMRequestViewController.m in Sources */,
 				9E1F784E17A0CAB7001DC68E /* WMUploadViewController.m in Sources */,
 				9E39E16C1780423200E403A4 /* AFXMLRequestOperation.m in Sources */,

@@ -10,4 +10,5 @@
 @interface WMTabBarController : UITabBarController
 - (void)presentLoginView;
 - (void)presentCameraView;
+- (void)presentCameraViewWithURL:(NSString *)url;
 @end

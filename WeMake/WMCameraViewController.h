@@ -16,6 +16,7 @@
 
 @protocol WMCameraViewControllerDelegate
 - (void)previewVideo:(NSURL *)url;
+- (void)cancel;
 @end
 
 @interface WMCameraViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate> {
@@ -77,6 +78,7 @@
 - (IBAction)focus:(UIButton *)sender;
 - (IBAction)grid:(UIButton *)sender;
 - (IBAction)flip:(UIButton *)sender;
+- (IBAction)cancel:(id)sender;
 
 - (void)display:(void (^)(void))completion;
 - (void)hide:(void (^)(void))completion;

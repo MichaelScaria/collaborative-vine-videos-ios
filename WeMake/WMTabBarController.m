@@ -25,10 +25,12 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Upload"] && sender) {
+        WMUploadViewController *vc = [segue destinationViewController];
+        NSLog(@"UR:%@", [NSString stringWithFormat:@"%@", sender]);
+        vc.initalURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", sender]];
+    }
 }
 
 - (void)presentCameraView {
@@ -39,4 +41,11 @@
     [self performSegueWithIdentifier:@"Upload" sender:nil];
 }
 
+- (void)presentCameraViewWithURL:(NSString *)url {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self setSelectedIndex:2];
+    });
+    
+    [self performSegueWithIdentifier:@"Upload" sender:url];
+}
 @end

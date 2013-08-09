@@ -1,4 +1,4 @@
-//
+  //
 //  WMNotificationViewController.m
 //  WeMake
 //
@@ -8,11 +8,14 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "WMNotificationViewController.h"
+#import "WMTabBarController.h"
+#import "WMNotificationCell.h"
 #import "WMModel.h"
 #import "WMRequest.h"
 #import "WMInteraction.h"
 
 #import "UIImageView+AFNetworking.h"
+
 
 @interface WMNotificationViewController ()
 
@@ -22,7 +25,9 @@
 
 - (void)viewDidLoad
 {
+    
     selectedIndexes = [[NSMutableDictionary alloc] init];
+//    [selectedIndexes setObject:@1 forKey:[NSIndexPath indexPathForRow:1 inSection:0]];
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [[WMModel sharedInstance] getNotificationsSuccess:^(NSArray *notifications){
@@ -34,10 +39,33 @@
             [player setControlStyle:MPMovieControlStyleNone];
             [player.view setFrame:CGRectMake(5, 45, 310, 310)];
             [player setScalingMode:MPMovieScalingModeAspectFill];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadStateChange:) name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
             [_tableView reloadData];
+            
         });
     }failure:nil];
+    
+//    _notifications = @[
+//                       [WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"@video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}],
+//                       [WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"@video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}]
+//                       ];
 }
+
+- (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
+}
+
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    //dispatch_async(dispatch_get_main_queue(), ^{
+//        player = [[MPMoviePlayerController alloc] init];
+//        [player setRepeatMode:MPMovieRepeatModeOne];
+//        [player setFullscreen:NO];
+//        [player setControlStyle:MPMovieControlStyleNone];
+//        [player.view setFrame:CGRectMake(5, 45, 310, 310)];
+//        [player setScalingMode:MPMovieScalingModeAspectFill];
+//    //});
+//}
 
 - (NSString *)simplifiedTimeWithEpochTime:(NSInteger)createdAt {
     NSString *time;
@@ -73,9 +101,45 @@
 }
 
 - (BOOL)cellIsSelected:(NSIndexPath *)indexPath {
+    NSLog(@"Row:%d", indexPath.row);
 	// Return whether the cell at the specified index path is selected or not
-	NSNumber *selectedIndex = [selectedIndexes objectForKey:indexPath];
+	NSNumber *selectedIndex = [selectedIndexes objectForKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
 	return !selectedIndex ? NO : [selectedIndex boolValue];
+}
+
+- (void)loadStateChange:(NSNotification *)n {
+    //LATER - avoid flicker player.playbackState == 1 - http://stackoverflow.com/questions/6941734/putting-a-video-to-pause-state-before-playing
+    MPMovieLoadState state = [(MPMoviePlayerController *)n.object loadState];
+    if (state & (MPMovieLoadStatePlayable | MPMovieLoadStatePlaythroughOK)) {
+        NSLog(@"%@", (state & MPMovieLoadStatePlayable) ? @"MPMovieLoadStatePlayable" : @"MPMovieLoadStatePlaythroughOK");
+        UIActivityIndicatorView *aiv = (UIActivityIndicatorView *)[[(MPMoviePlayerController *)n.object view] viewWithTag:999];
+        if (aiv) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [aiv stopAnimating];
+                [aiv removeFromSuperview];
+            });
+        }
+    }
+    else if (state & MPMovieLoadStateStalled) {
+        NSLog(@"MPMovieLoadStateStalled");
+        if (![[(MPMoviePlayerController *)n.object view] viewWithTag:999]) {
+            UIActivityIndicatorView *aiv = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(135, 135, 40, 40)];
+            //aiv.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+            aiv.tag = 999;
+            [[(MPMoviePlayerController *)n.object view] addSubview:aiv];
+            [aiv startAnimating];
+        }
+    }
+}
+
+- (void)accept:(UIButton *)accept {
+    WMRequest *request = [(WMNotificationCell *)accept.superview.superview request];
+    [(WMTabBarController *)self.parentViewController presentCameraViewWithURL:request.video.url];
+    NSLog(@"U:%@", request.sent.username);
+}
+
+- (void)reject:(UIButton *)reject {
+    
 }
 
 #pragma mark UITableViewDataSource
@@ -88,9 +152,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Notification"];
+    WMNotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Notification"];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Notification"];
+        cell = [[WMNotificationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Notification"];
     }
     id notification = _notifications[indexPath.row];
     UIImageView *createdBy = (UIImageView*)[cell viewWithTag:1];
@@ -99,11 +163,12 @@
 
     if ([notification isKindOfClass:[WMRequest class]]) {
         WMRequest *request = (WMRequest *)notification;
+        cell.request = request;
         [createdBy setImageWithURL:[NSURL URLWithString:request.sent.photoURL] placeholderImage:[UIImage imageNamed:@"missingPhoto.png"]];
         UILabel *title = (UILabel*)[cell viewWithTag:2];
         title.frame = CGRectMake(title.frame.origin.x, title.frame.origin.y, title.frame.size.width + 50, title.frame.size.height);
         title.text = [NSString stringWithFormat:@"%@ wants to create a video with you.", request.sent.username];
-        title.font = [UIFont systemFontOfSize:14];
+        title.font = [UIFont systemFontOfSize:13];
         UILabel *time = (UILabel*)[cell viewWithTag:3];
         time.text = [self simplifiedTimeWithEpochTime:request.createdAt];
     }
@@ -118,14 +183,13 @@
         UILabel *time = (UILabel*)[cell viewWithTag:3];
         time.text = [self simplifiedTimeWithEpochTime:interaction.createdAt];
     }
-    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // If our cell is selected, return double height
     if([self cellIsSelected:indexPath]) {
-        return 360;
+        return 410;
     }
     // Cell isn't selected so return single height
     return 48;
@@ -135,7 +199,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    WMNotificationCell *cell = (WMNotificationCell *)[tableView cellForRowAtIndexPath:indexPath];
     id notification = _notifications[indexPath.row];
     if ([notification isKindOfClass:[WMRequest class]]) {
         //toggle selected state for cell
@@ -144,18 +208,31 @@
             [selectedIndexes setObject:@NO forKey:key];
         }
         NSNumber *selectedIndex = [NSNumber numberWithBool:isSelected];
-        [selectedIndexes setObject:selectedIndex forKey:indexPath];
+        [selectedIndexes enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+            NSLog(@"key:%@ value:%@", key, value);
+        }];
+        [selectedIndexes setObject:selectedIndex forKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
         
         //preview video
         if (isSelected) {
-            WMRequest *request = (WMRequest *)notification;
-            [player setContentURL:[NSURL URLWithString:request.video.url]];
+            cell.request = (WMRequest *)notification;
+            [player setContentURL:[NSURL URLWithString:cell.request.video.url]];
             [player prepareToPlay];
             [player play];
             [player setShouldAutoplay:YES];
             [cell addSubview:player.view];
+            UIActivityIndicatorView *aiv = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(135, 135, 40, 40)];
+            aiv.tag = 999;
+            [player.view addSubview:aiv];
+            [aiv startAnimating];
+            [cell addAcceptButton];
+            [cell.accept addTarget:self action:@selector(accept:)forControlEvents:UIControlEventTouchUpInside];
+            [cell addRejectButton];
+            [cell.reject addTarget:self action:@selector(reject:)forControlEvents:UIControlEventTouchUpInside];
         }
         else {
+            [cell.accept removeFromSuperview];
+            [cell.reject removeFromSuperview];
             [player stop];
             [player.view removeFromSuperview];
         }

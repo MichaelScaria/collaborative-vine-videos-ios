@@ -210,6 +210,10 @@
     
 }
 
+- (IBAction)cancel:(id)sender {
+    [self.delegate cancel];
+}
+
 - (void)focusAtPoint:(CGPoint)locationPoint {
     [self autoFocusAtPoint:locationPoint];
     CGPoint resizedPoint = CGPointMake(locationPoint.x / self.videoPreviewView.bounds.size.width, locationPoint.y / self.videoPreviewView.bounds.size.height);

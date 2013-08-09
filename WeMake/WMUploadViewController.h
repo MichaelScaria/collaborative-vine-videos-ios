@@ -18,4 +18,5 @@
     
     NSURL *videoURL;
 }
+@property (nonatomic, strong) NSURL *initalURL;
 @end

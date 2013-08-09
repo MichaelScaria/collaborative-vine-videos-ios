@@ -51,10 +51,7 @@
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if ((self = [super init])) {
-        for (NSString *key in dictionary) {
-            id value = [dictionary objectForKey:key];
-            if (!value) continue; //if value is null, skip
-            
+        [dictionary enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
             if ([key isEqualToString:@"id"]) {
                 _theID = [value intValue];
             }
@@ -73,7 +70,7 @@
             else if ([key isEqualToString:@"video"]) {
                 _video = [WMVideo videoWithDictionary:value];
             }
-        }
+        }];
     }
     return self;
     

@@ -186,22 +186,31 @@
 #pragma mark Interactions
 
 - (void)getNotificationsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure {
-    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/users/%@/notifications", [WMSession sharedInstance].user] type:@"GET"];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSData *data = (NSData *)responseObject;
-        if (data){
-            NSArray *notificationsJSON = [[JSONDecoder decoder] objectWithData:data];
-            NSMutableArray *notifications = [[NSMutableArray alloc] initWithCapacity:2];
-            [notifications addObjectsFromArray:[WMRequest requestsWithArray:notificationsJSON[0]]];
-            [notifications addObjectsFromArray:[WMInteraction interactionsWithArray:notificationsJSON[1]]];
-            if (success) success(notifications);
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        if (failure) failure();
-    }];
-    [operation start];
+//    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/users/%@/notifications", [WMSession sharedInstance].user] type:@"GET"];
+//    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+//    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSData *data = (NSData *)responseObject;
+//        if (data){
+//            NSArray *notificationsJSON = [[JSONDecoder decoder] objectWithData:data];
+//            NSMutableArray *notifications = [[NSMutableArray alloc] initWithCapacity:2];
+//            [notifications addObjectsFromArray:[WMRequest requestsWithArray:notificationsJSON[0]]];
+//            [notifications addObjectsFromArray:[WMInteraction interactionsWithArray:notificationsJSON[1]]];
+//            if (success) success(notifications);
+//        }
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"Error: %@", error);
+//        if (failure) failure();
+//    }];
+//    [operation start];
+    
+    //    _notifications = @[
+    //                       [WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"@video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}],
+    //                       [WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"@video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}]
+    //                       ];
+
+    if (success) success(
+                         @[[WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}]]
+                         );
 }
 
 #pragma mark Helpers

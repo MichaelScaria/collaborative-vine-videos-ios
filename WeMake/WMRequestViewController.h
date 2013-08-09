@@ -10,6 +10,7 @@
 
 @protocol WMRequestViewControllerDelegate <NSObject>
 - (void)sendToFollowers:(NSString *)followers;
+- (void)cancel;
 @end
 
 @interface WMRequestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
@@ -20,4 +21,5 @@
 @property (strong, nonatomic) IBOutlet UIButton *inviteButton;
 @property (strong, nonatomic) id <WMRequestViewControllerDelegate>delegate;
 - (IBAction)invite:(id)sender;
+- (IBAction)cancel:(id)sender;
 @end
