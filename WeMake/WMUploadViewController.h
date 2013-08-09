@@ -17,6 +17,8 @@
     WMRequestViewController *requestViewController;
     
     NSURL *videoURL;
+    NSURL *tempURL;
+    NSURL *exportURL;
 }
 @property (nonatomic, strong) NSURL *initalURL;
 @end

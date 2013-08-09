@@ -50,11 +50,22 @@
 
 - (void)merge {
     if (initalURL && videoURL) {
-        NSString *mediaurl = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mov"];
-        AVAsset *firstAsset = [AVAsset assetWithURL:initalURL];
+        NSArray *dirArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSLog(@"DIR:%@", [dirArray objectAtIndex:0]);
+        NSString *path = [NSString stringWithFormat:@"%@/temp-%d.mov", [dirArray objectAtIndex:0], arc4random() % 1000];
+        
+        NSData *urlData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"]];
+        if ([urlData writeToFile:path options:NSAtomicWrite error:nil] == NO) {
+            NSLog(@"writeToFile error");
+        }
+        else {
+            NSLog(@"Written!");
+        }
+        tempURL = [NSURL fileURLWithPath:path];
+        reviewViewController.url = tempURL;
+        
+        AVAsset *firstAsset = [AVAsset assetWithURL:tempURL];
         AVAsset *secondAsset = [AVAsset assetWithURL:videoURL];
-        
-        
 
         AVMutableComposition *mixComposition = [[AVMutableComposition alloc] init];
         CMTime videoDuration1 = firstAsset.duration;
@@ -84,7 +95,6 @@
         AVMutableVideoCompositionLayerInstruction *firstlayerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:firstTrack];
         CGAffineTransform translateToCenter = CGAffineTransformMakeTranslation( 0,-320);
         CGAffineTransform rotateBy90Degrees = CGAffineTransformMakeRotation( M_PI_2);
-        //CGAffineTransform shrinkWidth = CGAffineTransformMakeScale(0.66, 1); // needed because Apple does a "stretch" by default - really, we should find and undo apple's stretch - I suspect it'll be a CALayer defaultTransform, or UIView property causing this
         CGAffineTransform finalTransform = CGAffineTransformConcat(translateToCenter, rotateBy90Degrees);
         [firstlayerInstruction setTransform:finalTransform atTime:kCMTimeZero];
         [firstlayerInstruction setOpacity:0.0 atTime:firstAsset.duration];
@@ -103,21 +113,18 @@
         
         
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *myPathDocs =  [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"mergeVideo-%d.mov",arc4random() % 1000]];
-        NSURL *url = [NSURL fileURLWithPath:myPathDocs];
+        exportURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@Movie-%d.MOV", NSTemporaryDirectory(), arc4random() % 1000]];
         // 5 - Create exporter
         AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
         exporter.videoComposition = mainCompositionInst;
-        exporter.outputURL=url;
+        exporter.outputURL=exportURL;
         exporter.outputFileType = AVFileTypeQuickTimeMovie;
         exporter.shouldOptimizeForNetworkUse = YES;
         [exporter exportAsynchronouslyWithCompletionHandler:^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self exportDidFinish:exporter];
             });
-        }];
+        }];;
     }
     else {
         NSLog(@"URL nil");
@@ -152,14 +159,25 @@
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Video Saved" message:@"Saved To Photo Album"
                                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
+                        reviewViewController.url = assetURL;
                     }
+                    [self cleanup];
                 });
             }];
+        }
+        else {
+            [self cleanup];
         }
     }
     else if (session.status & AVAssetExportSessionStatusFailed) {
         NSLog(@"Error:%@", session.error.description);
+        [self cleanup];
     }
+}
+
+- (void)cleanup {
+    [self removeFile:tempURL];
+    [self removeFile:exportURL];
 }
 
 - (void)cancel {
@@ -172,9 +190,9 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         videoURL = url;
         if (initalURL) [self merge];
+        else reviewViewController.url = url;
         UIScrollView *scrollView = (UIScrollView *)self.view;
         [scrollView scrollRectToVisible:CGRectMake(320, 0, 320, 1) animated:YES];
-        reviewViewController.url = url;
         if (!requestViewController) {
             CGSize screenSize = [[UIScreen mainScreen] bounds].size;
             requestViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Request"];
@@ -217,6 +235,19 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
+}
+
+#pragma mark Utilities
+
+- (void)removeFile:(NSURL *)fileURL
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *filePath = [fileURL path];
+    if ([fileManager fileExistsAtPath:filePath]) {
+        NSError *error;
+        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+		if (!success) NSLog(@"removeFile-Error:%@", error.localizedDescription);
+    }
 }
 
 @end

@@ -133,6 +133,7 @@
 }
 
 - (void)accept:(UIButton *)accept {
+    [player stop];
     WMRequest *request = [(WMNotificationCell *)accept.superview.superview request];
     [(WMTabBarController *)self.parentViewController presentCameraViewWithURL:request.video.url];
     NSLog(@"U:%@", request.sent.username);
