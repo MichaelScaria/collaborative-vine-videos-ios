@@ -11,6 +11,8 @@
 #import "WMReviewViewController.h"
 #import "WMRequestViewController.h"
 
+#import "WMVideo.h"
+
 @interface WMUploadViewController : UIViewController <WMCameraViewControllerDelegate, WMReviewViewControllerDelegate, WMRequestViewControllerDelegate> {
     WMCameraViewController *cameraViewController;
     WMReviewViewController *reviewViewController;
@@ -19,6 +21,8 @@
     NSURL *videoURL;
     NSURL *tempURL;
     NSURL *exportURL;
+    
+    float startTime;
 }
-@property (nonatomic, strong) NSURL *initalURL;
+@property (nonatomic, strong) WMVideo *initialVideo;
 @end

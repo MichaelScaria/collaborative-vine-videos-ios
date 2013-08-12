@@ -6,24 +6,22 @@
 //  Copyright (c) 2013 michaelscaria. All rights reserved.
 //
 
-#import "WMCameraViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#import "WMCreator.h"
+
+#import "WMCameraViewController.h"
+
 #import "UIImage+WeMake.h"
+#import "Constants.h"
 
 #define kGridLength 106
 #define KSizeOfSquare 75.0f
 #define KSizeOfSquareInset 10.0f
 
 #define kCameraViewOffset 60
-
-#define kColorNeutral [UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1]
-#define kColorLight [UIColor colorWithRed:.61 green:.35 blue:.71 alpha:1]
-#define kColorDark [UIColor colorWithRed:.37 green:.16 blue:.45 alpha:1]
-
 #define kTimeInterval 0.05
-#define kTotalVideoTime 2.0
 
 @interface WMCameraViewController ()
 @property (readwrite) CMVideoCodecType videoType;
@@ -46,6 +44,21 @@
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     if (!self.context) {
         NSLog(@"Failed to create ES context");
+    }
+    maxLength = kTotalVideoTime - _lengthOfInitialVideo;
+    if (_creators.count > 0) {
+        //creatorsTableViewController = [[WMCreatorsViewController alloc] initWithCreators:_creators];
+        creatorsTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Creator"];
+        creatorsTableViewController.view.frame = CGRectMake(0, 0, 320, 135);
+        [_creatorsView addSubview:creatorsTableViewController.view];
+    }
+    else {
+        //[_creatorsView removeFromSuperview];
+        creatorsTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Creator"];
+        creatorsTableViewController.view.frame = CGRectMake(0, 0, 320, 135);
+        //[creatorsTableViewController setCreators:_creators];
+        [creatorsTableViewController setCreators:@[[WMCreator creatorWithDictionary:@{@"username" : @"michaelscaria", @"photo_url" : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400", @"start_time" : @0.0, @"length" : @2.3}], [WMCreator creatorWithDictionary:@{@"username" : @"michaelscaria", @"photo_url" : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400", @"start_time" : @2.3, @"length" : @1.4}]]];
+        [_creatorsView addSubview:creatorsTableViewController.view];
     }
     touches = [[NSMutableArray alloc] init];
     self.videoPreviewView.context = self.context;
@@ -94,6 +107,7 @@
     
     [self.flipButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     [self.focusButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    _finishButton.enabled = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -214,6 +228,11 @@
     [self.delegate cancel];
 }
 
+- (IBAction)finish:(id)sender {
+    if ([timer isValid]) [timer invalidate];
+    [self stopRecording];
+}
+
 - (void)focusAtPoint:(CGPoint)locationPoint {
     [self autoFocusAtPoint:locationPoint];
     CGPoint resizedPoint = CGPointMake(locationPoint.x / self.videoPreviewView.bounds.size.width, locationPoint.y / self.videoPreviewView.bounds.size.height);
@@ -259,12 +278,13 @@
 
 - (void)time {
     secondsElapsed += kTimeInterval;
-    if (secondsElapsed > kTotalVideoTime) {
+    _finishButton.enabled = secondsElapsed > 1;
+    if (secondsElapsed > maxLength) {
         [timer invalidate];
         [self stopRecording];
     }
     else
-        progress.progress = secondsElapsed/kTotalVideoTime;
+        progress.progress = secondsElapsed/maxLength;
 }
 
 - (void)touchesEnded:(NSSet *)touchSet withEvent:(UIEvent *)event {
@@ -657,11 +677,15 @@
 {
 	paused = YES;
     discontinued= YES;
+    flipButton.enabled = YES;
+    focusButton.enabled = YES;
 }
 
 - (void)resumeRecording
 {
 	paused = NO;
+    flipButton.enabled = NO;
+    focusButton.enabled = NO;
 }
 
 #pragma mark Capture

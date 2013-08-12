@@ -14,6 +14,8 @@
 #import <CoreImage/CoreImage.h>
 #import <ImageIO/ImageIO.h>
 
+#import "WMCreatorsViewController.h"
+
 @protocol WMCameraViewControllerDelegate
 - (void)previewVideo:(NSURL *)url;
 - (void)cancel;
@@ -31,8 +33,10 @@
     CAShapeLayer *focusGrid;
     NSTimer *timer;
     float secondsElapsed;
+    float maxLength;
     BOOL hasOverlay;
     BOOL creatingVideo;
+    WMCreatorsViewController *creatorsTableViewController;
     
     AVCaptureConnection *audioConnection;
 	AVCaptureConnection *videoConnection;
@@ -62,16 +66,21 @@
 	BOOL recordingWillBeStopped;
 	BOOL recording;
 }
+
 @property (nonatomic, strong) NSMutableArray *touches;
+@property (nonatomic, strong) NSArray *creators;
 @property (nonatomic, strong) AVCaptureDevice *device;
 @property (strong, nonatomic) EAGLContext *context;
 @property (nonatomic, strong) id <WMCameraViewControllerDelegate>delegate;
+@property (nonatomic, assign) float lengthOfInitialVideo;
 
 @property (nonatomic,retain) IBOutlet GLKView *videoPreviewView;
 @property (strong, nonatomic) IBOutlet UIButton *flipButton;
 @property (strong, nonatomic) IBOutlet UIButton *focusButton;
 @property (strong, nonatomic) IBOutlet UIButton *gridButton;
 @property (strong, nonatomic) IBOutlet UIProgressView *progress;
+@property (strong, nonatomic) IBOutlet UIButton *finishButton;
+@property (strong, nonatomic) IBOutlet UIView *creatorsView;
 
 -(void)setupCGContext;
 
@@ -79,6 +88,7 @@
 - (IBAction)grid:(UIButton *)sender;
 - (IBAction)flip:(UIButton *)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)finish:(id)sender;
 
 - (void)display:(void (^)(void))completion;
 - (void)hide:(void (^)(void))completion;

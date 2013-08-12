@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WMVideo.h"
+
 @interface WMTabBarController : UITabBarController
 - (void)presentLoginView;
 - (void)presentCameraView;
-- (void)presentCameraViewWithURL:(NSString *)url;
+- (void)presentCameraViewWithURL:(WMVideo *)video;
 @end

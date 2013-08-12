@@ -43,6 +43,9 @@
 		9E5E23AA178945CD00E0CA0B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E5E23A9178945CD00E0CA0B /* ImageIO.framework */; };
 		9E62D2AC17A7541B004F3D0F /* WMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E62D2AB17A75407004F3D0F /* WMTabBarController.m */; };
 		9E6E54A417A979290029E9A6 /* WMNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */; };
+		9E79B5FA17B834AE00425BFA /* WMCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E79B5F917B834AE00425BFA /* WMCreator.m */; };
+		9E79B5FE17B8460100425BFA /* WMCreatorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E79B5FD17B8460100425BFA /* WMCreatorsViewController.m */; };
+		9E79B60117B84D1900425BFA /* WMCreatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E79B60017B84D1900425BFA /* WMCreatorCell.m */; };
 		9E83C21417AA28FE00F7033E /* WMRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21317AA28FE00F7033E /* WMRequest.m */; };
 		9E83C21717AA298800F7033E /* WMInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21617AA298800F7033E /* WMInteraction.m */; };
 		9E83C21A17AA2CBE00F7033E /* WMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21917AA2CBE00F7033E /* WMUser.m */; };
@@ -142,6 +145,13 @@
 		9E62D2AB17A75407004F3D0F /* WMTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMTabBarController.m; sourceTree = "<group>"; };
 		9E6E54A217A979290029E9A6 /* WMNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMNotificationViewController.h; sourceTree = "<group>"; };
 		9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMNotificationViewController.m; sourceTree = "<group>"; };
+		9E79B5F817B834AE00425BFA /* WMCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCreator.h; sourceTree = "<group>"; };
+		9E79B5F917B834AE00425BFA /* WMCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCreator.m; sourceTree = "<group>"; };
+		9E79B5FC17B8460100425BFA /* WMCreatorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCreatorsViewController.h; sourceTree = "<group>"; };
+		9E79B5FD17B8460100425BFA /* WMCreatorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCreatorsViewController.m; sourceTree = "<group>"; };
+		9E79B5FF17B84D1900425BFA /* WMCreatorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCreatorCell.h; sourceTree = "<group>"; };
+		9E79B60017B84D1900425BFA /* WMCreatorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCreatorCell.m; sourceTree = "<group>"; };
+		9E79B60217B91DF200425BFA /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9E83C21217AA28FE00F7033E /* WMRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMRequest.h; sourceTree = "<group>"; };
 		9E83C21317AA28FE00F7033E /* WMRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMRequest.m; sourceTree = "<group>"; };
 		9E83C21517AA298800F7033E /* WMInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMInteraction.h; sourceTree = "<group>"; };
@@ -254,6 +264,7 @@
 		9E39E11E178040CB00E403A4 /* WeMake */ = {
 			isa = PBXGroup;
 			children = (
+				9E79B60217B91DF200425BFA /* Constants.h */,
 				9E39E127178040CB00E403A4 /* WMAppDelegate.h */,
 				9E39E128178040CB00E403A4 /* WMAppDelegate.m */,
 				9E39E12A178040CB00E403A4 /* Main.storyboard */,
@@ -267,6 +278,7 @@
 				9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */,
 				9EF9801217B37D4D00FCB950 /* Subclasses */,
 				9E847B7317A8BC2400603C78 /* CameraViewControllers */,
+				9E79B5FB17B845CD00425BFA /* HelperViews */,
 				9E8B72E71785932C0053F5D6 /* WMLoginViewController.h */,
 				9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */,
 				9EBC0AB317A4A4D8009901BB /* test.mov */,
@@ -320,6 +332,8 @@
 				9E83C21917AA2CBE00F7033E /* WMUser.m */,
 				9E83C21B17AA2DB900F7033E /* WMVideo.h */,
 				9E83C21C17AA2DB900F7033E /* WMVideo.m */,
+				9E79B5F817B834AE00425BFA /* WMCreator.h */,
+				9E79B5F917B834AE00425BFA /* WMCreator.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -368,6 +382,17 @@
 				9E39E1511780423200E403A4 /* AFNetworking */,
 			);
 			name = External;
+			sourceTree = "<group>";
+		};
+		9E79B5FB17B845CD00425BFA /* HelperViews */ = {
+			isa = PBXGroup;
+			children = (
+				9E79B5FC17B8460100425BFA /* WMCreatorsViewController.h */,
+				9E79B5FD17B8460100425BFA /* WMCreatorsViewController.m */,
+				9E79B5FF17B84D1900425BFA /* WMCreatorCell.h */,
+				9E79B60017B84D1900425BFA /* WMCreatorCell.m */,
+			);
+			name = HelperViews;
 			sourceTree = "<group>";
 		};
 		9E83C21117AA28EA00F7033E /* Singletons */ = {
@@ -509,6 +534,7 @@
 				9E8B72E6178592C30053F5D6 /* WMSession.m in Sources */,
 				9E39E1731780457A00E403A4 /* AFURLConnectionOperation.m in Sources */,
 				9E83C21D17AA2DB900F7033E /* WMVideo.m in Sources */,
+				9E79B5FE17B8460100425BFA /* WMCreatorsViewController.m in Sources */,
 				9E6E54A417A979290029E9A6 /* WMNotificationViewController.m in Sources */,
 				9E39E16D1780423200E403A4 /* UIImageView+AFNetworking.m in Sources */,
 				9E34B433179140720052E780 /* UIImage+WeMake.m in Sources */,
@@ -529,10 +555,12 @@
 				9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */,
 				9E39E1681780423200E403A4 /* AFJSONRequestOperation.m in Sources */,
 				9E39E125178040CB00E403A4 /* main.m in Sources */,
+				9E79B5FA17B834AE00425BFA /* WMCreator.m in Sources */,
 				9E39E16A1780423200E403A4 /* AFPropertyListRequestOperation.m in Sources */,
 				9E39E1711780423F00E403A4 /* JSONKit.m in Sources */,
 				9E8B72E91785932C0053F5D6 /* WMLoginViewController.m in Sources */,
 				9E83C21717AA298800F7033E /* WMInteraction.m in Sources */,
+				9E79B60117B84D1900425BFA /* WMCreatorCell.m in Sources */,
 				9E39E1691780423200E403A4 /* AFNetworkActivityIndicatorManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

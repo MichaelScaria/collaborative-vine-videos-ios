@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface WMModel : NSObject
 + (WMModel *)sharedInstance;
@@ -22,7 +23,7 @@
 - (void)fetchFollowersSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;
 
 //uploads
-- (void)uploadURL:(NSURL *)url to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure;
+- (void)uploadURL:(NSURL *)url length:(float)length startTime:(float)startTime to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure;
 
 //interactions
 - (void)getNotificationsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;

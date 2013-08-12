@@ -11,5 +11,6 @@
 @interface WMVideo : NSObject
 @property (nonatomic, assign) int theID;
 @property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSArray *creators;
 + (id)videoWithDictionary:(NSDictionary *)videoDictionary;
 @end

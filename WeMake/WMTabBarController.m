@@ -28,8 +28,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"Upload"] && sender) {
         WMUploadViewController *vc = [segue destinationViewController];
-        NSLog(@"UR:%@", [NSString stringWithFormat:@"%@", sender]);
-        vc.initalURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", sender]];
+        vc.initialVideo = (WMVideo *)sender;
     }
 }
 
@@ -41,11 +40,11 @@
     [self performSegueWithIdentifier:@"Upload" sender:nil];
 }
 
-- (void)presentCameraViewWithURL:(NSString *)url {
+- (void)presentCameraViewWithURL:(WMVideo *)video {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [self setSelectedIndex:2];
     });
     
-    [self performSegueWithIdentifier:@"Upload" sender:url];
+    [self performSegueWithIdentifier:@"Upload" sender:video];
 }
 @end

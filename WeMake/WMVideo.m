@@ -7,6 +7,7 @@
 //
 
 #import "WMVideo.h"
+#import "WMCreator.h"
 
 @implementation WMVideo
 
@@ -24,6 +25,10 @@
             }
             else if ([key isEqualToString:@"url"]) {
                 _url = value;
+            }
+            else if ([key isEqualToString:@"users"]) {
+                NSLog(@"c:%@", value);
+                _creators = [WMCreator creatorsWithArray:value];
             }
         }];
     }

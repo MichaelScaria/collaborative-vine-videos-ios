@@ -1,4 +1,4 @@
-  //
+//
 //  WMNotificationViewController.m
 //  WeMake
 //
@@ -31,7 +31,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [[WMModel sharedInstance] getNotificationsSuccess:^(NSArray *notifications){
-        _notifications = @[notifications[0], notifications[0]];
+        _notifications = notifications;
         dispatch_async(dispatch_get_main_queue(), ^{
             player = [[MPMoviePlayerController alloc] init];
             [player setRepeatMode:MPMovieRepeatModeOne];
@@ -135,7 +135,7 @@
 - (void)accept:(UIButton *)accept {
     [player stop];
     WMRequest *request = [(WMNotificationCell *)accept.superview.superview request];
-    [(WMTabBarController *)self.parentViewController presentCameraViewWithURL:request.video.url];
+    [(WMTabBarController *)self.parentViewController presentCameraViewWithURL:request.video];
     NSLog(@"U:%@", request.sent.username);
 }
 

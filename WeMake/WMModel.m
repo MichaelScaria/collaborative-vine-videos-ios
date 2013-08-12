@@ -17,7 +17,7 @@
 #import "JSONKit.h"
 
 //#define kRootURL @"http://localhost:3000/api"
-#define kRootURL @"http://192.168.1.65:3000/api"
+#define kRootURL @"http://192.168.1.11:3000/api"
 //#define kRootURL @"http://wemake.herokuapp.com/api"
 
 #define kAppSecret @"MSwDp9CIMLzQ"
@@ -155,14 +155,14 @@
 
 #pragma mark Uploads
 
-- (void)uploadURL:(NSURL *)url to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure{
+- (void)uploadURL:(NSURL *)url length:(float)length startTime:(float)startTime to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure{
     ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
     [assetLibrary assetForURL:url resultBlock:^(ALAsset *asset) {
         ALAssetRepresentation *rep = [asset defaultRepresentation];
         Byte *buffer = (Byte*)malloc(rep.size);
         NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
         NSData *videoData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-        NSData *postData = [self generatePostDataForVideoData:videoData followers:followers];
+        NSData *postData = [self generatePostDataForVideoData:videoData length:length startTime:startTime followers:followers];
         NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
 
         NSMutableURLRequest *uploadRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/videos", kRootURL]] cachePolicy: NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
@@ -186,31 +186,28 @@
 #pragma mark Interactions
 
 - (void)getNotificationsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure {
-//    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/users/%@/notifications", [WMSession sharedInstance].user] type:@"GET"];
-//    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
-//    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSData *data = (NSData *)responseObject;
-//        if (data){
-//            NSArray *notificationsJSON = [[JSONDecoder decoder] objectWithData:data];
-//            NSMutableArray *notifications = [[NSMutableArray alloc] initWithCapacity:2];
-//            [notifications addObjectsFromArray:[WMRequest requestsWithArray:notificationsJSON[0]]];
-//            [notifications addObjectsFromArray:[WMInteraction interactionsWithArray:notificationsJSON[1]]];
-//            if (success) success(notifications);
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Error: %@", error);
-//        if (failure) failure();
-//    }];
-//    [operation start];
+    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/users/%@/notifications", [WMSession sharedInstance].user] type:@"GET"];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = (NSData *)responseObject;
+        if (data){
+            NSArray *notificationsJSON = [[JSONDecoder decoder] objectWithData:data];
+            NSMutableArray *notifications = [[NSMutableArray alloc] initWithCapacity:2];
+            [notifications addObjectsFromArray:[WMRequest requestsWithArray:notificationsJSON[0]]];
+            [notifications addObjectsFromArray:[WMInteraction interactionsWithArray:notificationsJSON[1]]];
+            if (success) success(notifications);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if (failure) failure();
+    }];
+    [operation start];
     
-    //    _notifications = @[
-    //                       [WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"@video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}],
-    //                       [WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"@video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}]
-    //                       ];
 
-    if (success) success(
-                         @[[WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}]]
-                         );
+
+//    if (success) success(
+//                         @[[WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}]]
+//                         );
 }
 
 #pragma mark Helpers
@@ -222,9 +219,9 @@
     return request;
 }
 
-- (NSData *)generatePostDataForVideoData:(NSData *)uploadData followers:(NSString *)followers {
+- (NSData *)generatePostDataForVideoData:(NSData *)uploadData length:(float)length startTime:(float)startTime followers:(NSString *)followers {
     NSMutableData *body = [NSMutableData data];
-    NSDictionary *dictionary = @{@"movie": uploadData, @"users" : followers};
+    NSDictionary *dictionary = @{@"movie": uploadData, @"users" : followers, @"length" : [NSString stringWithFormat:@"%f", length], @"start_time" : [NSString stringWithFormat:@"%f", startTime]};
     for (NSString *key in dictionary) {
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
         id value = [dictionary objectForKey:key];
