@@ -35,7 +35,6 @@
     float secondsElapsed;
     float maxLength;
     BOOL hasOverlay;
-    BOOL creatingVideo;
     WMCreatorsViewController *creatorsTableViewController;
     
     AVCaptureConnection *audioConnection;
@@ -73,14 +72,16 @@
 @property (strong, nonatomic) EAGLContext *context;
 @property (nonatomic, strong) id <WMCameraViewControllerDelegate>delegate;
 @property (nonatomic, assign) float lengthOfInitialVideo;
+@property (nonatomic, assign) BOOL videoIsFinished;
 
 @property (nonatomic,retain) IBOutlet GLKView *videoPreviewView;
 @property (strong, nonatomic) IBOutlet UIButton *flipButton;
 @property (strong, nonatomic) IBOutlet UIButton *focusButton;
 @property (strong, nonatomic) IBOutlet UIButton *gridButton;
 @property (strong, nonatomic) IBOutlet UIProgressView *progress;
-@property (strong, nonatomic) IBOutlet UIButton *finishButton;
 @property (strong, nonatomic) IBOutlet UIView *creatorsView;
+@property (strong, nonatomic) IBOutlet UIButton *finishButton;
+@property (strong, nonatomic) IBOutlet UIButton *doneButton;
 
 -(void)setupCGContext;
 
@@ -88,6 +89,7 @@
 - (IBAction)grid:(UIButton *)sender;
 - (IBAction)flip:(UIButton *)sender;
 - (IBAction)cancel:(id)sender;
+- (IBAction)next:(id)sender;
 - (IBAction)finish:(id)sender;
 
 - (void)display:(void (^)(void))completion;

@@ -19,7 +19,6 @@
 		9E39E125178040CB00E403A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E124178040CB00E403A4 /* main.m */; };
 		9E39E129178040CB00E403A4 /* WMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E128178040CB00E403A4 /* WMAppDelegate.m */; };
 		9E39E12C178040CB00E403A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E39E12A178040CB00E403A4 /* Main.storyboard */; };
-		9E39E12F178040CB00E403A4 /* WMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E12E178040CB00E403A4 /* WMViewController.m */; };
 		9E39E131178040CB00E403A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E39E130178040CB00E403A4 /* Images.xcassets */; };
 		9E39E138178040CB00E403A4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E39E137178040CB00E403A4 /* XCTest.framework */; };
 		9E39E139178040CB00E403A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E39E118178040CB00E403A4 /* Foundation.framework */; };
@@ -60,7 +59,6 @@
 		9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */; };
 		9EBC0AB417A4A4D8009901BB /* test.mov in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC0AB317A4A4D8009901BB /* test.mov */; };
 		9ED093991782AC0800EA1D90 /* WMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E128178040CB00E403A4 /* WMAppDelegate.m */; };
-		9ED0939A1782AC0800EA1D90 /* WMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E12E178040CB00E403A4 /* WMViewController.m */; };
 		9ED0939E1782AC0800EA1D90 /* WMModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E14F178040FA00E403A4 /* WMModel.m */; };
 		9ED0939F1782AC0800EA1D90 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1701780423F00E403A4 /* JSONKit.m */; };
 		9ED093A01782AC7100EA1D90 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1531780423200E403A4 /* AFHTTPClient.m */; };
@@ -74,6 +72,8 @@
 		9ED093A81782AC7100EA1D90 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1641780423200E403A4 /* UIImageView+AFNetworking.m */; };
 		9EF9801517B37D6F00FCB950 /* WMNotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF9801417B37D6F00FCB950 /* WMNotificationCell.m */; };
 		9EF9801717B451CA00FCB950 /* test-2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 9EF9801617B451CA00FCB950 /* test-2.mov */; };
+		9EFB6E0D17BCA663006B33B8 /* WMPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFB6E0C17BCA663006B33B8 /* WMPostViewController.m */; };
+		9EFB6E1017BCCC67006B33B8 /* WMFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EFB6E0F17BCCC67006B33B8 /* WMFeedViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,8 +106,6 @@
 		9E39E127178040CB00E403A4 /* WMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMAppDelegate.h; sourceTree = "<group>"; };
 		9E39E128178040CB00E403A4 /* WMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMAppDelegate.m; sourceTree = "<group>"; };
 		9E39E12B178040CB00E403A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9E39E12D178040CB00E403A4 /* WMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMViewController.h; sourceTree = "<group>"; };
-		9E39E12E178040CB00E403A4 /* WMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMViewController.m; sourceTree = "<group>"; };
 		9E39E130178040CB00E403A4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9E39E136178040CB00E403A4 /* WeMakeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeMakeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E39E137178040CB00E403A4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -177,6 +175,10 @@
 		9EF9801317B37D6F00FCB950 /* WMNotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMNotificationCell.h; sourceTree = "<group>"; };
 		9EF9801417B37D6F00FCB950 /* WMNotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMNotificationCell.m; sourceTree = "<group>"; };
 		9EF9801617B451CA00FCB950 /* test-2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = "test-2.mov"; sourceTree = "<group>"; };
+		9EFB6E0B17BCA663006B33B8 /* WMPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMPostViewController.h; sourceTree = "<group>"; };
+		9EFB6E0C17BCA663006B33B8 /* WMPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMPostViewController.m; sourceTree = "<group>"; };
+		9EFB6E0E17BCCC67006B33B8 /* WMFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMFeedViewController.h; sourceTree = "<group>"; };
+		9EFB6E0F17BCCC67006B33B8 /* WMFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMFeedViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,8 +272,8 @@
 				9E39E12A178040CB00E403A4 /* Main.storyboard */,
 				9E62D2AA17A75407004F3D0F /* WMTabBarController.h */,
 				9E62D2AB17A75407004F3D0F /* WMTabBarController.m */,
-				9E39E12D178040CB00E403A4 /* WMViewController.h */,
-				9E39E12E178040CB00E403A4 /* WMViewController.m */,
+				9EFB6E0E17BCCC67006B33B8 /* WMFeedViewController.h */,
+				9EFB6E0F17BCCC67006B33B8 /* WMFeedViewController.m */,
 				9E847B7017A8B18500603C78 /* WMCameraTabViewController.h */,
 				9E847B7117A8B18500603C78 /* WMCameraTabViewController.m */,
 				9E6E54A217A979290029E9A6 /* WMNotificationViewController.h */,
@@ -417,6 +419,8 @@
 				9E1F785017A1E35C001DC68E /* WMReviewViewController.m */,
 				9E847B7417A8BC3C00603C78 /* WMRequestViewController.h */,
 				9E847B7517A8BC3C00603C78 /* WMRequestViewController.m */,
+				9EFB6E0B17BCA663006B33B8 /* WMPostViewController.h */,
+				9EFB6E0C17BCA663006B33B8 /* WMPostViewController.m */,
 			);
 			name = CameraViewControllers;
 			sourceTree = "<group>";
@@ -544,15 +548,16 @@
 				9E39E1651780423200E403A4 /* AFHTTPClient.m in Sources */,
 				9EF9801517B37D6F00FCB950 /* WMNotificationCell.m in Sources */,
 				9E847B7617A8BC3C00603C78 /* WMRequestViewController.m in Sources */,
+				9EFB6E1017BCCC67006B33B8 /* WMFeedViewController.m in Sources */,
 				9E1F784E17A0CAB7001DC68E /* WMUploadViewController.m in Sources */,
 				9E39E16C1780423200E403A4 /* AFXMLRequestOperation.m in Sources */,
 				9E1F785117A1E35C001DC68E /* WMReviewViewController.m in Sources */,
-				9E39E12F178040CB00E403A4 /* WMViewController.m in Sources */,
 				9E39E150178040FA00E403A4 /* WMModel.m in Sources */,
 				9E83C21A17AA2CBE00F7033E /* WMUser.m in Sources */,
 				9E39E129178040CB00E403A4 /* WMAppDelegate.m in Sources */,
 				9E847B7217A8B18500603C78 /* WMCameraTabViewController.m in Sources */,
 				9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */,
+				9EFB6E0D17BCA663006B33B8 /* WMPostViewController.m in Sources */,
 				9E39E1681780423200E403A4 /* AFJSONRequestOperation.m in Sources */,
 				9E39E125178040CB00E403A4 /* main.m in Sources */,
 				9E79B5FA17B834AE00425BFA /* WMCreator.m in Sources */,
@@ -579,7 +584,6 @@
 				9ED093A71782AC7100EA1D90 /* AFXMLRequestOperation.m in Sources */,
 				9ED093A81782AC7100EA1D90 /* UIImageView+AFNetworking.m in Sources */,
 				9ED093991782AC0800EA1D90 /* WMAppDelegate.m in Sources */,
-				9ED0939A1782AC0800EA1D90 /* WMViewController.m in Sources */,
 				9ED0939E1782AC0800EA1D90 /* WMModel.m in Sources */,
 				9ED0939F1782AC0800EA1D90 /* JSONKit.m in Sources */,
 				9E39E144178040CB00E403A4 /* WeMakeTests.m in Sources */,

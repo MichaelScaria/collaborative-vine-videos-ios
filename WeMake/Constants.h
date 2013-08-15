@@ -14,5 +14,6 @@
 #define kColorDark [UIColor colorWithRed:.37 green:.16 blue:.45 alpha:1]
 
 #define kTotalVideoTime 10.0
+#define kMinimumLength 8.0
 
 #endif

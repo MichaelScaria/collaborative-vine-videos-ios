@@ -27,6 +27,7 @@
 {
     
     selectedIndexes = [[NSMutableDictionary alloc] init];
+    rejectedIndexes = [[NSMutableDictionary alloc] init];
 //    [selectedIndexes setObject:@1 forKey:[NSIndexPath indexPathForRow:1 inSection:0]];
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
@@ -54,18 +55,6 @@
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//    //dispatch_async(dispatch_get_main_queue(), ^{
-//        player = [[MPMoviePlayerController alloc] init];
-//        [player setRepeatMode:MPMovieRepeatModeOne];
-//        [player setFullscreen:NO];
-//        [player setControlStyle:MPMovieControlStyleNone];
-//        [player.view setFrame:CGRectMake(5, 45, 310, 310)];
-//        [player setScalingMode:MPMovieScalingModeAspectFill];
-//    //});
-//}
 
 - (NSString *)simplifiedTimeWithEpochTime:(NSInteger)createdAt {
     NSString *time;
@@ -107,6 +96,13 @@
 	return !selectedIndex ? NO : [selectedIndex boolValue];
 }
 
+- (BOOL)cellIsRejected:(NSIndexPath *)indexPath {
+    NSLog(@"Row:%d", indexPath.row);
+	// Return whether the cell at the specified index path is rejected or not
+	NSNumber *rejectedIndex = [rejectedIndexes objectForKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
+	return !rejectedIndex ? NO : [rejectedIndex boolValue];
+}
+
 - (void)loadStateChange:(NSNotification *)n {
     //LATER - avoid flicker player.playbackState == 1 - http://stackoverflow.com/questions/6941734/putting-a-video-to-pause-state-before-playing
     MPMovieLoadState state = [(MPMoviePlayerController *)n.object loadState];
@@ -137,9 +133,23 @@
     WMRequest *request = [(WMNotificationCell *)accept.superview.superview request];
     [(WMTabBarController *)self.parentViewController presentCameraViewWithURL:request.video];
     NSLog(@"U:%@", request.sent.username);
+    //[[WMModel sharedInstance] updateRequest:request.theID accepted:YES success:nil failure:nil];
 }
 
 - (void)reject:(UIButton *)reject {
+    WMNotificationCell *cell = (WMNotificationCell *)reject.superview.superview;
+    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+    [rejectedIndexes setObject:@YES forKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
+    [_tableView beginUpdates];
+    [_tableView endUpdates];
+    
+    [[WMModel sharedInstance] updateRequest:cell.request.theID accepted:NO success:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSMutableArray *array = [_notifications mutableCopy];
+            [array removeObjectAtIndex:indexPath.row];
+            [_tableView reloadData];
+        });
+    }failure:nil];
     
 }
 
@@ -168,8 +178,11 @@
         [createdBy setImageWithURL:[NSURL URLWithString:request.sent.photoURL] placeholderImage:[UIImage imageNamed:@"missingPhoto.png"]];
         UILabel *title = (UILabel*)[cell viewWithTag:2];
         title.frame = CGRectMake(title.frame.origin.x, title.frame.origin.y, title.frame.size.width + 50, title.frame.size.height);
-        title.text = [NSString stringWithFormat:@"%@ wants to create a video with you.", request.sent.username];
+        
+        if (request.type == WMCreate) title.text = [NSString stringWithFormat:@"%@ wants to create a video with you.", request.sent.username];
+        else title.text = [NSString stringWithFormat:@"%@ finished your video! Would you Like to publish it?", request.sent.username];
         title.font = [UIFont systemFontOfSize:13];
+        
         UILabel *time = (UILabel*)[cell viewWithTag:3];
         time.text = [self simplifiedTimeWithEpochTime:request.createdAt];
     }
@@ -188,8 +201,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // If our cell is selected, return double height
-    if([self cellIsSelected:indexPath]) {
+    if ([self cellIsRejected:indexPath]) {
+        return 0;
+    }
+    if ([self cellIsSelected:indexPath]) {
         return 410;
     }
     // Cell isn't selected so return single height
@@ -209,9 +224,6 @@
             [selectedIndexes setObject:@NO forKey:key];
         }
         NSNumber *selectedIndex = [NSNumber numberWithBool:isSelected];
-        [selectedIndexes enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-            NSLog(@"key:%@ value:%@", key, value);
-        }];
         [selectedIndexes setObject:selectedIndex forKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
         
         //preview video

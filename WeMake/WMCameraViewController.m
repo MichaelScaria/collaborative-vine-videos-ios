@@ -38,7 +38,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    creatingVideo = YES;
     hasOverlay = YES;
     movieURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), @"Movie.MOV"]];
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -46,19 +45,22 @@
         NSLog(@"Failed to create ES context");
     }
     maxLength = kTotalVideoTime - _lengthOfInitialVideo;
+    _doneButton.hidden = _lengthOfInitialVideo < kMinimumLength;
     if (_creators.count > 0) {
         //creatorsTableViewController = [[WMCreatorsViewController alloc] initWithCreators:_creators];
         creatorsTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Creator"];
         creatorsTableViewController.view.frame = CGRectMake(0, 0, 320, 135);
+        //[creatorsTableViewController setCreators:@[[WMCreator creatorWithDictionary:@{@"username" : @"michaelscaria", @"photo_url" : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400", @"start_time" : @0.0, @"length" : @2.3}], [WMCreator creatorWithDictionary:@{@"username" : @"michaelscaria", @"photo_url" : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400", @"start_time" : @2.3, @"length" : @1.4}]]];
+        [creatorsTableViewController setCreators:_creators];
         [_creatorsView addSubview:creatorsTableViewController.view];
     }
     else {
-        //[_creatorsView removeFromSuperview];
-        creatorsTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Creator"];
+        [_creatorsView removeFromSuperview];
+        /*creatorsTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Creator"];
         creatorsTableViewController.view.frame = CGRectMake(0, 0, 320, 135);
-        //[creatorsTableViewController setCreators:_creators];
-        [creatorsTableViewController setCreators:@[[WMCreator creatorWithDictionary:@{@"username" : @"michaelscaria", @"photo_url" : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400", @"start_time" : @0.0, @"length" : @2.3}], [WMCreator creatorWithDictionary:@{@"username" : @"michaelscaria", @"photo_url" : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400", @"start_time" : @2.3, @"length" : @1.4}]]];
-        [_creatorsView addSubview:creatorsTableViewController.view];
+        [creatorsTableViewController setCreators:_creators];
+        //[creatorsTableViewController setCreators:@[[WMCreator creatorWithDictionary:@{@"username" : @"michaelscaria", @"photo_url" : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400", @"start_time" : @0.0, @"length" : @2.3}], [WMCreator creatorWithDictionary:@{@"username" : @"michaelscaria", @"photo_url" : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400", @"start_time" : @2.3, @"length" : @1.4}]]];
+        [_creatorsView addSubview:creatorsTableViewController.view];*/
     }
     touches = [[NSMutableArray alloc] init];
     self.videoPreviewView.context = self.context;
@@ -228,9 +230,29 @@
     [self.delegate cancel];
 }
 
-- (IBAction)finish:(id)sender {
+- (IBAction)next:(id)sender {
     if ([timer isValid]) [timer invalidate];
     [self stopRecording];
+}
+
+- (IBAction)finish:(id)sender {
+    self.videoIsFinished = YES;
+    if ([timer isValid]) [timer invalidate];
+    [self stopRecording];
+}
+
+- (void)time {
+    secondsElapsed += kTimeInterval;
+    _finishButton.enabled = secondsElapsed > 1;
+    if (secondsElapsed > maxLength) {
+        [timer invalidate];
+        [self stopRecording];
+    }
+    else
+        progress.progress = secondsElapsed/maxLength;
+    if (_lengthOfInitialVideo + secondsElapsed >= kMinimumLength) {
+        _doneButton.hidden = NO;
+    }
 }
 
 - (void)focusAtPoint:(CGPoint)locationPoint {
@@ -274,17 +296,6 @@
         }
         
     }];
-}
-
-- (void)time {
-    secondsElapsed += kTimeInterval;
-    _finishButton.enabled = secondsElapsed > 1;
-    if (secondsElapsed > maxLength) {
-        [timer invalidate];
-        [self stopRecording];
-    }
-    else
-        progress.progress = secondsElapsed/maxLength;
 }
 
 - (void)touchesEnded:(NSSet *)touchSet withEvent:(UIEvent *)event {

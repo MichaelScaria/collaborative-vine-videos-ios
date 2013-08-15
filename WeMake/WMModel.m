@@ -17,7 +17,7 @@
 #import "JSONKit.h"
 
 //#define kRootURL @"http://localhost:3000/api"
-#define kRootURL @"http://192.168.1.11:3000/api"
+#define kRootURL @"http://10.0.1.15:3000/api"
 //#define kRootURL @"http://wemake.herokuapp.com/api"
 
 #define kAppSecret @"MSwDp9CIMLzQ"
@@ -91,8 +91,13 @@
     else {
         NSDictionary *user = [[JSONDecoder decoder] objectWithData:data];
         NSLog(@"user-login:%@", user);
-        [[WMSession sharedInstance] loginWithUserInfo:@{@"token": user[@"token"], @"username" : username, @"password" : password, @"id" : user[@"user"][@"id"]}];
-        if (success) success();
+        if (user) {
+            [[WMSession sharedInstance] loginWithUserInfo:@{@"token": user[@"token"], @"username" : username, @"password" : password, @"id" : user[@"user"][@"id"]}];
+            if (success) success();
+        }
+        else {
+            if (failure) failure();
+        }
     }
 }
 
@@ -155,14 +160,14 @@
 
 #pragma mark Uploads
 
-- (void)uploadURL:(NSURL *)url length:(float)length startTime:(float)startTime to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure{
+- (void)uploadURL:(NSURL *)url thumbnail:(UIImage *)thumbnail length:(float)length startTime:(float)startTime to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure{
     ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
     [assetLibrary assetForURL:url resultBlock:^(ALAsset *asset) {
         ALAssetRepresentation *rep = [asset defaultRepresentation];
         Byte *buffer = (Byte*)malloc(rep.size);
         NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
         NSData *videoData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-        NSData *postData = [self generatePostDataForVideoData:videoData length:length startTime:startTime followers:followers];
+        NSData *postData = [self generatePostDataForVideoData:videoData thumbnail:UIImagePNGRepresentation(thumbnail) length:length startTime:startTime followers:followers post:NO caption:@""];
         NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
 
         NSMutableURLRequest *uploadRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/videos", kRootURL]] cachePolicy: NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
@@ -183,8 +188,54 @@
 
 }
 
-#pragma mark Interactions
+- (void)updateVideo:(int)video url:(NSURL *)url thumbnail:(UIImage *)thumbnail length:(float)length startTime:(float)startTime to:(NSString *)followers postToFollowers:(BOOL)post caption:(NSString *)caption success:(void (^)(void))success failure:(void (^)(void))failure {
+    ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
+    [assetLibrary assetForURL:url resultBlock:^(ALAsset *asset) {
+        ALAssetRepresentation *rep = [asset defaultRepresentation];
+        Byte *buffer = (Byte*)malloc(rep.size);
+        NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
+        NSData *videoData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
+        NSData *postData = [self generatePostDataForVideoData:videoData thumbnail:UIImagePNGRepresentation(thumbnail) length:length startTime:startTime followers:followers ? followers : @"" post:post caption:caption ? caption : @""];
+        NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+        
+        NSMutableURLRequest *uploadRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/videos/%d", kRootURL, video]] cachePolicy: NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30];
+        [uploadRequest setHTTPMethod:@"POST"];
+        [uploadRequest setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"CSRFToken"] forHTTPHeaderField:@"X-CSRF-Token"];
+        [uploadRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        [uploadRequest setValue:@"multipart/form-data; boundary=AaB03x" forHTTPHeaderField:@"Content-Type"];
+        [uploadRequest setHTTPBody:postData];
+        
+        NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:uploadRequest delegate:self];
+        if (conn && success) success();
+        else if (failure) failure();
+        
+    } failureBlock:^(NSError *err) {
+        NSLog(@"Error: %@",[err localizedDescription]);
+        if (failure) failure();
+    }];
+}
 
+#pragma mark Interactions
+- (void)getPostsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure {
+    NSMutableURLRequest *req = [self generateMutableRequestForPath:@"/users/feed" type:@"GET"];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = (NSData *)responseObject;
+        if (data){
+            NSArray *postsJSON = [[JSONDecoder decoder] objectWithData:data];
+            NSLog(@"postsJSON:%@", postsJSON);
+            NSMutableArray *thumbnails = [[NSMutableArray alloc] initWithCapacity:2];
+            for (NSDictionary *d in postsJSON) {
+                [thumbnails addObject:d[@"thumbnail_url"]];
+            }
+            if (success) success(thumbnails);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if (failure) failure();
+    }];
+    [operation start];
+}
 - (void)getNotificationsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure {
     NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/users/%@/notifications", [WMSession sharedInstance].user] type:@"GET"];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
@@ -206,8 +257,23 @@
 
 
 //    if (success) success(
-//                         @[[WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"video" : @{@"url" : @"https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D"}}]]
+//                         @[[WMRequest requestWithDictionary:@{@"sent" : @{@"username" : @"robinjoseph", @"photo_url" : @"http://graph.facebook.com/580207324/picture?type=square&width=100&height=100&width=400&height=400"}, @"recipient" : @{@"username" : @"michaelscaria"}, @"status" : @0, @"created_at" : @1375928440, @"video" : @{@"url" : @""https://s3.amazonaws.com/WeMake/users/1/2013-07-31%2023%3A04%3A11%20-0500/video-2.mov?AWSAccessKeyId=AKIAIAQUCYOECQCJOENA&Expires=2006481914&Signature=wyRbwYhgknxTKOnTD57zjjzzghM%3D}}]]
 //                         );
+}
+
+- (void)updateRequest:(int)request accepted:(BOOL)accepted success:(void (^)(void))success failure:(void (^)(void))failure {
+    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/requests/%d/%@", request, accepted ? @"accept" : @"decline"] type:@"POST"];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = (NSData *)responseObject;
+        if (data){
+            if (success) success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if (failure) failure();
+    }];
+    [operation start];
 }
 
 #pragma mark Helpers
@@ -219,15 +285,55 @@
     return request;
 }
 
-- (NSData *)generatePostDataForVideoData:(NSData *)uploadData length:(float)length startTime:(float)startTime followers:(NSString *)followers {
+- (NSData *)generatePostDataForVideoData:(NSData *)uploadData thumbnail:(NSData *)thumbnailData length:(float)length startTime:(float)startTime followers:(NSString *)followers post:(BOOL)post caption:(NSString *)caption {
     NSMutableData *body = [NSMutableData data];
-    NSDictionary *dictionary = @{@"movie": uploadData, @"users" : followers, @"length" : [NSString stringWithFormat:@"%f", length], @"start_time" : [NSString stringWithFormat:@"%f", startTime]};
-    for (NSString *key in dictionary) {
+    if (!thumbnailData) {
+        NSLog(@"No thumbnailData");
+    }
+    if (!followers) {
+        NSLog(@"No followers");
+    }
+    if (!caption) {
+        NSLog(@"No caption");
+    }
+    NSDictionary *dictionary = @{@"movie": uploadData, @"thumbnail" : thumbnailData, @"users" : followers, @"length" : [NSString stringWithFormat:@"%f", length], @"start_time" : [NSString stringWithFormat:@"%f", startTime], @"post" : (post) ? @"YES" : @"NO", @"caption" : caption};
+//    for (NSString *key in dictionary) {
+//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
+//        id value = [dictionary objectForKey:key];
+//        
+//        if ([value isKindOfClass:[NSData class]]) {
+//            [body appendData: [[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"movie.mov\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+//        } else {
+//            [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+//        }
+//        
+//        if ([value isKindOfClass:[NSData class]]) {
+//            
+//            
+//            [body appendData:value];
+//            
+//        } else {
+//            [body appendData:[value dataUsingEncoding:NSUTF8StringEncoding]];
+//        }
+//        
+//        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//    }
+    [dictionary enumerateKeysAndObjectsUsingBlock:^(NSString *key, id value, BOOL *stop) {
         [body appendData:[[NSString stringWithFormat:@"--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
-        id value = [dictionary objectForKey:key];
         
         if ([value isKindOfClass:[NSData class]]) {
-            [body appendData: [[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"movie.mov\"\r\nContent-Type: application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
+            NSString *name, *filename, *type;
+            if ([key isEqualToString:@"movie"]) {
+                name = @"movie";
+                filename = @"movie.mov";
+                type = @"application/octet-stream";
+            }
+            else {
+                name = @"thumbnail";
+                filename = @"thumbnail.png";
+                type = @"image/png";
+            }
+            [body appendData: [[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\nContent-Type: %@\r\nContent-Transfer-Encoding: binary\r\n\r\n", name, filename, type] dataUsingEncoding:NSUTF8StringEncoding]];
         } else {
             [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
         }
@@ -242,7 +348,7 @@
         }
         
         [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    }
+    }];
     
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
     return body;

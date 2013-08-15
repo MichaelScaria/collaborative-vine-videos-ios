@@ -184,24 +184,37 @@
         else reviewViewController.url = url;
         UIScrollView *scrollView = (UIScrollView *)self.view;
         [scrollView setContentOffset:CGPointMake(320, 0) animated:YES];
-        if (!requestViewController) {
-            CGSize screenSize = [[UIScreen mainScreen] bounds].size;
-            requestViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Request"];
-            requestViewController.delegate = self;
-            requestViewController.view.frame = CGRectMake(screenSize.width * 2, 0, requestViewController.view.frame.size.width, requestViewController.view.frame.size.height);
-            [scrollView addSubview:requestViewController.view];
+        [scrollView setContentSize:CGSizeMake(320, 568)];
+        if (cameraViewController.videoIsFinished) {
+            if (!postViewController) {
+                CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+                postViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Post"];
+                postViewController.delegate = self;
+                postViewController.view.frame = CGRectMake(screenSize.width * 2, 0, postViewController.view.frame.size.width, postViewController.view.frame.size.height);
+                [scrollView addSubview:postViewController.view];
+            }
         }
-        [[WMModel sharedInstance] fetchFollowersSuccess:^(NSArray *followers){
-            NSLog(@"Followers:%@", followers);
-            [requestViewController setFollowers:[followers mutableCopy]];
-        }failure:nil];
+        else {
+            if (!requestViewController) {
+                CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+                requestViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Request"];
+                requestViewController.delegate = self;
+                requestViewController.view.frame = CGRectMake(screenSize.width * 2, 0, requestViewController.view.frame.size.width, requestViewController.view.frame.size.height);
+                [scrollView addSubview:requestViewController.view];
+            }
+            [[WMModel sharedInstance] fetchFollowersSuccess:^(NSArray *followers){
+                NSLog(@"Followers:%@", followers);
+                [requestViewController setFollowers:[followers mutableCopy]];
+            }failure:nil];
+        }
     });
     
 }
 
 #pragma mark WMReviewViewControllerDelegate
 
-- (void)approved {
+- (void)approvedWithThumbnail:(UIImage *)thumbnail {
+    thumbnailImage = thumbnail;
     UIScrollView *scrollView = (UIScrollView *)self.view;
     [scrollView setContentOffset:CGPointMake(640, 0) animated:YES];
 }
@@ -216,17 +229,51 @@
 - (void)sendToFollowers:(NSString *)followers {
     NSLog(@"F:%@", followers);
     CMTime assetLength = [(AVAsset *)[AVAsset assetWithURL:videoURL] duration];
-    [[WMModel sharedInstance] uploadURL:videoURL length:CMTimeGetSeconds(assetLength) startTime:startTime to:followers success:^{
+    if (initialVideo) {
+        [[WMModel sharedInstance] updateVideo:initialVideo.theID url:videoURL thumbnail:thumbnailImage length:CMTimeGetSeconds(assetLength) startTime:startTime to:followers postToFollowers:NO caption:nil success:^{
+            [self dismissViewControllerAnimated:YES completion:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Sent Request%@", (followers.length > 1) ? @"s" : @""] message:@"Success" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
+                });
+            }];
+        }failure:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
+    else {
+        [[WMModel sharedInstance] uploadURL:videoURL thumbnail:thumbnailImage length:CMTimeGetSeconds(assetLength) startTime:startTime to:followers success:^{
+            [self dismissViewControllerAnimated:YES completion:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Sent Request%@", (followers.length > 1) ? @"s" : @""] message:@"Success" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alert show];
+                });
+            }];
+        }failure:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
+}
+
+#pragma mark WMPostViewControllerDelegate
+
+- (void)postVideoWithCaption:(NSString *)caption {
+    CMTime assetLength = [(AVAsset *)[AVAsset assetWithURL:videoURL] duration];
+    [[WMModel sharedInstance] updateVideo:initialVideo.theID url:videoURL thumbnail:thumbnailImage length:CMTimeGetSeconds(assetLength) startTime:startTime to:nil postToFollowers:YES caption:caption success:^{
         [self dismissViewControllerAnimated:YES completion:^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Sent Request%@", (followers.length > 1) ? @"s" : @""] message:@"Success" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Video Uploading" message:@"Success" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
             });
         }];
     }failure:^{
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failed" message:@"Fail" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            });
+        }];
     }];
-    
 }
 
 #pragma mark Utilities

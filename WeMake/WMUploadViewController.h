@@ -10,17 +10,21 @@
 #import "WMCameraViewController.h"
 #import "WMReviewViewController.h"
 #import "WMRequestViewController.h"
+#import "WMPostViewController.h"
 
 #import "WMVideo.h"
 
-@interface WMUploadViewController : UIViewController <WMCameraViewControllerDelegate, WMReviewViewControllerDelegate, WMRequestViewControllerDelegate> {
+@interface WMUploadViewController : UIViewController <WMCameraViewControllerDelegate, WMReviewViewControllerDelegate, WMRequestViewControllerDelegate, WMPostViewControllerDelegate> {
     WMCameraViewController *cameraViewController;
     WMReviewViewController *reviewViewController;
     WMRequestViewController *requestViewController;
+    WMPostViewController *postViewController;
     
     NSURL *videoURL;
     NSURL *tempURL;
     NSURL *exportURL;
+    
+    UIImage *thumbnailImage;
     
     float startTime;
 }

@@ -23,8 +23,11 @@
 - (void)fetchFollowersSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;
 
 //uploads
-- (void)uploadURL:(NSURL *)url length:(float)length startTime:(float)startTime to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure;
+- (void)uploadURL:(NSURL *)url thumbnail:(UIImage *)thumbnail length:(float)length startTime:(float)startTime to:(NSString *)followers success:(void (^)(void))success failure:(void (^)(void))failure;
+- (void)updateVideo:(int)video url:(NSURL *)url thumbnail:(UIImage *)thumbnail length:(float)length startTime:(float)startTime to:(NSString *)followers postToFollowers:(BOOL)post caption:(NSString *)caption success:(void (^)(void))success failure:(void (^)(void))failure;
 
 //interactions
+- (void)getPostsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;
 - (void)getNotificationsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;
+- (void)updateRequest:(int)request accepted:(BOOL)accepted success:(void (^)(void))success failure:(void (^)(void))failure;
 @end

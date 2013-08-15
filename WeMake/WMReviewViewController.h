@@ -11,12 +11,13 @@
 
 
 @protocol WMReviewViewControllerDelegate
-- (void)approved;
+- (void)approvedWithThumbnail:(UIImage *)thumbnail;
 - (void)back;
 @end
 
 @interface WMReviewViewController : UIViewController {
     MPMoviePlayerController *player;
+    UIImage *thumbnailImage;
 }
 @property (nonatomic, strong) id <WMReviewViewControllerDelegate>delegate;
 @property (nonatomic, strong) NSURL *url;

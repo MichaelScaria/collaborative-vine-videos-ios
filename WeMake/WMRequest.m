@@ -48,6 +48,23 @@
     }
 }
 
+- (WMRequestType)getRequestTypeFromNumber:(int)number
+{
+    switch (number) {
+        case 0:
+            return WMCreate;
+            break;
+            
+        case 1:
+            return WMPublish;
+            break;
+            
+        default:
+            return WMCreate;
+            break;
+    }
+}
+
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if ((self = [super init])) {
@@ -60,6 +77,9 @@
             }
             else if ([key isEqualToString:@"recipient"]) {
                 _recipient = [WMUser userWithDictionary:value];
+            }
+            else if ([key isEqualToString:@"request_type"]) {
+                _type = [self getRequestTypeFromNumber:[value intValue]];
             }
             else if ([key isEqualToString:@"status"]) {
                 _status = [self getRequestStatusFromNumber:[value intValue]];

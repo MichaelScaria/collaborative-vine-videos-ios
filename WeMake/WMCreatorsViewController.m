@@ -22,7 +22,7 @@
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        _creators = @[creators[0], creators[0]];
+        _creators = creators;
     }
     return self;
 }
@@ -30,7 +30,7 @@
 - (void)setCreators:(NSArray *)creators {
     if (creators != _creators) {
         _creators = creators;
-        _creators = @[creators[0], creators[1], creators[0]];
+        //_creators = @[creators[0], creators[1], creators[0]];
         [self.tableView reloadData];
     }
 }

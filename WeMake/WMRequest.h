@@ -17,11 +17,17 @@ typedef enum {
     WMRejected
 }WMRequestStatus;
 
+typedef enum {
+    WMCreate,
+    WMPublish,
+}WMRequestType;
+
 @interface WMRequest : NSObject
 @property (nonatomic, assign) int theID;
 @property (nonatomic, strong) WMUser *sent;
 @property (nonatomic, strong) WMUser *recipient;
 @property (nonatomic, strong) WMVideo *video;
+@property (nonatomic, assign) WMRequestType type;
 @property (nonatomic, assign) WMRequestStatus status;
 @property (nonatomic) NSInteger createdAt;
 

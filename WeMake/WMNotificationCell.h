@@ -13,7 +13,6 @@
 @property (nonatomic, strong) UIButton *accept;
 @property (nonatomic, strong) UIButton *reject;
 @property (nonatomic, strong) WMRequest *request;
-
 - (void)addAcceptButton;
 - (void)addRejectButton;
 @end

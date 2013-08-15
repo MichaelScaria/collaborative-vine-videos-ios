@@ -11,6 +11,7 @@
 
 @interface WMNotificationViewController : UIViewController {
     NSMutableDictionary *selectedIndexes;
+    NSMutableDictionary *rejectedIndexes;
     MPMoviePlayerController *player;
 }
 @property (nonatomic, strong) NSArray *notifications;
