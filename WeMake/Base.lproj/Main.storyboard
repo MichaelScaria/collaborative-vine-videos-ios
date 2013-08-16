@@ -1,9 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A510d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MSj-Jk-K04">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A510d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="xbO-tO-2hg">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="uiR-rV-ksn">
+            <objects>
+                <viewController id="xbO-tO-2hg" customClass="WMViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XGx-8u-ud6"/>
+                        <viewControllerLayoutGuide type="bottom" id="WO0-sn-3BI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ITi-CC-OFw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-cG-bes" userLabel="Main">
+                                <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" image="blueCircle.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="mainTapped:" destination="xbO-tO-2hg" eventType="touchUpInside" id="lFR-y7-ZXc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLb-SV-MX4" userLabel="Feed">
+                                <rect key="frame" x="-100" y="10" width="100" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="feedTapped:" destination="xbO-tO-2hg" eventType="touchUpInside" id="E8t-Ux-MHJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zB-4d-f5K" userLabel="Camera">
+                                <rect key="frame" x="-100" y="40" width="100" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cameraTapped:" destination="xbO-tO-2hg" eventType="touchUpInside" id="dZk-BO-boO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysV-HB-nR6" userLabel="Notification">
+                                <rect key="frame" x="-100" y="70" width="100" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="notificationTapped:" destination="xbO-tO-2hg" eventType="touchUpInside" id="lwq-F6-nJj"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraButton" destination="6zB-4d-f5K" id="Jer-ev-yeE"/>
+                        <outlet property="feedButton" destination="oLb-SV-MX4" id="5CV-HB-3oH"/>
+                        <outlet property="mainButton" destination="Ej1-cG-bes" id="4sw-2c-gX6"/>
+                        <outlet property="notificationButton" destination="ysV-HB-nR6" id="d6B-07-Vxd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eCr-8L-bex" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-790" y="-1506"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Umv-U8-I1h">
             <objects>
@@ -32,8 +105,8 @@
             <objects>
                 <viewController id="KCd-bh-TFs" customClass="WMCameraTabViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="WlD-NP-U2f"/>
-                        <viewControllerLayoutGuide type="bottom" id="Xi5-1u-ifT"/>
+                        <viewControllerLayoutGuide type="top" id="rPB-Kv-McV"/>
+                        <viewControllerLayoutGuide type="bottom" id="hS3-Sz-fyR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="oAF-Wa-Id3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -51,8 +124,8 @@
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="WMFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0vR-lz-L10"/>
-                        <viewControllerLayoutGuide type="bottom" id="VGe-WK-fzC"/>
+                        <viewControllerLayoutGuide type="top" id="FTH-JU-ib2"/>
+                        <viewControllerLayoutGuide type="bottom" id="FxO-pB-IyX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
@@ -83,8 +156,8 @@
             <objects>
                 <viewController storyboardIdentifier="Camera" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cVa-bO-kS4" customClass="WMCameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Olq-9F-gsI"/>
-                        <viewControllerLayoutGuide type="bottom" id="l3i-or-2l8"/>
+                        <viewControllerLayoutGuide type="top" id="5C1-7W-0OT"/>
+                        <viewControllerLayoutGuide type="bottom" id="gtx-he-Z0k"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VDo-lM-Db9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -254,8 +327,8 @@
             <objects>
                 <viewController storyboardIdentifier="Review" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1tk-5V-gFP" customClass="WMReviewViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="39W-31-m6P"/>
-                        <viewControllerLayoutGuide type="bottom" id="gok-ea-yeH"/>
+                        <viewControllerLayoutGuide type="top" id="5Ps-Mf-5gh"/>
+                        <viewControllerLayoutGuide type="bottom" id="POk-N2-6cO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sFS-Q6-3En">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -304,8 +377,8 @@
             <objects>
                 <viewController storyboardIdentifier="Request" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NfC-rA-knd" customClass="WMRequestViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="V1m-3L-HsG"/>
-                        <viewControllerLayoutGuide type="bottom" id="u8M-sO-xfa"/>
+                        <viewControllerLayoutGuide type="top" id="Nfv-9n-IRu"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hqe-RW-PNX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="A1p-86-Tws">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -404,8 +477,8 @@
             <objects>
                 <viewController storyboardIdentifier="Post" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sFY-Md-A5G" customClass="WMPostViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zTh-T3-o7J"/>
-                        <viewControllerLayoutGuide type="bottom" id="GlJ-4X-baj"/>
+                        <viewControllerLayoutGuide type="top" id="imo-5I-lMc"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ahb-IA-X50"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VF1-8c-cg0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -483,8 +556,8 @@
             <objects>
                 <viewController storyboardIdentifier="Upload" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0z4-H2-NKP" customClass="WMUploadViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="c15-ds-kcm"/>
-                        <viewControllerLayoutGuide type="bottom" id="Gqu-N8-v3i"/>
+                        <viewControllerLayoutGuide type="top" id="ddp-bM-btp"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jyq-x0-3Za"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7Y3-0p-syB" userLabel="View" customClass="UIScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -501,8 +574,8 @@
             <objects>
                 <viewController id="Jov-jq-qaX" customClass="WMLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Baf-Ey-Saa"/>
-                        <viewControllerLayoutGuide type="bottom" id="2cr-AB-pyS"/>
+                        <viewControllerLayoutGuide type="top" id="QqP-qJ-5ko"/>
+                        <viewControllerLayoutGuide type="bottom" id="Wdw-7p-KbA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fqQ-3l-icv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -622,8 +695,8 @@
             <objects>
                 <viewController id="Hxa-wS-fqj" customClass="WMNotificationViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Wfk-tS-6zQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="Dye-yF-2fh"/>
+                        <viewControllerLayoutGuide type="top" id="MHH-9O-2WA"/>
+                        <viewControllerLayoutGuide type="bottom" id="IPt-Bl-nw6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="I1H-Rx-oEp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -712,6 +785,7 @@
         <image name="Crosshairs" width="56" height="56"/>
         <image name="Flip" width="56" height="42"/>
         <image name="Grid" width="56" height="56"/>
+        <image name="blueCircle.png" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
