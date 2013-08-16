@@ -32,7 +32,7 @@
 //        
 //    }];
     
-    [[WMModel sharedInstance] login:@"michaelscaria" password:@"password" success:nil failure:nil];
+    [[WMModel sharedInstance] login:@"robinjoseph" password:@"password" success:nil failure:nil];
     //[[NSUserDefaults standardUserDefaults] setObject:@"michaelscaria" forKey:@"Username"];
     //[[NSUserDefaults standardUserDefaults] setObject:@"password" forKey:@"Password"];
     

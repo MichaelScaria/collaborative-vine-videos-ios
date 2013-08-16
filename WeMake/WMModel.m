@@ -17,7 +17,7 @@
 #import "JSONKit.h"
 
 //#define kRootURL @"http://localhost:3000/api"
-#define kRootURL @"http://10.0.1.15:3000/api"
+#define kRootURL @"http://Michaels-MacBook-Pro.local:3000/api"
 //#define kRootURL @"http://wemake.herokuapp.com/api"
 
 #define kAppSecret @"MSwDp9CIMLzQ"
