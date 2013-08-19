@@ -65,6 +65,8 @@
     creatorView.layer.cornerRadius = creatorView.frame.size.width/2;
     creatorView.layer.masksToBounds = YES;
     [self addSubview:creatorView];
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
+    [self addGestureRecognizer:panGesture];
 }
 
 - (void)setCreatorUrl:(NSString *)creatorUrl {
@@ -72,6 +74,66 @@
         NSLog(@"%@", _creatorUrl);
         _creatorUrl = creatorUrl;
         [creatorView setImageWithURL:[NSURL URLWithString:_creatorUrl] placeholderImage:[UIImage imageNamed:@"missingPhoto.png"]];
+    }
+}
+
+- (void)dragged:(UIPanGestureRecognizer *)recognizer {
+    CGPoint newPoint = [recognizer locationInView:self];
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Received a pan gesture");
+        initialPoint = newPoint;
+        
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded) {
+        float radius = self.frame.size.width/2;
+        float roundedCenter = self.center.x + 160;
+        float finalX;
+        float offset = 5;
+        if (roundedCenter > 320) {
+            //closer to the right side
+            finalX = 320 - radius;
+        }
+        else {
+            offset *= -1;
+            finalX = radius;
+        }
+        [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.center = CGPointMake(finalX + offset, self.center.y);
+        }completion:^(BOOL finished) {
+            [UIView animateWithDuration:.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                self.center = CGPointMake(finalX - offset, self.center.y);
+            }completion:nil];
+        }];
+    }
+    else {
+        float radius = self.frame.size.width/2;
+        float finalX, finalY;
+        
+        float deltaX = newPoint.x-initialPoint.x;
+        float deltaY = newPoint.y-initialPoint.y;
+        //pin the x value
+        if (self.center.x + deltaX - radius < 0) {
+            finalX = 0 + radius;
+        }
+        else if (self.center.x + deltaX + radius > 320) {
+            finalX = 320 - radius;
+        }
+        else {
+            finalX = self.center.x + deltaX;
+        }
+        //pin the y value
+        if (self.center.y + deltaY - radius < 0) {
+            finalY = 0 + radius;
+        }
+        else if (self.center.y + deltaY + radius > 320) {
+            finalY = 320 - radius;
+        }
+        else {
+            finalY = self.center.y + deltaY;
+        }
+        
+        self.center = CGPointMake(finalX, finalY);
+        //initialPoint = newPoint;
     }
 }
 

@@ -10,6 +10,7 @@
 
 @interface WMCreatorView : UIView {
     UIImageView *creatorView;
+    CGPoint initialPoint;
 }
 @property (nonatomic, strong) NSString *creatorUrl;
 @end

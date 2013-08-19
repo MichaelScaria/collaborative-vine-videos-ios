@@ -49,7 +49,7 @@
     }
     if (currentCreator.photoURL) {
         [_creatorView setCreatorUrl:currentCreator.photoURL];
-    }    
+    }
     
 }
 
@@ -98,6 +98,14 @@
 //            [self next:nil];
 //        }
 //    }
+}
+
+- (void)setCreators:(NSArray *)creators {
+    if (![creators isEqualToArray:_creators]) {
+        _creators = creators;
+        WMCreator *firstCreator = _creators[0];
+        [_creatorView setCreatorUrl:firstCreator.photoURL];
+    }
 }
 
 - (void)setUrl:(NSURL *)url {

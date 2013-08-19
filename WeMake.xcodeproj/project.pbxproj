@@ -57,8 +57,6 @@
 		9E8B72E91785932C0053F5D6 /* WMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */; };
 		9E8B72EB17861D040053F5D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8B72EA17861D040053F5D6 /* QuartzCore.framework */; };
 		9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */; };
-		9EB31E0817C007BE00A82277 /* WMVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB31E0717C007BE00A82277 /* WMVideoView.m */; };
-		9EB31E0B17C007ED00A82277 /* WMVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EB31E0A17C007ED00A82277 /* WMVideoView.xib */; };
 		9EB31E0E17C0132400A82277 /* WMVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB31E0D17C0132400A82277 /* WMVideoCell.m */; };
 		9EBC0AB417A4A4D8009901BB /* test.mov in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC0AB317A4A4D8009901BB /* test.mov */; };
 		9ED093991782AC0800EA1D90 /* WMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E128178040CB00E403A4 /* WMAppDelegate.m */; };
@@ -177,9 +175,6 @@
 		9E8B72EA17861D040053F5D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9E99B7FB17928C090034B1C9 /* WMCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCameraViewController.h; sourceTree = "<group>"; };
 		9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCameraViewController.m; sourceTree = "<group>"; };
-		9EB31E0617C007BE00A82277 /* WMVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMVideoView.h; sourceTree = "<group>"; };
-		9EB31E0717C007BE00A82277 /* WMVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMVideoView.m; sourceTree = "<group>"; };
-		9EB31E0A17C007ED00A82277 /* WMVideoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WMVideoView.xib; sourceTree = "<group>"; };
 		9EB31E0C17C0132400A82277 /* WMVideoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMVideoCell.h; sourceTree = "<group>"; };
 		9EB31E0D17C0132400A82277 /* WMVideoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMVideoCell.m; sourceTree = "<group>"; };
 		9EBC0AB317A4A4D8009901BB /* test.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.mov; sourceTree = "<group>"; };
@@ -446,9 +441,6 @@
 		9EB31E0917C007BF00A82277 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				9EB31E0617C007BE00A82277 /* WMVideoView.h */,
-				9EB31E0717C007BE00A82277 /* WMVideoView.m */,
-				9EB31E0A17C007ED00A82277 /* WMVideoView.xib */,
 				9EB31E0C17C0132400A82277 /* WMVideoCell.h */,
 				9EB31E0D17C0132400A82277 /* WMVideoCell.m */,
 				9E71B06917C21F2D00F0F277 /* WMCreatorView.h */,
@@ -549,7 +541,6 @@
 				9E39E123178040CB00E403A4 /* InfoPlist.strings in Resources */,
 				9EDBC5EC17BE267000566924 /* redCircle.png in Resources */,
 				9EF9801717B451CA00FCB950 /* test-2.mov in Resources */,
-				9EB31E0B17C007ED00A82277 /* WMVideoView.xib in Resources */,
 				9E39E12C178040CB00E403A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -570,7 +561,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E62D2AC17A7541B004F3D0F /* WMTabBarController.m in Sources */,
-				9EB31E0817C007BE00A82277 /* WMVideoView.m in Sources */,
 				9E8B72E6178592C30053F5D6 /* WMSession.m in Sources */,
 				9E39E1731780457A00E403A4 /* AFURLConnectionOperation.m in Sources */,
 				9E83C21D17AA2DB900F7033E /* WMVideo.m in Sources */,

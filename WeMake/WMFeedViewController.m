@@ -80,7 +80,7 @@
         [players addObject:cell.player];
         [cell setCreators:video.creators];
     }
-    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 @end
