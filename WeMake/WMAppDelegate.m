@@ -31,14 +31,13 @@
 //        else  NSLog(@"failed");
 //        
 //    }];
-    
     [[WMModel sharedInstance] login:@"robinjoseph" password:@"password" success:nil failure:nil];
     //[[NSUserDefaults standardUserDefaults] setObject:@"michaelscaria" forKey:@"Username"];
     //[[NSUserDefaults standardUserDefaults] setObject:@"password" forKey:@"Password"];
-    
+    [application setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 //     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -74,6 +73,7 @@
     else {
         [(WMTabBarController *)self.window.rootViewController presentLoginView];
     }*/
+    [application setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

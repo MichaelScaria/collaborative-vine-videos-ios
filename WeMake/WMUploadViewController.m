@@ -33,25 +33,21 @@
         cameraViewController.creators = initialVideo.creators;
     }
     else startTime = 0.0;
-	reviewViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Review"];
-    reviewViewController.delegate = self;
-    reviewViewController.view.frame = CGRectMake(screenSize.width, 0, reviewViewController.view.frame.size.width, reviewViewController.view.frame.size.height);
+	
 
     UIScrollView *scrollView = (UIScrollView *)self.view;
-    //scrollView.translatesAutoresizingMaskIntoConstraints = YES;
     scrollView.pagingEnabled = YES;
     scrollView.contentSize = CGSizeMake(screenSize.width*3, screenSize.height);
     scrollView.scrollEnabled = NO;
     scrollView.backgroundColor = [UIColor blackColor];
-
     [scrollView addSubview:cameraViewController.view];
-    [scrollView addSubview:reviewViewController.view];
-    //NSString *mediaurl = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mov"];
-
-    //[self previewVideo:[NSURL fileURLWithPath:mediaurl]];
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//        [self merge];
-//    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        reviewViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Review"];
+        reviewViewController.delegate = self;
+        reviewViewController.view.frame = CGRectMake(screenSize.width, 0, reviewViewController.view.frame.size.width, reviewViewController.view.frame.size.height);
+        [scrollView addSubview:reviewViewController.view];
+    });
     
 }
 

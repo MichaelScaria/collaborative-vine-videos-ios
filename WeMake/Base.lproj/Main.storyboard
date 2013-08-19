@@ -9,15 +9,15 @@
             <objects>
                 <viewController id="xbO-tO-2hg" customClass="WMViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="XGx-8u-ud6"/>
-                        <viewControllerLayoutGuide type="bottom" id="WO0-sn-3BI"/>
+                        <viewControllerLayoutGuide type="top" id="0xn-Ej-6Ss"/>
+                        <viewControllerLayoutGuide type="bottom" id="6BZ-A8-6CD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ITi-CC-OFw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-cG-bes" userLabel="Main">
-                                <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                <rect key="frame" x="6" y="533" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" image="blueCircle.png">
@@ -28,7 +28,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLb-SV-MX4" userLabel="Feed">
-                                <rect key="frame" x="-100" y="10" width="100" height="25"/>
+                                <rect key="frame" x="-102" y="458" width="100" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal">
@@ -40,7 +40,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zB-4d-f5K" userLabel="Camera">
-                                <rect key="frame" x="-100" y="40" width="100" height="25"/>
+                                <rect key="frame" x="-102" y="498" width="100" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal">
@@ -52,7 +52,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysV-HB-nR6" userLabel="Notification">
-                                <rect key="frame" x="-100" y="70" width="100" height="25"/>
+                                <rect key="frame" x="-102" y="538" width="100" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal">
@@ -77,87 +77,75 @@
             </objects>
             <point key="canvasLocation" x="-790" y="-1506"/>
         </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="Umv-U8-I1h">
-            <objects>
-                <tabBarController definesPresentationContext="YES" id="MSj-Jk-K04" customClass="WMTabBarController" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="15e-ng-Obm">
-                        <rect key="frame" x="129" y="330" width="163" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="selectedImageTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="Jov-jq-qaX" kind="modal" identifier="Login" modalTransitionStyle="coverVertical" id="qce-AJ-XMR"/>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="viewControllers" id="wsK-6L-lfS"/>
-                        <segue destination="KCd-bh-TFs" kind="relationship" relationship="viewControllers" id="Utu-hc-BlR"/>
-                        <segue destination="0z4-H2-NKP" kind="modal" identifier="Upload" modalTransitionStyle="coverVertical" id="pc4-mo-jqY"/>
-                        <segue destination="Hxa-wS-fqj" kind="relationship" relationship="viewControllers" id="cIv-Ds-ysX"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZjV-38-i0D" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-341" y="-1034"/>
-        </scene>
-        <!--Camera Tab View Controller - Item 2-->
-        <scene sceneID="2jE-LD-4PH">
-            <objects>
-                <viewController id="KCd-bh-TFs" customClass="WMCameraTabViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="rPB-Kv-McV"/>
-                        <viewControllerLayoutGuide type="bottom" id="hS3-Sz-fyR"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="oAF-Wa-Id3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="yyr-8a-17t"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="n1N-wX-g5I" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="233" y="-696"/>
-        </scene>
         <!--Feed View Controller - Item-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="WMFeedViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Feed" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="WMFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="FTH-JU-ib2"/>
-                        <viewControllerLayoutGuide type="bottom" id="FxO-pB-IyX"/>
+                        <viewControllerLayoutGuide type="top" id="pmS-mi-S5H"/>
+                        <viewControllerLayoutGuide type="bottom" id="jbo-pt-J6l"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.84999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qjg-26-YU2">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="421" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RrJ-M8-EO6">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="540"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </scrollView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="Video" selectionStyle="default" indentationWidth="10" reuseIdentifier="Video" rowHeight="421" id="XbH-df-9BD" customClass="WMVideoCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="421"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="XbH-df-9BD" id="jOe-wn-cwM">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="421"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hPm-G2-Pba">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="321"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qMh-bN-3Y6" customClass="WMCreatorView">
+                                                    <rect key="frame" x="20" y="253" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="creatorView" destination="qMh-bN-3Y6" id="iPd-uc-Iki"/>
+                                            <outlet property="thumbnailView" destination="hPm-G2-Pba" id="A8b-AU-1yc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="pYt-7e-6CG"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="tTX-za-iNQ"/>
+                                </connections>
+                            </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="0.23135264598540148" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Item" id="Jbp-q7-7Vx"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="scrollView" destination="qjg-26-YU2" id="I9Y-6f-Ecl"/>
-                        <segue destination="Jov-jq-qaX" kind="modal" identifier="Login" modalTransitionStyle="coverVertical" id="5KJ-Tf-NFt"/>
+                        <outlet property="tableView" destination="RrJ-M8-EO6" id="QI5-e9-J0o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="233" y="-1379"/>
+            <point key="canvasLocation" x="-376" y="-1499"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="Wgf-r4-3C8">
             <objects>
                 <viewController storyboardIdentifier="Camera" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cVa-bO-kS4" customClass="WMCameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5C1-7W-0OT"/>
-                        <viewControllerLayoutGuide type="bottom" id="gtx-he-Z0k"/>
+                        <viewControllerLayoutGuide type="top" id="VlE-Po-iEy"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ydp-dI-3nl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VDo-lM-Db9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -327,8 +315,8 @@
             <objects>
                 <viewController storyboardIdentifier="Review" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1tk-5V-gFP" customClass="WMReviewViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5Ps-Mf-5gh"/>
-                        <viewControllerLayoutGuide type="bottom" id="POk-N2-6cO"/>
+                        <viewControllerLayoutGuide type="top" id="lwV-aw-IMR"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kma-g1-qEz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sFS-Q6-3En">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -377,8 +365,8 @@
             <objects>
                 <viewController storyboardIdentifier="Request" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NfC-rA-knd" customClass="WMRequestViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Nfv-9n-IRu"/>
-                        <viewControllerLayoutGuide type="bottom" id="Hqe-RW-PNX"/>
+                        <viewControllerLayoutGuide type="top" id="ACN-lF-qW9"/>
+                        <viewControllerLayoutGuide type="bottom" id="ghD-Uq-uul"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="A1p-86-Tws">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -477,8 +465,8 @@
             <objects>
                 <viewController storyboardIdentifier="Post" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sFY-Md-A5G" customClass="WMPostViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="imo-5I-lMc"/>
-                        <viewControllerLayoutGuide type="bottom" id="Ahb-IA-X50"/>
+                        <viewControllerLayoutGuide type="top" id="hzl-M5-Iza"/>
+                        <viewControllerLayoutGuide type="bottom" id="6Se-Iu-d8Q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VF1-8c-cg0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -556,8 +544,8 @@
             <objects>
                 <viewController storyboardIdentifier="Upload" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0z4-H2-NKP" customClass="WMUploadViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ddp-bM-btp"/>
-                        <viewControllerLayoutGuide type="bottom" id="Jyq-x0-3Za"/>
+                        <viewControllerLayoutGuide type="top" id="aRW-QA-OV7"/>
+                        <viewControllerLayoutGuide type="bottom" id="DDG-ME-pe0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7Y3-0p-syB" userLabel="View" customClass="UIScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -574,8 +562,8 @@
             <objects>
                 <viewController id="Jov-jq-qaX" customClass="WMLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="QqP-qJ-5ko"/>
-                        <viewControllerLayoutGuide type="bottom" id="Wdw-7p-KbA"/>
+                        <viewControllerLayoutGuide type="top" id="nN3-y9-pW9"/>
+                        <viewControllerLayoutGuide type="bottom" id="0TF-I9-rQB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fqQ-3l-icv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -693,10 +681,10 @@
         <!--Notification View Controller - Item-->
         <scene sceneID="chG-Lf-OH6">
             <objects>
-                <viewController id="Hxa-wS-fqj" customClass="WMNotificationViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="Notification" storyboardIdentifier="Notification" id="Hxa-wS-fqj" customClass="WMNotificationViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MHH-9O-2WA"/>
-                        <viewControllerLayoutGuide type="bottom" id="IPt-Bl-nw6"/>
+                        <viewControllerLayoutGuide type="top" id="q2l-QB-p7O"/>
+                        <viewControllerLayoutGuide type="bottom" id="eeF-Ti-8B7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="I1H-Rx-oEp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -792,7 +780,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="5KJ-Tf-NFt"/>
-    </inferredMetricsTieBreakers>
 </document>

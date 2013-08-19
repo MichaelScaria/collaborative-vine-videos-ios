@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WMFeedViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@interface WMFeedViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+    NSMutableArray *players;
+}
+@property (nonatomic, strong) NSArray *videos;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @end

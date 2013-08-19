@@ -11,6 +11,15 @@
 
 @implementation WMVideo
 
++ (NSArray *)videosWithArray:(NSArray *)videosArray {
+    NSMutableArray *videos = [NSMutableArray arrayWithCapacity:videosArray.count];
+    for (NSDictionary *dictionary in videosArray) {
+        WMVideo *video = [[self alloc] initWithDictionary:dictionary];
+        [videos addObject:video];
+    }
+    return [videos copy];
+}
+
 + (id)videoWithDictionary:(NSDictionary *)videoDictionary {
     WMVideo *video = [[self alloc] initWithDictionary:videoDictionary];
     return video;
@@ -26,8 +35,10 @@
             else if ([key isEqualToString:@"url"]) {
                 _url = value;
             }
+            else if ([key isEqualToString:@"thumbnail_url"]) {
+                _thumbnailUrl = value;
+            }
             else if ([key isEqualToString:@"users"]) {
-                NSLog(@"c:%@", value);
                 _creators = [WMCreator creatorsWithArray:value];
             }
         }];

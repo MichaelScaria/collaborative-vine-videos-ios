@@ -44,7 +44,6 @@
                 _length = [value floatValue];
             }
         }];
-        
     }
     return self;
     

@@ -5,11 +5,16 @@
 //  Created by Michael Scaria on 8/15/13.
 //  Copyright (c) 2013 michaelscaria. All rights reserved.
 //
+#import <MediaPlayer/MediaPlayer.h>
+
 
 #import "WMFeedViewController.h"
-#import "WMModel.h"
 
+#import "WMModel.h"
+#import "WMVideo.h"
 #import "UIImageView+AFNetworking.h"
+
+#import "WMVideoCell.h"
 
 @interface WMFeedViewController ()
 
@@ -17,33 +22,65 @@
 
 @implementation WMFeedViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    players = [[NSMutableArray alloc] init];
+    [[WMModel sharedInstance] getPostsSuccess:^(NSArray *videos) {
+        _videos = videos;
+        [_tableView reloadData];
+    } failure:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-	[[WMModel sharedInstance] getPostsSuccess:^(NSArray *thumbnails) {
-        int origin = 0;
-        for (NSString *s in thumbnails) {
-            UIImageView *i = [[UIImageView alloc] initWithFrame:CGRectMake(0, origin, 310, 310)];
-            [i setImageWithURL:[NSURL URLWithString:s]];
-            [_scrollView addSubview:i];
-            origin += 320;
+    
+//    if (players.count > 0) {
+//        MPMoviePlayerController *player = players[0];
+//        [player play];
+//    }
+	
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    for (MPMoviePlayerController *player in players) {
+        [player pause];
+    }
+    [super viewDidDisappear:animated];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    [players removeAllObjects];
+    return 1;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _videos.count + 1;
+    
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        return 28;
+    }
+    return 421;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    WMVideoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Video"];
+    if (cell == nil) {
+        cell = [[WMVideoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Video"];
+    }
+    if (indexPath.row == 0) {
+        for (UIView *view in cell.subviews) {
+            [view removeFromSuperview];
         }
-    } failure:nil];
+    }
+    else {
+        WMVideo *video = _videos[indexPath.row - 1];
+        cell.url = [NSURL URLWithString:video.url];
+        [cell.thumbnailView setImageWithURL:[NSURL URLWithString:video.thumbnailUrl]];
+        [players addObject:cell.player];
+        [cell setCreators:video.creators];
+    }
+    
+    return cell;
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 @end

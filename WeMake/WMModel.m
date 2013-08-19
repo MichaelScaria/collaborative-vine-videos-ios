@@ -224,11 +224,8 @@
         if (data){
             NSArray *postsJSON = [[JSONDecoder decoder] objectWithData:data];
             NSLog(@"postsJSON:%@", postsJSON);
-            NSMutableArray *thumbnails = [[NSMutableArray alloc] initWithCapacity:2];
-            for (NSDictionary *d in postsJSON) {
-                [thumbnails addObject:d[@"thumbnail_url"]];
-            }
-            if (success) success(thumbnails);
+            NSArray *videos = [WMVideo videosWithArray:postsJSON];
+            if (success) success(videos);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
