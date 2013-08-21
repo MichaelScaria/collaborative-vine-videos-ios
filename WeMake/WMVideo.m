@@ -41,6 +41,9 @@
             else if ([key isEqualToString:@"users"]) {
                 _creators = [WMCreator creatorsWithArray:value];
             }
+            else if ([key isEqualToString:@"poster"]) {
+                _poster = [WMUser userWithDictionary:value];
+            }
         }];
     }
     return self;

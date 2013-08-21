@@ -12,7 +12,6 @@
 
 #import "WMModel.h"
 #import "WMVideo.h"
-#import "UIImageView+AFNetworking.h"
 
 #import "WMVideoCell.h"
 
@@ -61,7 +60,7 @@
     if (indexPath.row == 0) {
         return 28;
     }
-    return 421;
+    return 480;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     WMVideoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Video"];
@@ -75,10 +74,8 @@
     }
     else {
         WMVideo *video = _videos[indexPath.row - 1];
-        cell.url = [NSURL URLWithString:video.url];
-        [cell.thumbnailView setImageWithURL:[NSURL URLWithString:video.thumbnailUrl]];
+        [cell setVideo:video];
         [players addObject:cell.player];
-        [cell setCreators:video.creators];
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;

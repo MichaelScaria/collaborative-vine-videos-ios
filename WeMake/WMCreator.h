@@ -8,11 +8,9 @@
 //WMCreator is the iOS model of the table UserToVideo
 
 #import <Foundation/Foundation.h>
+#import "WMUser.h"
 
-@interface WMCreator : NSObject
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *photoURL;
+@interface WMCreator : WMUser
 @property (nonatomic, assign) float startTime;
 @property (nonatomic, assign) float length;
 + (NSArray *)creatorsWithArray:(NSArray *)creatorsArray;

@@ -16,7 +16,7 @@
     [super willMoveToSuperview:newSuperview];
     
     [self setBackgroundColor:[UIColor clearColor]];
-    int lineWidth = 3;
+    /*int lineWidth = 3;
     int radius = self.frame.size.width/2;
     CAShapeLayer *circleUnder = [CAShapeLayer layer];
     // Make a circular shape
@@ -60,24 +60,37 @@
     drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     
     // Add the animation to the circle
-    [circle addAnimation:drawAnimation forKey:@"drawCircleAnimation"];
+    [circle addAnimation:drawAnimation forKey:@"drawCircleAnimation"];*/
+    
     creatorView = [[UIImageView alloc] initWithFrame:self.bounds];
     creatorView.layer.cornerRadius = creatorView.frame.size.width/2;
     creatorView.layer.masksToBounds = YES;
     [self addSubview:creatorView];
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
-    [self addGestureRecognizer:panGesture];
+
+    self.layer.shadowOffset = CGSizeMake(0, 1);
+    self.layer.shadowRadius = 1.0;
+    self.layer.shadowOpacity = 1.0;
+//    int radius = self.frame.size.width/2;
+//    self.center = CGPointMake(radius, self.center.y);
 }
 
 - (void)setCreatorUrl:(NSString *)creatorUrl {
     if (creatorUrl && ![creatorUrl isEqualToString:_creatorUrl]) {
-        NSLog(@"%@", _creatorUrl);
+        NSLog(@"New:%@", creatorUrl);
         _creatorUrl = creatorUrl;
+        CGPoint oldCenter = self.center;
         [creatorView setImageWithURL:[NSURL URLWithString:_creatorUrl] placeholderImage:[UIImage imageNamed:@"missingPhoto.png"]];
+        [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.center = CGPointMake(self.frame.size.width/2 + 5, self.center.y);
+        }completion:^(BOOL finished) {
+            [UIView animateWithDuration:.2 delay:1.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.center = oldCenter;
+            }completion:nil];
+        }];
     }
 }
 
-- (void)dragged:(UIPanGestureRecognizer *)recognizer {
+/*- (void)dragged:(UIPanGestureRecognizer *)recognizer {
     CGPoint newPoint = [recognizer locationInView:self];
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         NSLog(@"Received a pan gesture");
@@ -101,7 +114,7 @@
             self.center = CGPointMake(finalX + offset, self.center.y);
         }completion:^(BOOL finished) {
             [UIView animateWithDuration:.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                self.center = CGPointMake(finalX - offset, self.center.y);
+                self.center = CGPointMake(finalX, self.center.y);
             }completion:nil];
         }];
     }
@@ -136,5 +149,5 @@
         //initialPoint = newPoint;
     }
 }
-
+*/
 @end

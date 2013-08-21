@@ -40,6 +40,8 @@
 		9E5E23A6178945B700E0CA0B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E5E23A5178945B700E0CA0B /* GLKit.framework */; };
 		9E5E23A8178945C500E0CA0B /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E5E23A7178945C500E0CA0B /* CoreImage.framework */; };
 		9E5E23AA178945CD00E0CA0B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E5E23A9178945CD00E0CA0B /* ImageIO.framework */; };
+		9E5E363517C40278006CB4C4 /* Like.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E5E363417C40278006CB4C4 /* Like.png */; };
+		9E5E363717C41355006CB4C4 /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E5E363617C41355006CB4C4 /* comment.png */; };
 		9E62D2AC17A7541B004F3D0F /* WMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E62D2AB17A75407004F3D0F /* WMTabBarController.m */; };
 		9E6E54A417A979290029E9A6 /* WMNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */; };
 		9E71B06B17C21F2D00F0F277 /* WMCreatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E71B06A17C21F2D00F0F277 /* WMCreatorView.m */; };
@@ -56,6 +58,8 @@
 		9E8B72E6178592C30053F5D6 /* WMSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B72E2178590510053F5D6 /* WMSession.m */; };
 		9E8B72E91785932C0053F5D6 /* WMLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */; };
 		9E8B72EB17861D040053F5D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8B72EA17861D040053F5D6 /* QuartzCore.framework */; };
+		9E94DB5117C2C3C6004B0B3C /* Disclosure.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E94DB5017C2C3C6004B0B3C /* Disclosure.png */; };
+		9E94DB5417C2C50B004B0B3C /* WMCreatorPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E94DB5317C2C50B004B0B3C /* WMCreatorPhotoView.m */; };
 		9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */; };
 		9EB31E0E17C0132400A82277 /* WMVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB31E0D17C0132400A82277 /* WMVideoCell.m */; };
 		9EBC0AB417A4A4D8009901BB /* test.mov in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC0AB317A4A4D8009901BB /* test.mov */; };
@@ -71,6 +75,7 @@
 		9ED093A61782AC7100EA1D90 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1601780423200E403A4 /* AFURLConnectionOperation.m */; };
 		9ED093A71782AC7100EA1D90 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1621780423200E403A4 /* AFXMLRequestOperation.m */; };
 		9ED093A81782AC7100EA1D90 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1641780423200E403A4 /* UIImageView+AFNetworking.m */; };
+		9EDA15E717C3EF7000421F6D /* view.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EDA15E617C3EF7000421F6D /* view.png */; };
 		9EDBC5E817BE253900566924 /* WMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDBC5E717BE253900566924 /* WMViewController.m */; };
 		9EDBC5EB17BE267000566924 /* blueCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EDBC5E917BE267000566924 /* blueCircle.png */; };
 		9EDBC5EC17BE267000566924 /* redCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EDBC5EA17BE267000566924 /* redCircle.png */; };
@@ -143,6 +148,8 @@
 		9E5E23A5178945B700E0CA0B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		9E5E23A7178945C500E0CA0B /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		9E5E23A9178945CD00E0CA0B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		9E5E363417C40278006CB4C4 /* Like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Like.png; sourceTree = "<group>"; };
+		9E5E363617C41355006CB4C4 /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment.png; sourceTree = "<group>"; };
 		9E62D2AA17A75407004F3D0F /* WMTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMTabBarController.h; sourceTree = "<group>"; };
 		9E62D2AB17A75407004F3D0F /* WMTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMTabBarController.m; sourceTree = "<group>"; };
 		9E6E54A217A979290029E9A6 /* WMNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMNotificationViewController.h; sourceTree = "<group>"; };
@@ -173,11 +180,15 @@
 		9E8B72E71785932C0053F5D6 /* WMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLoginViewController.h; sourceTree = "<group>"; };
 		9E8B72E81785932C0053F5D6 /* WMLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMLoginViewController.m; sourceTree = "<group>"; };
 		9E8B72EA17861D040053F5D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9E94DB5017C2C3C6004B0B3C /* Disclosure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Disclosure.png; sourceTree = "<group>"; };
+		9E94DB5217C2C50B004B0B3C /* WMCreatorPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCreatorPhotoView.h; sourceTree = "<group>"; };
+		9E94DB5317C2C50B004B0B3C /* WMCreatorPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCreatorPhotoView.m; sourceTree = "<group>"; };
 		9E99B7FB17928C090034B1C9 /* WMCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCameraViewController.h; sourceTree = "<group>"; };
 		9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCameraViewController.m; sourceTree = "<group>"; };
 		9EB31E0C17C0132400A82277 /* WMVideoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMVideoCell.h; sourceTree = "<group>"; };
 		9EB31E0D17C0132400A82277 /* WMVideoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMVideoCell.m; sourceTree = "<group>"; };
 		9EBC0AB317A4A4D8009901BB /* test.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.mov; sourceTree = "<group>"; };
+		9EDA15E617C3EF7000421F6D /* view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = view.png; sourceTree = "<group>"; };
 		9EDBC5E617BE253900566924 /* WMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMViewController.h; sourceTree = "<group>"; };
 		9EDBC5E717BE253900566924 /* WMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMViewController.m; sourceTree = "<group>"; };
 		9EDBC5E917BE267000566924 /* blueCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueCircle.png; sourceTree = "<group>"; };
@@ -302,6 +313,10 @@
 				9E39E14D178040DB00E403A4 /* Models */,
 				9E34B4301791403F0052E780 /* Categories */,
 				9E39E130178040CB00E403A4 /* Images.xcassets */,
+				9E5E363417C40278006CB4C4 /* Like.png */,
+				9E5E363617C41355006CB4C4 /* comment.png */,
+				9EDA15E617C3EF7000421F6D /* view.png */,
+				9E94DB5017C2C3C6004B0B3C /* Disclosure.png */,
 				9E39E1721780424B00E403A4 /* External */,
 				9E39E11F178040CB00E403A4 /* Supporting Files */,
 			);
@@ -445,6 +460,8 @@
 				9EB31E0D17C0132400A82277 /* WMVideoCell.m */,
 				9E71B06917C21F2D00F0F277 /* WMCreatorView.h */,
 				9E71B06A17C21F2D00F0F277 /* WMCreatorView.m */,
+				9E94DB5217C2C50B004B0B3C /* WMCreatorPhotoView.h */,
+				9E94DB5317C2C50B004B0B3C /* WMCreatorPhotoView.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -537,10 +554,14 @@
 			files = (
 				9EBC0AB417A4A4D8009901BB /* test.mov in Resources */,
 				9EDBC5EB17BE267000566924 /* blueCircle.png in Resources */,
+				9E5E363517C40278006CB4C4 /* Like.png in Resources */,
+				9EDA15E717C3EF7000421F6D /* view.png in Resources */,
 				9E39E131178040CB00E403A4 /* Images.xcassets in Resources */,
 				9E39E123178040CB00E403A4 /* InfoPlist.strings in Resources */,
 				9EDBC5EC17BE267000566924 /* redCircle.png in Resources */,
 				9EF9801717B451CA00FCB950 /* test-2.mov in Resources */,
+				9E94DB5117C2C3C6004B0B3C /* Disclosure.png in Resources */,
+				9E5E363717C41355006CB4C4 /* comment.png in Resources */,
 				9E39E12C178040CB00E403A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -584,6 +605,7 @@
 				9E83C21A17AA2CBE00F7033E /* WMUser.m in Sources */,
 				9E39E129178040CB00E403A4 /* WMAppDelegate.m in Sources */,
 				9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */,
+				9E94DB5417C2C50B004B0B3C /* WMCreatorPhotoView.m in Sources */,
 				9EFB6E0D17BCA663006B33B8 /* WMPostViewController.m in Sources */,
 				9E39E1681780423200E403A4 /* AFJSONRequestOperation.m in Sources */,
 				9E39E125178040CB00E403A4 /* main.m in Sources */,

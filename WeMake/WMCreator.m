@@ -29,13 +29,13 @@
         [dictionary enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
             if (value == [NSNull null]) ;
             else if ([key isEqualToString:@"name"]) {
-                _name = value;
+                self.name = value;
             }
             else if ([key isEqualToString:@"username"]) {
-                _username = value;
+                self.username = value;
             }
             else if ([key isEqualToString:@"photo_url"]) {
-                _photoURL = value;
+                self.photoURL = value;
             }
             else if ([key isEqualToString:@"start_time"]) {
                 _startTime = [value floatValue];
