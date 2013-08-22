@@ -15,6 +15,9 @@
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *thumbnailUrl;
 @property (nonatomic, strong) NSArray *creators;
+@property (nonatomic, assign) NSInteger views;
+@property (nonatomic, strong) NSArray *likes;
+@property (nonatomic, strong) NSArray *comments;
 @property (nonatomic, strong) WMUser *poster;
 
 + (NSArray *)videosWithArray:(NSArray *)videosArray;

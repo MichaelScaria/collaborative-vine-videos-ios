@@ -12,6 +12,7 @@
 
 typedef enum {
     WMFollow,
+    WMView,
     WMLike,
     WMComment,
     WMShare

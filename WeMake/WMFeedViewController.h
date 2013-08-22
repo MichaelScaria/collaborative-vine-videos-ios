@@ -11,6 +11,7 @@
 
 @interface WMFeedViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     NSMutableArray *players;
+    NSMutableDictionary *indexes;
 }
 @property (nonatomic, strong) NSArray *videos;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

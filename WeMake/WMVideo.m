@@ -8,6 +8,7 @@
 
 #import "WMVideo.h"
 #import "WMCreator.h"
+#import "WMInteraction.h"
 
 @implementation WMVideo
 
@@ -28,6 +29,7 @@
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
     if ((self = [super init])) {
+        _views = 0;
         [dictionary enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
             if ([key isEqualToString:@"id"]) {
                 _theID = [value intValue];
@@ -40,6 +42,29 @@
             }
             else if ([key isEqualToString:@"users"]) {
                 _creators = [WMCreator creatorsWithArray:value];
+            }
+            else if ([key isEqualToString:@"interactions"]) {
+                NSArray *interactions = [WMInteraction interactionsWithArray:value];
+                NSMutableArray *mLikes = [[NSMutableArray alloc] initWithCapacity:interactions.count / 2];
+                NSMutableArray *mComments = [[NSMutableArray alloc] initWithCapacity:interactions.count / 2];
+                for (WMInteraction *interaction in interactions) {
+                    switch (interaction.interactionType) {
+                        case WMView:
+                            _views++;
+                            break;
+                        case WMLike:
+                            [mLikes addObject:interaction];
+                            break;
+                        case WMComment:
+                            [mComments addObject:interaction];
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }
+                _likes = (NSArray *)mLikes;
+                _comments = (NSArray *)mComments;
             }
             else if ([key isEqualToString:@"poster"]) {
                 _poster = [WMUser userWithDictionary:value];

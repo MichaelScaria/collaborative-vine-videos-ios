@@ -29,16 +29,18 @@
         case 0:
             return WMFollow;
             break;
-            
         case 1:
+            return WMView;
+            break;
+        case 2:
             return WMLike;
             break;
             
-        case 2:
+        case 3:
             return WMComment;
             break;
             
-        case 3:
+        case 4:
             return WMShare;
             break;
             

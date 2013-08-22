@@ -13,7 +13,7 @@
 #import "WMModel.h"
 #import "WMVideo.h"
 
-#import "WMVideoCell.h"
+#import "WMFeedCell.h"
 
 @interface WMFeedViewController ()
 
@@ -23,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    indexes = [[NSMutableDictionary alloc] init];
     players = [[NSMutableArray alloc] init];
     [[WMModel sharedInstance] getPostsSuccess:^(NSArray *videos) {
         _videos = videos;
@@ -60,12 +61,15 @@
     if (indexPath.row == 0) {
         return 28;
     }
-    return 480;
+    NSNumber *height = [indexes objectForKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
+    if (height) return [height floatValue];
+    return 500;
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WMVideoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Video"];
+    WMFeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Feed"];
     if (cell == nil) {
-        cell = [[WMVideoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Video"];
+        cell = [[WMFeedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Feed"];
     }
     if (indexPath.row == 0) {
         for (UIView *view in cell.subviews) {
@@ -74,9 +78,17 @@
     }
     else {
         WMVideo *video = _videos[indexPath.row - 1];
+        [cell setHeightChanged:^(int newHeight) {
+            [indexes setObject:[NSNumber numberWithInt:newHeight] forKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
+            [tableView beginUpdates];
+            [tableView endUpdates];
+        }];
         [cell setVideo:video];
         [players addObject:cell.player];
+        //__weak WMFeedViewController *weakSelf = self;
+
     }
+    
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }

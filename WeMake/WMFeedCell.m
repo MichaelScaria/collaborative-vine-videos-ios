@@ -6,8 +6,12 @@
 //  Copyright (c) 2013 michaelscaria. All rights reserved.
 //
 
-#import "WMVideoCell.h"
+#import "WMFeedCell.h"
 
+#import "Constants.h"
+#import "UIImage+WeMake.h"
+
+#import "MSTextView.h"
 #import "UIImageView+AFNetworking.h"
 
 
@@ -15,7 +19,7 @@
 #define kTimeInterval .05
 #define kDisclosurePadding 5
 
-@implementation WMVideoCell
+@implementation WMFeedCell
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
@@ -121,18 +125,78 @@
         self.creators = video.creators;
         [_posterImageView setUser:video.poster];
         _posterLabel.translatesAutoresizingMaskIntoConstraints =
-        _disclosureIndicator.translatesAutoresizingMaskIntoConstraints =
-        _viewsIcon.translatesAutoresizingMaskIntoConstraints =
-        _viewsLabel.translatesAutoresizingMaskIntoConstraints =
-        _likesIcon.translatesAutoresizingMaskIntoConstraints =
-        _likesLabel.translatesAutoresizingMaskIntoConstraints =
-        _commentsIcon.translatesAutoresizingMaskIntoConstraints =
-        _commentsLabel.translatesAutoresizingMaskIntoConstraints =YES;
-        CGSize size = [@"michaelscaria" sizeWithAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:13], NSForegroundColorAttributeName : [UIColor colorWithRed:212/255.0 green:212/255.0 blue:212/255.0 alpha:1]}];
-        NSLog(@"Size:%f", size.width);
+        _disclosureIndicator.translatesAutoresizingMaskIntoConstraints = YES;
+        CGSize size = [@"michaelscaria" sizeWithAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:13]}];
         _posterLabel.frame = CGRectMake(_posterLabel.frame.origin.x, _posterLabel.frame.origin.y, size.width, _posterLabel.frame.size.height);
         //disclosure button has padding to remove
         _disclosureIndicator.frame = CGRectMake(_posterLabel.frame.origin.x + size.width - kDisclosurePadding, _disclosureIndicator.frame.origin.y, _disclosureIndicator.frame.size.width, _disclosureIndicator.frame.size.height);
+        //add view for comments if present
+        if (video.comments.count > 0 || YES) {
+            int height = self.frame.size.height;
+            NSArray *commentPreviews;
+            int offset = 0;
+            int startPointY = 430;
+            NSArray *u = @[@"michaelscaria", @"robinjoseph", @"adityavis"];
+            UIButton *viewComments;
+            if (video.comments.count > 2 || YES) {
+                viewComments = [UIButton buttonWithType:UIButtonTypeCustom];
+                [viewComments setTitle:@"view all 101 comments" forState:UIControlStateNormal];
+                [viewComments.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
+                [viewComments addTarget:self action:@selector(viewAllComments) forControlEvents:UIControlEventTouchUpInside];
+                NSArray *b = @[@"b", @"Totally awesome, I'm going to write a really long text string just to mess with butts", @"This is cool!", @"I'm digging it."];
+                NSRange lastThree = {b.count - 3, 3};
+                commentPreviews = [b subarrayWithRange:lastThree];
+            }
+            else {
+                commentPreviews = @[@"michaelscaria", @"robinjoseph"];
+            }
+            int index = 0;
+            for (NSString *body in commentPreviews) {
+                MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + offset, 310, 35)];
+                NSRange range = {0, [(NSString *)u[index] length]};
+                [textView setText:[NSString stringWithFormat:@"%@ %@", u[index], body] withLinkedRange:range];
+                [self addSubview:textView];
+//                UIButton *username = [UIButton buttonWithType:UIButtonTypeCustom];
+//                username.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//                username.frame = CGRectMake(10, startPointY + offset, 80, 18);
+//                [username setTitle:u[index] forState:UIControlStateNormal];
+//                [username.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
+//                [self addSubview:username];
+//                CGRect bounds = [body boundingRectWithSize:CGSizeMake(240, 35) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue" size:13]} context:nil];
+//                NSLog(@"Boubds:%@", NSStringFromCGRect(bounds));
+//                UILabel *comment = [[UILabel alloc] initWithFrame:CGRectMake(95, startPointY + offset, 210, bounds.size.height)];
+//                comment.numberOfLines = 10;
+//                comment.lineBreakMode = NSLineBreakByCharWrapping;
+//                comment.backgroundColor = [UIColor clearColor];
+//                comment.textColor = [UIColor colorWithRed:212/255.0 green:212/255.0 blue:212/255.0 alpha:1];
+//                comment.text = body;
+//                comment.font = [UIFont fontWithName:@"HelveticaNeue" size:13];
+//                [self addSubview:comment];
+//                
+                offset += textView.frame.size.height - 11;
+                index++;
+                height += textView.frame.size.height - 11;
+            }
+            if (viewComments) {
+                viewComments.frame = CGRectMake(20, startPointY + offset + 8, 280, 20);
+                [self addSubview:viewComments];
+                offset += 35;
+                height += 35;
+            }
+            UIButton *likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            likeButton.frame = CGRectMake(100, startPointY + offset, 25, 25);
+            [likeButton setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:kColorGray] forState:UIControlStateNormal];
+            [likeButton setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:kColorDark] forState:UIControlStateHighlighted];
+            [likeButton addTarget:self action:@selector(like:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:likeButton];
+             height += 30;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                _heightChanged(height);
+            });
+            
+            
+        }
+        //get all users in video except poster
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             if (!cleanedCreators) {
                 NSMutableArray *mutableCleanedCreators = [[NSMutableArray alloc] initWithArray:_creators copyItems:NO];
@@ -174,6 +238,36 @@
     }
 }
 
+- (void)viewAllComments {
+    
+}
+
+- (void)like:(UIButton *)sender {
+    liked = !liked;
+    UIColor *oldColor, *newColor;
+    int i = 1;
+    if (liked) {
+        newColor = kColorDark; oldColor = kColorGray;
+    }
+    else {
+        newColor = kColorGray; oldColor = kColorDark;
+        i *= -1;
+    }
+    _likesIcon.image = [UIImage ipMaskedImageNamed:@"Like-Small" color:newColor];
+    int likes = [_likesLabel.text intValue];
+    _likesLabel.text = [NSString stringWithFormat:@"%d", likes + i];
+    _likesLabel.textColor = newColor;
+    [sender setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:newColor] forState:UIControlStateNormal];
+    [sender setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:oldColor] forState:UIControlStateHighlighted];
+    [UIView animateWithDuration: 0.15 delay: 0 options: UIViewAnimationOptionCurveEaseOut animations:^{
+        sender.transform = CGAffineTransformScale(sender.transform, 1.4, 1.4);
+    } completion:^(BOOL completed) {
+        [UIView animateWithDuration: 0.15 delay: 0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
+            sender.transform = CGAffineTransformIdentity;
+        } completion:nil];
+    }];
+}
+
 - (IBAction)disclose:(id)sender {
     NSLog(@"%f", self.center.x);
     if (creatorsShown) {
@@ -190,17 +284,16 @@
                 delay += .15;
             }
         }
-        int offset = 25;
         [UIView animateWithDuration: 0.25 delay: 0 options: UIViewAnimationOptionCurveEaseIn animations:^{
             _disclosureIndicator.transform = CGAffineTransformIdentity;
             _disclosureIndicator.center = CGPointMake(173 - kDisclosurePadding, _disclosureIndicator.center.y);
             _posterLabel.alpha = 1;
-            _viewsIcon.center = CGPointMake(_viewsIcon.center.x , _viewsIcon.center.y - offset);
-            _viewsLabel.center = CGPointMake(_viewsLabel.center.x, _viewsLabel.center.y - offset);
-            _likesIcon.center = CGPointMake(_likesIcon.center.x, _likesIcon.center.y - offset);
-            _likesLabel.center = CGPointMake(_likesLabel.center.x, _likesLabel.center.y - offset);
-            _commentsIcon.center = CGPointMake(_commentsIcon.center.x, _commentsIcon.center.y - offset);
-            _commentsLabel.center = CGPointMake(_commentsLabel.center.x, _commentsLabel.center.y - offset);
+            _viewsIcon.alpha = 1;
+            _viewsLabel.alpha = 1;
+            _likesIcon.alpha = 1;
+            _likesLabel.alpha = 1;
+            _commentsIcon.alpha = 1;
+            _commentsLabel.alpha = 1;
         } completion: nil];
         
     }
@@ -227,17 +320,16 @@
             }completion:nil];
             delay += .15;
         }
-        int offset = 25;
         [UIView animateWithDuration:.25 delay:0 options: UIViewAnimationOptionCurveLinear animations:^{
             _disclosureIndicator.transform = CGAffineTransformMakeRotation (M_PI * 90 / 180.0f);
             _disclosureIndicator.center = CGPointMake(MIN(offsetX + 5, 310), _disclosureIndicator.center.y);
             _posterLabel.alpha = 0.0;
-            _viewsIcon.center = CGPointMake(_viewsIcon.center.x, _viewsIcon.center.y + offset);
-            _viewsLabel.center = CGPointMake(_viewsLabel.center.x, _viewsLabel.center.y + offset);
-            _likesIcon.center = CGPointMake(_likesIcon.center.x, _likesIcon.center.y + offset);
-            _likesLabel.center = CGPointMake(_likesLabel.center.x, _likesLabel.center.y + offset);
-            _commentsIcon.center = CGPointMake(_commentsIcon.center.x, _commentsIcon.center.y + offset);
-            _commentsLabel.center = CGPointMake(_commentsLabel.center.x, _commentsLabel.center.y + offset);
+            _viewsIcon.alpha = 0.0;
+            _viewsLabel.alpha = 0.0;;
+            _likesIcon.alpha = 0.0;
+            _likesLabel.alpha = 0.0;
+            _commentsIcon.alpha = 0.0;
+            _commentsLabel.alpha = 0.0;
         } completion:nil];
     }
     creatorsShown = !creatorsShown;

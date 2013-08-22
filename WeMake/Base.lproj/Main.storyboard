@@ -89,12 +89,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="500" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RrJ-M8-EO6">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="510" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RrJ-M8-EO6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="540"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="Video" selectionStyle="default" indentationWidth="10" reuseIdentifier="Video" rowHeight="480" id="XbH-df-9BD" customClass="WMVideoCell">
+                                    <tableViewCell contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="Feed" selectionStyle="default" indentationWidth="10" reuseIdentifier="Feed" rowHeight="480" id="XbH-df-9BD" customClass="WMFeedCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="480"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="XbH-df-9BD" id="jOe-wn-cwM">
@@ -114,7 +114,7 @@
                                                     <rect key="frame" x="64" y="330" width="100" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                    <color key="textColor" red="0.83137254901960778" green="0.83137254901960778" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.60784313725490191" green="0.33333333333333331" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HLa-Va-Oq2">
@@ -132,7 +132,7 @@
                                                     <rect key="frame" x="6" y="326" width="50" height="50"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="view.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qd7-Mt-zKc">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="View-Small.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qd7-Mt-zKc">
                                                     <rect key="frame" x="64" y="356" width="18" height="10"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
@@ -143,7 +143,7 @@
                                                     <color key="textColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="Like.png" translatesAutoresizingMaskIntoConstraints="NO" id="el8-sf-jwM">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="Like-Small.png" translatesAutoresizingMaskIntoConstraints="NO" id="el8-sf-jwM">
                                                     <rect key="frame" x="143" y="353" width="14" height="14"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
@@ -154,7 +154,7 @@
                                                     <color key="textColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="comment.png" translatesAutoresizingMaskIntoConstraints="NO" id="P7Y-4g-Dhg">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="Comment-Small.png" translatesAutoresizingMaskIntoConstraints="NO" id="P7Y-4g-Dhg">
                                                     <rect key="frame" x="213" y="354" width="15" height="14"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
@@ -165,6 +165,15 @@
                                                     <color key="textColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZlU-oR-zzY">
+                                                    <rect key="frame" x="5" y="375" width="310" height="75"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+                                                    <color key="textColor" red="0.83137254900000002" green="0.83137254900000002" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </tableViewCellContentView>
@@ -834,14 +843,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Comment-Small.png" width="30" height="27"/>
         <image name="Crosshairs" width="56" height="56"/>
         <image name="Disclosure.png" width="95" height="95"/>
         <image name="Flip" width="56" height="42"/>
         <image name="Grid" width="56" height="56"/>
-        <image name="Like.png" width="40" height="40"/>
+        <image name="Like-Small.png" width="40" height="40"/>
+        <image name="View-Small.png" width="36" height="20"/>
         <image name="blueCircle.png" width="50" height="50"/>
-        <image name="comment.png" width="30" height="27"/>
-        <image name="view.png" width="36" height="20"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
