@@ -49,6 +49,9 @@
 		9E79B5FE17B8460100425BFA /* WMCreatorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E79B5FD17B8460100425BFA /* WMCreatorsViewController.m */; };
 		9E79B60117B84D1900425BFA /* WMCreatorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E79B60017B84D1900425BFA /* WMCreatorCell.m */; };
 		9E80C49217C54C6100E2B2C1 /* MSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E80C49117C54C6100E2B2C1 /* MSTextView.m */; };
+		9E80C49517C6157C00E2B2C1 /* WMCommentBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E80C49417C6157C00E2B2C1 /* WMCommentBubble.m */; };
+		9E80C49917C6242500E2B2C1 /* CommentBubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E80C49817C6242500E2B2C1 /* CommentBubble@2x.png */; };
+		9E80C49B17C624F700E2B2C1 /* BlackDots@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E80C49A17C624F700E2B2C1 /* BlackDots@2x.png */; };
 		9E83C21417AA28FE00F7033E /* WMRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21317AA28FE00F7033E /* WMRequest.m */; };
 		9E83C21717AA298800F7033E /* WMInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21617AA298800F7033E /* WMInteraction.m */; };
 		9E83C21A17AA2CBE00F7033E /* WMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E83C21917AA2CBE00F7033E /* WMUser.m */; };
@@ -166,6 +169,10 @@
 		9E79B60217B91DF200425BFA /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9E80C49017C54C6100E2B2C1 /* MSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSTextView.h; sourceTree = "<group>"; };
 		9E80C49117C54C6100E2B2C1 /* MSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSTextView.m; sourceTree = "<group>"; };
+		9E80C49317C6157C00E2B2C1 /* WMCommentBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCommentBubble.h; sourceTree = "<group>"; };
+		9E80C49417C6157C00E2B2C1 /* WMCommentBubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCommentBubble.m; sourceTree = "<group>"; };
+		9E80C49817C6242500E2B2C1 /* CommentBubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CommentBubble@2x.png"; sourceTree = "<group>"; };
+		9E80C49A17C624F700E2B2C1 /* BlackDots@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackDots@2x.png"; sourceTree = "<group>"; };
 		9E83C21217AA28FE00F7033E /* WMRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMRequest.h; sourceTree = "<group>"; };
 		9E83C21317AA28FE00F7033E /* WMRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMRequest.m; sourceTree = "<group>"; };
 		9E83C21517AA298800F7033E /* WMInteraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMInteraction.h; sourceTree = "<group>"; };
@@ -317,6 +324,8 @@
 				9E39E130178040CB00E403A4 /* Images.xcassets */,
 				9E5E363417C40278006CB4C4 /* Like-Small.png */,
 				9E5E363617C41355006CB4C4 /* Comment-Small.png */,
+				9E80C49A17C624F700E2B2C1 /* BlackDots@2x.png */,
+				9E80C49817C6242500E2B2C1 /* CommentBubble@2x.png */,
 				9EDA15E617C3EF7000421F6D /* View-Small.png */,
 				9E94DB5017C2C3C6004B0B3C /* Disclosure.png */,
 				9E39E1721780424B00E403A4 /* External */,
@@ -468,6 +477,8 @@
 				9EB31E0D17C0132400A82277 /* WMFeedCell.m */,
 				9E94DB5217C2C50B004B0B3C /* WMCreatorPhotoView.h */,
 				9E94DB5317C2C50B004B0B3C /* WMCreatorPhotoView.m */,
+				9E80C49317C6157C00E2B2C1 /* WMCommentBubble.h */,
+				9E80C49417C6157C00E2B2C1 /* WMCommentBubble.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -553,9 +564,11 @@
 				9EDBC5EB17BE267000566924 /* blueCircle.png in Resources */,
 				9E5E363517C40278006CB4C4 /* Like-Small.png in Resources */,
 				9EDA15E717C3EF7000421F6D /* View-Small.png in Resources */,
+				9E80C49917C6242500E2B2C1 /* CommentBubble@2x.png in Resources */,
 				9E39E131178040CB00E403A4 /* Images.xcassets in Resources */,
 				9E39E123178040CB00E403A4 /* InfoPlist.strings in Resources */,
 				9EDBC5EC17BE267000566924 /* redCircle.png in Resources */,
+				9E80C49B17C624F700E2B2C1 /* BlackDots@2x.png in Resources */,
 				9EF9801717B451CA00FCB950 /* test-2.mov in Resources */,
 				9E94DB5117C2C3C6004B0B3C /* Disclosure.png in Resources */,
 				9E5E363717C41355006CB4C4 /* Comment-Small.png in Resources */,
@@ -583,6 +596,7 @@
 				9E39E1731780457A00E403A4 /* AFURLConnectionOperation.m in Sources */,
 				9E83C21D17AA2DB900F7033E /* WMVideo.m in Sources */,
 				9E79B5FE17B8460100425BFA /* WMCreatorsViewController.m in Sources */,
+				9E80C49517C6157C00E2B2C1 /* WMCommentBubble.m in Sources */,
 				9E6E54A417A979290029E9A6 /* WMNotificationViewController.m in Sources */,
 				9E80C49217C54C6100E2B2C1 /* MSTextView.m in Sources */,
 				9E39E16D1780423200E403A4 /* UIImageView+AFNetworking.m in Sources */,

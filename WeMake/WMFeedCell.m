@@ -142,6 +142,7 @@
                 viewComments = [UIButton buttonWithType:UIButtonTypeCustom];
                 [viewComments setTitle:@"view all 101 comments" forState:UIControlStateNormal];
                 [viewComments.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
+                [viewComments setTitleColor:kColorDark forState:UIControlStateNormal];
                 [viewComments addTarget:self action:@selector(viewAllComments) forControlEvents:UIControlEventTouchUpInside];
                 NSArray *b = @[@"b", @"Totally awesome, I'm going to write a really long text string just to mess with butts", @"This is cool!", @"I'm digging it."];
                 NSRange lastThree = {b.count - 3, 3};
@@ -173,24 +174,52 @@
 //                comment.font = [UIFont fontWithName:@"HelveticaNeue" size:13];
 //                [self addSubview:comment];
 //                
-                offset += textView.frame.size.height - 11;
+                offset += textView.frame.size.height - 14;
                 index++;
-                height += textView.frame.size.height - 11;
+                height += textView.frame.size.height - 14;
             }
             if (viewComments) {
-                viewComments.frame = CGRectMake(20, startPointY + offset + 8, 280, 20);
+                viewComments.frame = CGRectMake(20, startPointY + offset + 11, 280, 20);
                 [self addSubview:viewComments];
                 offset += 35;
                 height += 35;
             }
+//            offset -= -5;
+//            height -= -5;
+            int x = 125;
             UIButton *likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            likeButton.frame = CGRectMake(100, startPointY + offset, 25, 25);
+            likeButton.frame = CGRectMake(x, startPointY + offset, 24, 24);
             [likeButton setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:kColorGray] forState:UIControlStateNormal];
             [likeButton setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:kColorDark] forState:UIControlStateHighlighted];
             [likeButton addTarget:self action:@selector(like:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:likeButton];
+            
+            bubble = [[WMCommentBubble alloc] initWithOrigin:CGPointMake(x + 38, startPointY + offset)];
+            [bubble setTapped:^(BOOL commenting){
+                [UIView animateWithDuration:.175 animations:^{
+                    likeButton.alpha = commenting ? 0 : 1;
+                }completion:nil];
+            }];
+            [self addSubview:bubble];
+//            UIButton *commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//            commentFrame = CGRectMake(x + 33, startPointY + offset, 30, 26);
+//            commentButton.frame = CGRectMake(x + 33, startPointY + offset, 30, 26);
+//            int x1 = 14;
+//            int y = 14;
+//            [commentButton setImage:[[UIImage ipMaskedImageNamed:@"Comment-Small" color:kColorGray] resizableImageWithCapInsets:UIEdgeInsetsMake(0, x1, 0, y)] forState:UIControlStateNormal];
+//            [commentButton setBackgroundImage:[[UIImage ipMaskedImageNamed:@"Comment-Small" color:kColorGray] resizableImageWithCapInsets:UIEdgeInsetsMake(0, x1, 0, y)] forState:UIControlStateNormal];
+//            [commentButton setBackgroundImage:[[UIImage ipMaskedImageNamed:@"Comment-Small" color:kColorDark] resizableImageWithCapInsets:UIEdgeInsetsMake(0, x1, 0, y)] forState:UIControlStateHighlighted];
+//            [commentButton addTarget:self action:@selector(commentTapped:) forControlEvents:UIControlEventTouchUpInside];
+//            [self addSubview:commentButton];
+//            commentBubble = [CAShapeLayer layer];
+//
+//            commentFrame = CGRectMake(x + 33*2, startPointY + offset, 42, 38);
+//            UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:commentFrame byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(21, 19)];
+//            commentBubble.path = path.CGPath;
+//            commentBubble.fillColor = kColorGray.CGColor;
+//            [self.layer addSublayer:commentBubble];
              height += 30;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 _heightChanged(height);
             });
             
@@ -267,6 +296,13 @@
         } completion:nil];
     }];
 }
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (bubble.isSelected) {
+        [bubble tappedButton];
+    }
+}
+
 
 - (IBAction)disclose:(id)sender {
     NSLog(@"%f", self.center.x);

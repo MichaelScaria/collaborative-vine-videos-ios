@@ -11,6 +11,8 @@
 
 #import "WMCreatorView.h"
 #import "WMCreatorPhotoView.h"
+#import "WMCommentBubble.h"
+
 
 #import "WMVideo.h"
 #import "WMCreator.h"
@@ -24,8 +26,12 @@ typedef void(^WMComment)(NSString *);
     WMCreator *currentCreator;
     BOOL creatorsShown;
     BOOL liked;
+    BOOL commentViewDisplayed;
+    CAShapeLayer *commentBubble;
+    CGRect commentFrame;
     //for disclosure
     NSArray *cleanedCreators;
+    WMCommentBubble *bubble;
 }
 @property (nonatomic, copy) WMHeightChanged heightChanged;
 @property (nonatomic, copy) WMLiked liked;
