@@ -19,7 +19,7 @@ typedef void(^WMComment)(NSString *);
 @property (nonatomic, copy) WMTapped tapped;
 @property (nonatomic, copy) WMComment comment;
 
-@property (nonatomic, assign) BOOL isSelected;;
+@property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, strong) UITextView *textView;
 - (id)initWithOrigin:(CGPoint)origin;
 - (void)tappedButton;

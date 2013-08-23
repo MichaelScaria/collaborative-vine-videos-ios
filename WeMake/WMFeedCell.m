@@ -142,7 +142,7 @@
                 viewComments = [UIButton buttonWithType:UIButtonTypeCustom];
                 [viewComments setTitle:@"view all 101 comments" forState:UIControlStateNormal];
                 [viewComments.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
-                [viewComments setTitleColor:kColorDark forState:UIControlStateNormal];
+                [viewComments setTitleColor:kColorLight forState:UIControlStateNormal];
                 [viewComments addTarget:self action:@selector(viewAllComments) forControlEvents:UIControlEventTouchUpInside];
                 NSArray *b = @[@"b", @"Totally awesome, I'm going to write a really long text string just to mess with butts", @"This is cool!", @"I'm digging it."];
                 NSRange lastThree = {b.count - 3, 3};
@@ -200,6 +200,7 @@
                     likeButton.alpha = commenting ? 0 : 1;
                 }completion:nil];
             }];
+            [bubble setComment:_comment];
             [self addSubview:bubble];
 //            UIButton *commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //            commentFrame = CGRectMake(x + 33, startPointY + offset, 30, 26);
@@ -300,6 +301,9 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     if (bubble.isSelected) {
         [bubble tappedButton];
+        NSLog(@"CLAS::%@", NSStringFromClass([self.superview.superview class]));
+        UITableView *tableView = (UITableView *)self.superview.superview;
+        [tableView setContentOffset:CGPointMake(tableView.contentOffset.x, self.frame.origin.y) animated:YES];
     }
 }
 

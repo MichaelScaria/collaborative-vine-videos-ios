@@ -29,6 +29,12 @@
         _videos = videos;
         [_tableView reloadData];
     } failure:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollToCommentBubble:) name:@"ScrollToCommentBubble" object:nil];
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ScrollToCommentBubble" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -42,12 +48,36 @@
 	
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (!commentScroll) [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveCommentView" object:nil];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    if (commentScroll) commentScroll = NO;
+}
+
+
 - (void)viewDidDisappear:(BOOL)animated {
     for (MPMoviePlayerController *player in players) {
         [player pause];
     }
     [super viewDidDisappear:animated];
 }
+
+- (void)scrollToCommentBubble:(NSNotification *)notification {
+    WMFeedCell *cell = (WMFeedCell *)notification.object;
+    NSLog(@"Cal:%f", _tableView.contentOffset.y - cell.frame.origin.y);
+    NSLog(@"%f", _tableView.contentOffset.y);
+    NSLog(@"O:%f", cell.frame.origin.y);
+    //int row = [[_tableView indexPathForCell:cell] row] - 1;
+    if (_tableView.contentOffset.y - cell.frame.origin.y < 225 ) {
+        //get delta from how far the tableview has passed the origin.y of th cell, then subtract from 375 to get other half and add it to the current offset
+        commentScroll = YES;
+        [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + (225 - (_tableView.contentOffset.y - cell.frame.origin.y))) animated:YES];
+    }
+}
+
+#pragma mark UITeableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     [players removeAllObjects];
@@ -83,7 +113,9 @@
             [tableView beginUpdates];
             [tableView endUpdates];
         }];
+        //set video last because  some objects need to be initialized i.e.^
         [cell setVideo:video];
+        
         [players addObject:cell.player];
         //__weak WMFeedViewController *weakSelf = self;
 

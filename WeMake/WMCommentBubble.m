@@ -40,36 +40,51 @@
     
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(8, 0, 300, 25)];
     _textView.backgroundColor = [UIColor clearColor];
+    _textView.hidden = YES;
+    _textView.delegate = self;
+    [self addSubview:_textView];
+
 }
 
 - (void)tappedButton {
     _isSelected = !_isSelected;
     _tapped(_isSelected);
+    if ([_textView isFirstResponder]) [_textView resignFirstResponder];
     if (_isSelected) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTextView) name:@"RemoveCommentView" object:nil];
         dots.hidden = YES;
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.frame = CGRectMake(8, self.frame.origin.y, 300, 25);
             bubble.frame = CGRectMake(8, 0, 300, 25);
         }completion:^(BOOL isCompleted){
-            
+            _textView.hidden = NO;
         }];
     }
     else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RemoveCommentView" object:nil];
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.frame = originalFrame;
             bubble.frame = CGRectMake(0, 0, 25, 25);
         }completion:^(BOOL isCompleted){
             dots.hidden = NO;
+            _textView.hidden = YES;
         }];
     }
+}
 
+- (void)removeTextView {
+    if (![_textView isFirstResponder]) return;
+    [_textView resignFirstResponder];
+    [self tappedButton];
+    
 }
 
 #pragma mark UITextViewDelegate
 
-//- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-//    return YES;
-//}
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollToCommentBubble" object:self.superview.superview];
+    return YES;
+}
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
     [textView resignFirstResponder];
