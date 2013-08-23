@@ -11,6 +11,8 @@
 #import "UIImage+WeMake.h"
 #import "Constants.h"
 
+#define kTextViewFrame CGRectMake(8, 0, 290, 32)
+
 @implementation WMCommentBubble
 
 - (id)initWithOrigin:(CGPoint)origin
@@ -38,16 +40,17 @@
     [self addSubview:dots];
     originalFrame = self.frame;
     
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(2, -4, 290, 23)];
+    _textView = [[UITextView alloc] initWithFrame:kTextViewFrame];
+    _textView.backgroundColor = [UIColor colorWithRed:.5 green:.3 blue:.8 alpha:.4];
     _textView.backgroundColor = [UIColor clearColor];
+    _textView.font = [UIFont fontWithName:@"HelveticaNeue" size:13];
+    _textView.contentMode = UIViewContentModeCenter;
     _textView.hidden = YES;
     _textView.delegate = self;
-    //[self addSubview:_textView];
-    
-    _textField = [[UITextField alloc] initWithFrame:CGRectMake(2, -4, 290, 23)];
-    _textField.borderStyle = UITextBorderStyleNone;
-    _textField.hidden = YES;
-    _textField.delegate = self;
+    //_textView.textInputView.backgroundColor = [UIColor colorWithRed:.1 green:.8 blue:.5 alpha:.4];
+    //_textView.textInputView.backgroundColor = [UIColor clearColor];
+    //_textView.textInputView.frame = CGRectInset(_textView.textInputView.frame, 9, 9);
+    [self addSubview:_textView];
 
 }
 
@@ -77,11 +80,13 @@
         dots.hidden = YES;
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.frame = CGRectMake(8, self.frame.origin.y, 300, 25);
-            bubble.frame = CGRectMake(5, 0, 295, 25);
+            bubble.frame = CGRectMake(4, 0, 295, 32);
         }completion:^(BOOL isCompleted){
-            //_textView.hidden = NO;
-            //[_textView becomeFirstResponder];
-            _textView.text = @"Lorem ipsum dolor sit er";
+            _textView.hidden = NO;
+            [_textView becomeFirstResponder];
+            _textView.text = @"Lorem ipsum dolor sit er or";
+            _textView.frame = kTextViewFrame;
+            [_textView scrollRectToVisible:CGRectMake(0, _textView.contentSize.height/2 * 0, 1, 1) animated:NO]; //random hack
         }];
     }
     else {
@@ -89,6 +94,7 @@
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.frame = originalFrame;
             bubble.frame = CGRectMake(0, 0, 25, 25);
+            _textView.frame = CGRectMake(0, 0, 25, 25);
         }completion:^(BOOL isCompleted){
             dots.hidden = NO;
             _textView.hidden = YES;
@@ -107,32 +113,32 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollToCommentBubble" object:self.superview.superview];
-    NSLog(@"C:%@", NSStringFromClass([self.superview.superview class]));
     originalYOffset = self.superview.superview.frame.origin.y;
     return YES;
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+    textView.text = @"";
     [textView resignFirstResponder];
     return YES;
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string {
     //limit comment count at 250 characters
     if (([[textView text] length] + string.length > 250 && range.length < string.length) || ([string hasSuffix:@"\n"] && isMax)) return NO;
-    
-    NSString *newString = [textView.text stringByReplacingCharactersInRange:range withString:string];
     return YES;
 }
 - (void)textViewDidChange:(UITextView *)textView
 {
     CGRect textFrame = textView.frame;
     CGRect bubbleFrame = bubble.frame;
-    float delta = textView.contentSize.height - bubbleFrame.size.height;
-    textFrame.origin.y -= delta;
-    textFrame.size.height += delta;
-    bubbleFrame.origin.y -= delta;
-    bubbleFrame.size.height += delta;
-    isMax =  textFrame.origin.y > 99;
+    float delta = textView.contentSize.height - textFrame.size.height;
+    if (fabsf(delta) > 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollForCommentContent" object:[NSNumber numberWithFloat:delta]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CommentContentSizeChanged" object:[NSNumber numberWithFloat:delta]];
+    }
+    
+    textFrame.size.height = bubbleFrame.size.height = textView.contentSize.height;
+    isMax =  textFrame.size.height > 100;
     bubble.frame = bubbleFrame;
     textView.frame = textFrame;
     NSLog(@"Bubble Frame:%@", NSStringFromCGRect(bubble.frame));

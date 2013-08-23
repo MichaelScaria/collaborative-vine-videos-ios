@@ -23,14 +23,11 @@
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
-}
-
-- (void)didMoveToSuperview {
-    [super didMoveToSuperview];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     UIView *aView = [[UIView alloc] initWithFrame:_player.view.bounds];
     [aView addGestureRecognizer:tapGesture];
     [_player.view addSubview:aView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commentContentSizeChanged:) name:@"CommentContentSizeChanged" object:nil];
 }
 
 - (void)tapped:(UIGestureRecognizer *)gestureRecognizer {
@@ -59,6 +56,10 @@
             [_creatorView setCreatorUrl:currentCreator.photoURL];
         }
     }
+}
+
+- (void)commentContentSizeChanged:(NSNotification *)notification {
+    _heightChanged(self.frame.size.height + [notification.object floatValue]);
 }
 
 - (void)playerLoadStateDidChange:(NSNotification *)notification
@@ -202,26 +203,9 @@
             }];
             [bubble setComment:_comment];
             [self addSubview:bubble];
-//            UIButton *commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//            commentFrame = CGRectMake(x + 33, startPointY + offset, 30, 26);
-//            commentButton.frame = CGRectMake(x + 33, startPointY + offset, 30, 26);
-//            int x1 = 14;
-//            int y = 14;
-//            [commentButton setImage:[[UIImage ipMaskedImageNamed:@"Comment-Small" color:kColorGray] resizableImageWithCapInsets:UIEdgeInsetsMake(0, x1, 0, y)] forState:UIControlStateNormal];
-//            [commentButton setBackgroundImage:[[UIImage ipMaskedImageNamed:@"Comment-Small" color:kColorGray] resizableImageWithCapInsets:UIEdgeInsetsMake(0, x1, 0, y)] forState:UIControlStateNormal];
-//            [commentButton setBackgroundImage:[[UIImage ipMaskedImageNamed:@"Comment-Small" color:kColorDark] resizableImageWithCapInsets:UIEdgeInsetsMake(0, x1, 0, y)] forState:UIControlStateHighlighted];
-//            [commentButton addTarget:self action:@selector(commentTapped:) forControlEvents:UIControlEventTouchUpInside];
-//            [self addSubview:commentButton];
-//            commentBubble = [CAShapeLayer layer];
-//
-//            commentFrame = CGRectMake(x + 33*2, startPointY + offset, 42, 38);
-//            UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:commentFrame byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(21, 19)];
-//            commentBubble.path = path.CGPath;
-//            commentBubble.fillColor = kColorGray.CGColor;
-//            [self.layer addSublayer:commentBubble];
              height += 30;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                _heightChanged(height);
+                _heightChanged(height + 100);
             });
             
             
@@ -245,11 +229,6 @@
 
 - (void)setUrl:(NSURL *)url {
     if (url != _url) {
-//        UIActivityIndicatorView *aiv = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(140, 190, 40, 40)];
-//        aiv.tag = 10;
-//        [self addSubview:aiv];
-//        [aiv startAnimating];
-        
         _url = url;
         if (!_player) {
             _player = [[MPMoviePlayerController alloc] init];
@@ -264,7 +243,6 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageRequestLoadFinished:) name:MPMoviePlayerThumbnailImageRequestDidFinishNotification object:nil];
         }
         [_player setContentURL:url];
-        //[_player prepareToPlay];
     }
 }
 
@@ -296,14 +274,6 @@
             sender.transform = CGAffineTransformIdentity;
         } completion:nil];
     }];
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    if (bubble.isSelected) {
-//        [bubble tappedButton];
-//        UITableView *tableView = (UITableView *)self.superview.superview;
-//        [tableView setContentOffset:CGPointMake(tableView.contentOffset.x, self.frame.origin.y) animated:YES];
-//    }
 }
 
 

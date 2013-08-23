@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeMake/WMCommentBubble.m"
-            timestampString = "398933269.385842"
+            timestampString = "398947896.360099"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "-tappedButton"
             landmarkType = "5">
          </BreakpointContent>

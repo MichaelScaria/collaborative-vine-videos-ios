@@ -30,11 +30,13 @@
         [_tableView reloadData];
     } failure:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollToCommentBubble:) name:@"ScrollToCommentBubble" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollForCommentContent:) name:@"ScrollForCommentContent" object:nil];
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ScrollToCommentBubble" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ScrollForCommentContent" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -75,8 +77,12 @@
     if (_tableView.contentOffset.y - cell.frame.origin.y < 225 ) {
         //get delta from how far the tableview has passed the origin.y of th cell, then subtract from 375 to get other half and add it to the current offset
         commentScroll = YES;
-        [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + (225 - (_tableView.contentOffset.y - cell.frame.origin.y))) animated:YES];
+        [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, 150 + _tableView.contentOffset.y + (225 - (_tableView.contentOffset.y - cell.frame.origin.y))) animated:YES];
     }
+}
+
+- (void)scrollForCommentContent:(NSNotification *)notification {
+    [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + [notification.object intValue]) animated:YES];
 }
 
 #pragma mark UITeableViewDataSource
