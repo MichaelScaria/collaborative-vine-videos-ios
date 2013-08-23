@@ -299,12 +299,11 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if (bubble.isSelected) {
-        [bubble tappedButton];
-        NSLog(@"CLAS::%@", NSStringFromClass([self.superview.superview class]));
-        UITableView *tableView = (UITableView *)self.superview.superview;
-        [tableView setContentOffset:CGPointMake(tableView.contentOffset.x, self.frame.origin.y) animated:YES];
-    }
+//    if (bubble.isSelected) {
+//        [bubble tappedButton];
+//        UITableView *tableView = (UITableView *)self.superview.superview;
+//        [tableView setContentOffset:CGPointMake(tableView.contentOffset.x, self.frame.origin.y) animated:YES];
+//    }
 }
 
 

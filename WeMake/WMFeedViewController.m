@@ -48,13 +48,19 @@
 	
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (!commentScroll) [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveCommentView" object:nil];
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    if (commentScroll) commentScroll = NO;
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (!commentScroll) {
+//        //scrollView.scrollEnabled = NO;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveCommentView" object:nil];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//           // scrollView.scrollEnabled = YES;
+//        });
+//    }
+//}
+//
+//- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+//    if (commentScroll) commentScroll = NO;
+//}
 
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -66,10 +72,6 @@
 
 - (void)scrollToCommentBubble:(NSNotification *)notification {
     WMFeedCell *cell = (WMFeedCell *)notification.object;
-    NSLog(@"Cal:%f", _tableView.contentOffset.y - cell.frame.origin.y);
-    NSLog(@"%f", _tableView.contentOffset.y);
-    NSLog(@"O:%f", cell.frame.origin.y);
-    //int row = [[_tableView indexPathForCell:cell] row] - 1;
     if (_tableView.contentOffset.y - cell.frame.origin.y < 225 ) {
         //get delta from how far the tableview has passed the origin.y of th cell, then subtract from 375 to get other half and add it to the current offset
         commentScroll = YES;

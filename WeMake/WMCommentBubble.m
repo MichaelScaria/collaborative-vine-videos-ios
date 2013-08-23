@@ -38,12 +38,34 @@
     [self addSubview:dots];
     originalFrame = self.frame;
     
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(8, 0, 300, 25)];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(2, -4, 290, 23)];
     _textView.backgroundColor = [UIColor clearColor];
     _textView.hidden = YES;
     _textView.delegate = self;
-    [self addSubview:_textView];
+    //[self addSubview:_textView];
+    
+    _textField = [[UITextField alloc] initWithFrame:CGRectMake(2, -4, 290, 23)];
+    _textField.borderStyle = UITextBorderStyleNone;
+    _textField.hidden = YES;
+    _textField.delegate = self;
 
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if (!CGRectContainsPoint(self.frame, point)) {
+        if (_isSelected) {
+            UITableView *tableView = (UITableView *)self.superview.superview.superview.superview;
+            tableView.scrollEnabled = NO;
+            [tableView setContentOffset:CGPointMake(tableView.contentOffset.x, originalYOffset) animated:YES];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .75 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                tableView.scrollEnabled = YES;
+            });
+        }
+        [self removeTextView];
+    }
+    // use this to pass the 'touch' onward in case no subviews trigger the touch
+    return [super hitTest:point withEvent:event];
 }
 
 - (void)tappedButton {
@@ -51,17 +73,19 @@
     _tapped(_isSelected);
     if ([_textView isFirstResponder]) [_textView resignFirstResponder];
     if (_isSelected) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTextView) name:@"RemoveCommentView" object:nil];
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTextView) name:@"RemoveCommentView" object:nil];
         dots.hidden = YES;
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.frame = CGRectMake(8, self.frame.origin.y, 300, 25);
-            bubble.frame = CGRectMake(8, 0, 300, 25);
+            bubble.frame = CGRectMake(5, 0, 295, 25);
         }completion:^(BOOL isCompleted){
-            _textView.hidden = NO;
+            //_textView.hidden = NO;
+            //[_textView becomeFirstResponder];
+            _textView.text = @"Lorem ipsum dolor sit er";
         }];
     }
     else {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RemoveCommentView" object:nil];
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"RemoveCommentView" object:nil];
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.frame = originalFrame;
             bubble.frame = CGRectMake(0, 0, 25, 25);
@@ -83,6 +107,8 @@
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollToCommentBubble" object:self.superview.superview];
+    NSLog(@"C:%@", NSStringFromClass([self.superview.superview class]));
+    originalYOffset = self.superview.superview.frame.origin.y;
     return YES;
 }
 
@@ -99,9 +125,17 @@
 }
 - (void)textViewDidChange:(UITextView *)textView
 {
-    CGRect frame = textView.frame;
-    float delta = textView.contentSize.height - frame.size.height;
-    frame.origin.y -= delta;
-    isMax =  frame.origin.y - 11 < -99;
+    CGRect textFrame = textView.frame;
+    CGRect bubbleFrame = bubble.frame;
+    float delta = textView.contentSize.height - bubbleFrame.size.height;
+    textFrame.origin.y -= delta;
+    textFrame.size.height += delta;
+    bubbleFrame.origin.y -= delta;
+    bubbleFrame.size.height += delta;
+    isMax =  textFrame.origin.y > 99;
+    bubble.frame = bubbleFrame;
+    textView.frame = textFrame;
+    NSLog(@"Bubble Frame:%@", NSStringFromCGRect(bubble.frame));
+    NSLog(@"Frame:%@", NSStringFromCGRect(_textView.frame));
 }
 @end
