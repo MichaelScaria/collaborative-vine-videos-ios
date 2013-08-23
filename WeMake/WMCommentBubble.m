@@ -118,6 +118,8 @@
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+    float delta = textView.contentSize.height - 32;
+    [self.delegate heightChanged:-delta];
     textView.text = @"";
     [textView resignFirstResponder];
     return YES;
@@ -134,7 +136,7 @@
     float delta = textView.contentSize.height - textFrame.size.height;
     if (fabsf(delta) > 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollForCommentContent" object:[NSNumber numberWithFloat:delta]];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CommentContentSizeChanged" object:[NSNumber numberWithFloat:delta]];
+        [self.delegate heightChanged:delta];
     }
     
     textFrame.size.height = bubbleFrame.size.height = textView.contentSize.height;

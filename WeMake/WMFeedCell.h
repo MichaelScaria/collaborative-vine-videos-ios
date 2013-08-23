@@ -17,11 +17,11 @@
 #import "WMVideo.h"
 #import "WMCreator.h"
 
-typedef void(^WMHeightChanged)(int);
+typedef void(^WMHeightChanged)(int, BOOL);
 typedef void(^WMLiked)();
 typedef void(^WMComment)(NSString *);
 
-@interface WMFeedCell : UITableViewCell {
+@interface WMFeedCell : UITableViewCell <WMCommentBubbleDelegate> {
     NSTimer *timer;
     WMCreator *currentCreator;
     BOOL creatorsShown;

@@ -10,6 +10,12 @@
 typedef void(^WMTapped)(BOOL);
 typedef void(^WMComment)(NSString *);
 
+@protocol WMCommentBubbleDelegate <NSObject>
+
+- (void)heightChanged:(float)changedHeight;
+
+@end
+
 @interface WMCommentBubble : UIView <UITextViewDelegate> {
     CGRect originalFrame;
     float originalYOffset;
@@ -19,6 +25,8 @@ typedef void(^WMComment)(NSString *);
 }
 @property (nonatomic, copy) WMTapped tapped;
 @property (nonatomic, copy) WMComment comment;
+
+@property (nonatomic, assign) id <WMCommentBubbleDelegate> delegate;
 
 @property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, strong) UITextView *textView;

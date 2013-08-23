@@ -74,10 +74,10 @@
 
 - (void)scrollToCommentBubble:(NSNotification *)notification {
     WMFeedCell *cell = (WMFeedCell *)notification.object;
-    if (_tableView.contentOffset.y - cell.frame.origin.y < 225 ) {
+    if (_tableView.contentOffset.y - cell.frame.origin.y < 235 ) {
         //get delta from how far the tableview has passed the origin.y of th cell, then subtract from 375 to get other half and add it to the current offset
         commentScroll = YES;
-        [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, 150 + _tableView.contentOffset.y + (225 - (_tableView.contentOffset.y - cell.frame.origin.y))) animated:YES];
+        [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + (235 - (_tableView.contentOffset.y - cell.frame.origin.y))) animated:YES];
     }
 }
 
@@ -116,10 +116,12 @@
     }
     else {
         WMVideo *video = _videos[indexPath.row - 1];
-        [cell setHeightChanged:^(int newHeight) {
+        [cell setHeightChanged:^(int newHeight, BOOL animated) {
             [indexes setObject:[NSNumber numberWithInt:newHeight] forKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
-            [tableView beginUpdates];
-            [tableView endUpdates];
+            if (animated) {
+                [tableView beginUpdates];
+                [tableView endUpdates];
+            }
         }];
         //set video last because  some objects need to be initialized i.e.^
         [cell setVideo:video];

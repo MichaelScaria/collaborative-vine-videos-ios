@@ -27,7 +27,7 @@
     UIView *aView = [[UIView alloc] initWithFrame:_player.view.bounds];
     [aView addGestureRecognizer:tapGesture];
     [_player.view addSubview:aView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commentContentSizeChanged:) name:@"CommentContentSizeChanged" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commentContentSizeChanged:) name:@"CommentContentSizeChanged" object:nil];
 }
 
 - (void)tapped:(UIGestureRecognizer *)gestureRecognizer {
@@ -58,9 +58,12 @@
     }
 }
 
-- (void)commentContentSizeChanged:(NSNotification *)notification {
-    _heightChanged(self.frame.size.height + [notification.object floatValue]);
-}
+//- (void)commentContentSizeChanged:(NSNotification *)notification {
+//    if (_heightChanged) {
+//         _heightChanged(600);
+//    }
+//   
+//}
 
 - (void)playerLoadStateDidChange:(NSNotification *)notification
 {
@@ -185,8 +188,7 @@
                 offset += 35;
                 height += 35;
             }
-//            offset -= -5;
-//            height -= -5;
+
             int x = 125;
             UIButton *likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
             likeButton.frame = CGRectMake(x, startPointY + offset, 24, 24);
@@ -196,6 +198,7 @@
             [self addSubview:likeButton];
             
             bubble = [[WMCommentBubble alloc] initWithOrigin:CGPointMake(x + 38, startPointY + offset)];
+            bubble.delegate = self;
             [bubble setTapped:^(BOOL commenting){
                 [UIView animateWithDuration:.175 animations:^{
                     likeButton.alpha = commenting ? 0 : 1;
@@ -203,9 +206,8 @@
             }];
             [bubble setComment:_comment];
             [self addSubview:bubble];
-             height += 30;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                _heightChanged(height + 100);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .15 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                _heightChanged(height, YES);
             });
             
             
@@ -343,5 +345,14 @@
     }
     creatorsShown = !creatorsShown;
 
+}
+
+#pragma mark WMCommentBubbleDelegate 
+
+- (void)heightChanged:(float)changedHeight {
+    if (_heightChanged) {
+        _heightChanged(self.frame.size.height + changedHeight, NO);
+    }
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height + changedHeight);
 }
 @end
