@@ -18,7 +18,7 @@
     return [interactions copy];
 }
 
-+ (id)requestWithDictionary:(NSDictionary *)interactionDictionary {
++ (id)interactionWithDictionary:(NSDictionary *)interactionDictionary {
     WMInteraction *interaction = [[self alloc] initWithDictionary:interactionDictionary];
     return interaction;
 }
@@ -71,6 +71,9 @@
             }
             else if ([key isEqualToString:@"video"]) {
                 _video = [WMVideo videoWithDictionary:value];
+            }
+            else if ([key isEqualToString:@"body"]) {
+                _body = value;
             }
         }];
     }

@@ -19,7 +19,7 @@
 
 typedef void(^WMHeightChanged)(int, BOOL);
 typedef void(^WMLiked)();
-typedef void(^WMComment)(NSString *);
+//typedef void(^WMComment)(NSString *);
 
 @interface WMFeedCell : UITableViewCell <WMCommentBubbleDelegate> {
     NSTimer *timer;
@@ -31,16 +31,17 @@ typedef void(^WMComment)(NSString *);
     CGRect commentFrame;
     //for disclosure
     NSArray *cleanedCreators;
-    WMCommentBubble *bubble;
 }
 @property (nonatomic, copy) WMHeightChanged heightChanged;
 @property (nonatomic, copy) WMLiked liked;
-@property (nonatomic, copy) WMComment comment;
+//@property (nonatomic, copy) WMComment comment;
 
 @property (nonatomic, strong) NSURL *url;
 @property (nonatomic, strong) NSArray *creators;
 @property (strong, nonatomic) MPMoviePlayerController *player;
 @property (nonatomic, strong) WMVideo *video;
+@property (nonatomic, strong) WMCommentBubble *bubble;
+@property (nonatomic, strong) NSMutableArray *commentViews;
 
 @property (strong, nonatomic) IBOutlet UIImageView *thumbnailView;
 @property (strong, nonatomic) IBOutlet WMCreatorView *creatorView;
@@ -53,6 +54,7 @@ typedef void(^WMComment)(NSString *);
 @property (strong, nonatomic) IBOutlet UILabel *likesLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *commentsIcon;
 @property (strong, nonatomic) IBOutlet UILabel *commentsLabel;
+@property (strong, nonatomic) IBOutlet UITextView *caption;
 
 - (IBAction)disclose:(id)sender;
 @end

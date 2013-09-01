@@ -24,8 +24,9 @@ typedef enum {
 @property (nonatomic, strong) WMUser *createdBy;
 @property (nonatomic, strong) WMVideo *video;
 @property (nonatomic, assign) WMInteractionType interactionType;
+@property (nonatomic, strong) NSString *body;
 @property (nonatomic) NSInteger createdAt;
 
 + (NSArray *)interactionsWithArray:(NSArray *)interactionsArray;
-+ (id)requestWithDictionary:(NSDictionary *)interactionDictionary;
++ (id)interactionWithDictionary:(NSDictionary *)interactionDictionary;
 @end

@@ -11,7 +11,6 @@
 #import "WMSession.h"
 #import "WMUser.h"
 #import "WMRequest.h"
-#import "WMInteraction.h"
 
 #import "AFNetworking.h"
 #import "JSONKit.h"
@@ -265,6 +264,39 @@
         NSData *data = (NSData *)responseObject;
         if (data){
             if (success) success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if (failure) failure();
+    }];
+    [operation start];
+}
+
+- (void)likeVideo:(int)video success:(void (^)(void))success failure:(void (^)(void))failure {
+    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/videos/%d/like", video] type:@"POST"];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = (NSData *)responseObject;
+        if (data){
+            if (success) success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if (failure) failure();
+    }];
+    [operation start];
+}
+
+- (void)comment:(NSString *)body onVideo:(int)video success:(void (^)(WMInteraction *))success failure:(void (^)(void))failure {
+    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/videos/%d/comment", video] type:@"POST"];
+    [req setHTTPBody:[[NSString stringWithFormat:@"comment=%@", body] dataUsingEncoding:NSUTF8StringEncoding]];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = (NSData *)responseObject;
+        if (data){
+            NSDictionary *commentJSON = [[JSONDecoder decoder] objectWithData:data];
+            WMInteraction *comment = [WMInteraction interactionWithDictionary:commentJSON];
+            if (success) success(comment);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

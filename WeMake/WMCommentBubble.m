@@ -11,6 +11,7 @@
 #import "UIImage+WeMake.h"
 #import "Constants.h"
 
+
 #define kTextViewFrame CGRectMake(8, 0, 290, 32)
 
 @implementation WMCommentBubble
@@ -47,6 +48,7 @@
     _textView.contentMode = UIViewContentModeCenter;
     _textView.hidden = YES;
     _textView.delegate = self;
+    _textView.returnKeyType = UIReturnKeyDone;
     //_textView.textInputView.backgroundColor = [UIColor colorWithRed:.1 green:.8 blue:.5 alpha:.4];
     //_textView.textInputView.backgroundColor = [UIColor clearColor];
     //_textView.textInputView.frame = CGRectInset(_textView.textInputView.frame, 9, 9);
@@ -85,6 +87,7 @@
             _textView.hidden = NO;
             [_textView becomeFirstResponder];
             _textView.text = @"Lorem ipsum dolor sit er or";
+            _textView.text = @"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..";
             _textView.frame = kTextViewFrame;
             [_textView scrollRectToVisible:CGRectMake(0, _textView.contentSize.height/2 * 0, 1, 1) animated:NO]; //random hack
         }];
@@ -124,9 +127,17 @@
     [textView resignFirstResponder];
     return YES;
 }
+
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string {
     //limit comment count at 250 characters
-    if (([[textView text] length] + string.length > 250 && range.length < string.length) || ([string hasSuffix:@"\n"] && isMax)) return NO;
+    if ([string hasSuffix:@"\n"]) {
+        //post comment to server
+        _comment(textView.text, _commentCompletion);
+        [self removeTextView];
+        return NO;
+    }
+    if (([[textView text] length] + string.length > 250 && range.length < string.length) || isMax) return NO;
     return YES;
 }
 - (void)textViewDidChange:(UITextView *)textView

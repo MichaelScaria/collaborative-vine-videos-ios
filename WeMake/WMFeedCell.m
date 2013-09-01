@@ -10,9 +10,10 @@
 
 #import "Constants.h"
 #import "UIImage+WeMake.h"
+#import "WMInteraction.h"
+#import "UIImageView+AFNetworking.h"
 
 #import "MSTextView.h"
-#import "UIImageView+AFNetworking.h"
 
 
 
@@ -20,7 +21,7 @@
 #define kDisclosurePadding 5
 
 @implementation WMFeedCell
-
+@synthesize bubble;
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
@@ -135,53 +136,44 @@
         //disclosure button has padding to remove
         _disclosureIndicator.frame = CGRectMake(_posterLabel.frame.origin.x + size.width - kDisclosurePadding, _disclosureIndicator.frame.origin.y, _disclosureIndicator.frame.size.width, _disclosureIndicator.frame.size.height);
         //add view for comments if present
+        //[_caption sizeToFit];
+        _caption.scrollEnabled = NO;
         if (video.comments.count > 0 || YES) {
             int height = self.frame.size.height;
             NSArray *commentPreviews;
             int offset = 0;
-            int startPointY = 430;
-            NSArray *u = @[@"michaelscaria", @"robinjoseph", @"adityavis"];
+            int startPointY = _caption.frame.origin.y + _caption.frame.size.height - 10;
             UIButton *viewComments;
-            if (video.comments.count > 2 || YES) {
+            if (video.comments.count > 2) {
                 viewComments = [UIButton buttonWithType:UIButtonTypeCustom];
-                [viewComments setTitle:@"view all 101 comments" forState:UIControlStateNormal];
+                [viewComments setTitle:[NSString stringWithFormat:@"view all %d comments", video.comments.count] forState:UIControlStateNormal];
                 [viewComments.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
                 [viewComments setTitleColor:kColorLight forState:UIControlStateNormal];
                 [viewComments addTarget:self action:@selector(viewAllComments) forControlEvents:UIControlEventTouchUpInside];
-                NSArray *b = @[@"b", @"Totally awesome, I'm going to write a really long text string just to mess with butts", @"This is cool!", @"I'm digging it."];
-                NSRange lastThree = {b.count - 3, 3};
-                commentPreviews = [b subarrayWithRange:lastThree];
+                NSRange lastThree = {video.comments.count - 3, 3};
+                commentPreviews = [video.comments subarrayWithRange:lastThree];
             }
             else {
-                commentPreviews = @[@"michaelscaria", @"robinjoseph"];
+                commentPreviews = video.comments;
             }
-            int index = 0;
-            for (NSString *body in commentPreviews) {
+            if (!_commentViews) {
+                _commentViews = [[NSMutableArray alloc] initWithCapacity:3];
+            }
+            int lastHeight;
+            int initialCommentY = startPointY + offset;
+            for (WMInteraction *comment in commentPreviews) {
                 MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + offset, 310, 35)];
-                NSRange range = {0, [(NSString *)u[index] length]};
-                [textView setText:[NSString stringWithFormat:@"%@ %@", u[index], body] withLinkedRange:range];
+                NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+                [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
                 [self addSubview:textView];
-//                UIButton *username = [UIButton buttonWithType:UIButtonTypeCustom];
-//                username.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-//                username.frame = CGRectMake(10, startPointY + offset, 80, 18);
-//                [username setTitle:u[index] forState:UIControlStateNormal];
-//                [username.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
-//                [self addSubview:username];
-//                CGRect bounds = [body boundingRectWithSize:CGSizeMake(240, 35) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue" size:13]} context:nil];
-//                NSLog(@"Boubds:%@", NSStringFromCGRect(bounds));
-//                UILabel *comment = [[UILabel alloc] initWithFrame:CGRectMake(95, startPointY + offset, 210, bounds.size.height)];
-//                comment.numberOfLines = 10;
-//                comment.lineBreakMode = NSLineBreakByCharWrapping;
-//                comment.backgroundColor = [UIColor clearColor];
-//                comment.textColor = [UIColor colorWithRed:212/255.0 green:212/255.0 blue:212/255.0 alpha:1];
-//                comment.text = body;
-//                comment.font = [UIFont fontWithName:@"HelveticaNeue" size:13];
-//                [self addSubview:comment];
-//                
-                offset += textView.frame.size.height - 14;
-                index++;
-                height += textView.frame.size.height - 14;
+                [_commentViews addObject:textView];
+                lastHeight = textView.frame.size.height - 7;
+                offset += textView.frame.size.height - 7;
+                height += textView.frame.size.height - 7;
             }
+            
+            //add more view comment if neccessary
+            __block int commentOffset = offset - lastHeight;
             if (viewComments) {
                 viewComments.frame = CGRectMake(20, startPointY + offset + 11, 280, 20);
                 [self addSubview:viewComments];
@@ -204,10 +196,84 @@
                     likeButton.alpha = commenting ? 0 : 1;
                 }completion:nil];
             }];
-            [bubble setComment:_comment];
+//            
+//            MSTextView *textViewq = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + commentOffset, 310, 35)];
+//            NSRange range = {0, [@"mike" length]};
+//            [textViewq setText:[NSString stringWithFormat:@"%@ %@", @"mike", @"comment.body"] withLinkedRange:range];
+//            [self addSubview:textViewq];
+            
+            
+            __weak WMFeedCell *weakSelf = self;
+            [bubble setCommentCompletion:^(BOOL success, WMInteraction *comment){
+                if (success) {
+                    NSLog(@"Success!");
+                    if (weakSelf.commentViews.count < 3) {
+                        MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + commentOffset, 310, 35)];
+                        NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+                        [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
+                        [weakSelf addSubview:textView];
+                        commentOffset += 35;
+                        
+                        [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            likeButton.center = CGPointMake(likeButton.center.x, likeButton.center.y + 35);
+                            weakSelf.bubble.center = CGPointMake(weakSelf.bubble.center.x, weakSelf.bubble.center.y + 35);
+                        }completion:^(BOOL completed){
+                            weakSelf.heightChanged(weakSelf.frame.size.height + textView.frame.size.height - 7, YES);
+                        }];
+                        [weakSelf.commentViews addObject:textView];
+                    }
+                    else {
+                        //if the number of comment previews is greater than 3, remove the older comment and add the new one
+                        
+                        
+                        //slide out oldest comment
+                        UIView *view = weakSelf.commentViews[0];
+                        [UIView animateWithDuration:.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            view.center = CGPointMake(view.center.x - 320, view.center.y);
+                        }completion:^(BOOL finished) {
+                            [weakSelf.commentViews removeObject:view];
+                        }];
+                        
+                        //shift previous comments
+                        //int shiftHeight = weakSelf.frame.size.height;
+                        int shiftOffset = 0;
+                        for (int i = 1; i < weakSelf.commentViews.count; i++) {
+                            UIView *shiftCommentView = weakSelf.commentViews[i];
+                            [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                //shiftCommentView.center = CGPointMake(shiftCommentView.center.x, shiftCommentView.center.y - 35);
+                                shiftCommentView.frame = CGRectMake(5, initialCommentY + shiftOffset, 310, shiftCommentView.frame.size.height);
+                            }completion:nil];
+                            shiftOffset += shiftCommentView.frame.size.height - 7;
+                        }
+                        
+                        //create new textview
+                        MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5,  startPointY + shiftOffset, 310, 35)];
+                        NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+                        [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
+                        textView.alpha = 0;
+                        [weakSelf addSubview:textView];
+                        [UIView animateWithDuration:.25 animations:^{
+                            textView.alpha = 1;
+                        }completion:nil];
+                        
+                        
+                        //take offset and add to height
+                        [UIView animateWithDuration:.25 animations:^{
+//                            viewComments.center = CGPointMake(viewComments.center.x, viewComments.center.y + shiftOffset  - viewComments.frame.origin.y);
+                            viewComments.frame = CGRectMake(viewComments.frame.origin.x, textView.frame.origin.y + textView.frame.size.height + 4, viewComments.frame.size.width, viewComments.frame.size.height);
+                            likeButton.frame = CGRectMake(likeButton.frame.origin.x, textView.frame.origin.y + textView.frame.size.height + 39, likeButton.frame.size.width, likeButton.frame.size.height);
+                            weakSelf.bubble.frame = CGRectMake(weakSelf.bubble.frame.origin.x, textView.frame.origin.y + textView.frame.size.height + 39, weakSelf.bubble.frame.size.width, weakSelf.bubble.frame.size.height);
+                        }completion:^(BOOL isCompleted){
+                            
+                        }];
+
+                        [weakSelf.commentViews addObject:textView];
+                    }
+                }
+            }];
             [self addSubview:bubble];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .15 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                _heightChanged(height, YES);
+                _heightChanged(height + 100, YES);
             });
             
             

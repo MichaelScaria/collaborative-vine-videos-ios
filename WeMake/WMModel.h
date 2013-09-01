@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "WMInteraction.h"
+
 @interface WMModel : NSObject
 + (WMModel *)sharedInstance;
 
@@ -30,4 +32,6 @@
 - (void)getPostsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;
 - (void)getNotificationsSuccess:(void (^)(NSArray *))success failure:(void (^)(void))failure;
 - (void)updateRequest:(int)request accepted:(BOOL)accepted success:(void (^)(void))success failure:(void (^)(void))failure;
+- (void)likeVideo:(int)video success:(void (^)(void))success failure:(void (^)(void))failure;
+- (void)comment:(NSString *)body onVideo:(int)video success:(void (^)(WMInteraction *))success failure:(void (^)(void))failure;
 @end

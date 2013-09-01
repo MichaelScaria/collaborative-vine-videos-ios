@@ -75,7 +75,7 @@
 - (void)scrollToCommentBubble:(NSNotification *)notification {
     WMFeedCell *cell = (WMFeedCell *)notification.object;
     if (_tableView.contentOffset.y - cell.frame.origin.y < 235 ) {
-        //get delta from how far the tableview has passed the origin.y of th cell, then subtract from 375 to get other half and add it to the current offset
+        //get delta from how far the tableview has passed the origin.y of the cell, then subtract from 375 to get other half and add it to the current offset
         commentScroll = YES;
         [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + (235 - (_tableView.contentOffset.y - cell.frame.origin.y))) animated:YES];
     }
@@ -125,6 +125,18 @@
         }];
         //set video last because  some objects need to be initialized i.e.^
         [cell setVideo:video];
+
+        [cell.bubble setComment:^(NSString *comment, WMCommentCompletion completion) {
+            [[WMModel sharedInstance] comment:comment onVideo:video.theID success:^(WMInteraction *interaction){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(YES, interaction);
+                });
+            }failure:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(NO, nil);
+                });
+            }];
+        }];
         
         [players addObject:cell.player];
         //__weak WMFeedViewController *weakSelf = self;

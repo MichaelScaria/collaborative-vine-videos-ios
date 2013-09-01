@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "WMInteraction.h"
+
 typedef void(^WMTapped)(BOOL);
-typedef void(^WMComment)(NSString *);
+typedef void(^WMCommentCompletion)(BOOL, WMInteraction *);
+typedef void(^WMCommentSend)(NSString *, WMCommentCompletion);
 
 @protocol WMCommentBubbleDelegate <NSObject>
 
@@ -24,7 +28,8 @@ typedef void(^WMComment)(NSString *);
     UIImageView *dots;
 }
 @property (nonatomic, copy) WMTapped tapped;
-@property (nonatomic, copy) WMComment comment;
+@property (nonatomic, copy) WMCommentCompletion commentCompletion;
+@property (nonatomic, copy) WMCommentSend comment;
 
 @property (nonatomic, assign) id <WMCommentBubbleDelegate> delegate;
 
