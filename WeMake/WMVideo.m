@@ -9,6 +9,7 @@
 #import "WMVideo.h"
 #import "WMCreator.h"
 #import "WMInteraction.h"
+#import "WMSession.h"
 
 @implementation WMVideo
 
@@ -51,9 +52,15 @@
                     switch (interaction.interactionType) {
                         case WMView:
                             _views++;
+                            if (interaction.createdBy.theID == [WMSession sharedInstance].user) {
+                                _viewed = YES;
+                            }
                             break;
                         case WMLike:
                             [mLikes addObject:interaction];
+                            if (interaction.createdBy.theID == [WMSession sharedInstance].user) {
+                                _liked = YES;
+                            }
                             break;
                         case WMComment:
                             [mComments addObject:interaction];

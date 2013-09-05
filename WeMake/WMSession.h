@@ -10,7 +10,7 @@
 
 @interface WMSession : NSObject
 
-@property (nonatomic, strong) NSString *user;
+@property (nonatomic, assign) int user;
 + (WMSession *)sharedInstance;
 - (void)loginWithUserInfo:(NSDictionary *)userInfo;
 - (void)logout;

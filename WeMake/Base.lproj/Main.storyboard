@@ -9,18 +9,18 @@
             <objects>
                 <viewController id="xbO-tO-2hg" customClass="WMViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Jcg-NL-6Ow"/>
-                        <viewControllerLayoutGuide type="bottom" id="3Vd-uJ-51s"/>
+                        <viewControllerLayoutGuide type="top" id="xyY-1X-yhZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="09g-gk-XvN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ITi-CC-OFw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-cG-bes" userLabel="Main">
-                                <rect key="frame" x="6" y="533" width="30" height="30"/>
+                                <rect key="frame" x="28" y="440" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" image="blueCircle.png">
+                                <state key="normal" image="Chevron.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -63,11 +63,16 @@
                                     <action selector="notificationTapped:" destination="xbO-tO-2hg" eventType="touchUpInside" id="lwq-F6-nJj"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blueCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="7Gx-po-sy7">
+                                <rect key="frame" x="6" y="533" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="cameraButton" destination="6zB-4d-f5K" id="Jer-ev-yeE"/>
+                        <outlet property="chevron" destination="7Gx-po-sy7" id="GD2-7F-T79"/>
                         <outlet property="feedButton" destination="oLb-SV-MX4" id="5CV-HB-3oH"/>
                         <outlet property="mainButton" destination="Ej1-cG-bes" id="4sw-2c-gX6"/>
                         <outlet property="notificationButton" destination="ysV-HB-nR6" id="d6B-07-Vxd"/>
@@ -82,8 +87,8 @@
             <objects>
                 <viewController storyboardIdentifier="Feed" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="WMFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IXZ-BF-PEt"/>
-                        <viewControllerLayoutGuide type="bottom" id="z5h-yF-O4b"/>
+                        <viewControllerLayoutGuide type="top" id="bym-fn-GtB"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ytq-oX-B08"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -200,7 +205,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.058823529411764705" green="0.058823529411764705" blue="0.058823529411764705" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Item" id="Jbp-q7-7Vx"/>
@@ -218,8 +223,8 @@
             <objects>
                 <viewController storyboardIdentifier="Camera" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cVa-bO-kS4" customClass="WMCameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Yqk-kg-QwH"/>
-                        <viewControllerLayoutGuide type="bottom" id="ebG-jX-NAj"/>
+                        <viewControllerLayoutGuide type="top" id="OWa-yN-7TY"/>
+                        <viewControllerLayoutGuide type="bottom" id="X5B-3B-dSN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VDo-lM-Db9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -389,8 +394,8 @@
             <objects>
                 <viewController storyboardIdentifier="Review" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1tk-5V-gFP" customClass="WMReviewViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ido-Hd-4be"/>
-                        <viewControllerLayoutGuide type="bottom" id="Ds5-Z3-FWS"/>
+                        <viewControllerLayoutGuide type="top" id="rz7-f9-Sh9"/>
+                        <viewControllerLayoutGuide type="bottom" id="SFq-N5-pB8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sFS-Q6-3En">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -439,8 +444,8 @@
             <objects>
                 <viewController storyboardIdentifier="Request" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NfC-rA-knd" customClass="WMRequestViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="RrD-ez-U5T"/>
-                        <viewControllerLayoutGuide type="bottom" id="SVM-B1-Jpu"/>
+                        <viewControllerLayoutGuide type="top" id="P2b-g5-3lE"/>
+                        <viewControllerLayoutGuide type="bottom" id="i28-Ty-av1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="A1p-86-Tws">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -539,8 +544,8 @@
             <objects>
                 <viewController storyboardIdentifier="Post" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sFY-Md-A5G" customClass="WMPostViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="og2-Fi-wq1"/>
-                        <viewControllerLayoutGuide type="bottom" id="Yz9-89-grK"/>
+                        <viewControllerLayoutGuide type="top" id="6us-nU-i5w"/>
+                        <viewControllerLayoutGuide type="bottom" id="dfY-ak-0AZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VF1-8c-cg0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -618,8 +623,8 @@
             <objects>
                 <viewController storyboardIdentifier="Upload" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0z4-H2-NKP" customClass="WMUploadViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="TIy-lr-brL"/>
-                        <viewControllerLayoutGuide type="bottom" id="5Ok-cx-j87"/>
+                        <viewControllerLayoutGuide type="top" id="MzX-HP-fjx"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fc6-re-JWZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7Y3-0p-syB" userLabel="View" customClass="UIScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -636,8 +641,8 @@
             <objects>
                 <viewController id="Jov-jq-qaX" customClass="WMLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="890-k8-RWh"/>
-                        <viewControllerLayoutGuide type="bottom" id="H7g-Nv-MFd"/>
+                        <viewControllerLayoutGuide type="top" id="IJn-K3-ebQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="S7j-my-dsi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fqQ-3l-icv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -757,8 +762,8 @@
             <objects>
                 <viewController restorationIdentifier="Notification" storyboardIdentifier="Notification" id="Hxa-wS-fqj" customClass="WMNotificationViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="oZ0-Cw-HnH"/>
-                        <viewControllerLayoutGuide type="bottom" id="OZI-Rv-nnT"/>
+                        <viewControllerLayoutGuide type="top" id="IpL-Ql-htR"/>
+                        <viewControllerLayoutGuide type="bottom" id="kki-mz-ZJg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="I1H-Rx-oEp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -844,6 +849,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Chevron.png" width="60" height="60"/>
         <image name="Comment-Small.png" width="30" height="27"/>
         <image name="Crosshairs" width="56" height="56"/>
         <image name="Disclosure.png" width="95" height="95"/>

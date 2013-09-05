@@ -34,7 +34,7 @@
     [[WMModel sharedInstance] login:@"michaelscaria" password:@"password" success:nil failure:nil];
     //[[NSUserDefaults standardUserDefaults] setObject:@"michaelscaria" forKey:@"Username"];
     //[[NSUserDefaults standardUserDefaults] setObject:@"password" forKey:@"Password"];
-    [application setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [application setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
 
@@ -73,7 +73,7 @@
     else {
         [(WMTabBarController *)self.window.rootViewController presentLoginView];
     }*/
-    [application setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [application setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

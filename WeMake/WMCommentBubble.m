@@ -27,9 +27,6 @@
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
-//    bubble = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-    //bubble.contentMode = UIViewContentModeScaleAspectFit;
-//    bubble.image = [[UIImage ipMaskedImageNamed:@"CommentBubble" color:kColorGray] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12) resizingMode:UIImageResizingModeTile];
     bubble = [UIButton buttonWithType:UIButtonTypeCustom];
     bubble.frame = CGRectMake(0, 0, 25, 25);
     [bubble setBackgroundImage:[[UIImage ipMaskedImageNamed:@"CommentBubble" color:kColorGray] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 12, 12, 12)] forState:UIControlStateNormal];
@@ -49,9 +46,6 @@
     _textView.hidden = YES;
     _textView.delegate = self;
     _textView.returnKeyType = UIReturnKeyDone;
-    //_textView.textInputView.backgroundColor = [UIColor colorWithRed:.1 green:.8 blue:.5 alpha:.4];
-    //_textView.textInputView.backgroundColor = [UIColor clearColor];
-    //_textView.textInputView.frame = CGRectInset(_textView.textInputView.frame, 9, 9);
     [self addSubview:_textView];
 
 }
@@ -78,7 +72,6 @@
     _tapped(_isSelected);
     if ([_textView isFirstResponder]) [_textView resignFirstResponder];
     if (_isSelected) {
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTextView) name:@"RemoveCommentView" object:nil];
         dots.hidden = YES;
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.frame = CGRectMake(8, self.frame.origin.y, 300, 25);
@@ -87,13 +80,12 @@
             _textView.hidden = NO;
             [_textView becomeFirstResponder];
             _textView.text = @"Lorem ipsum dolor sit er or";
-            _textView.text = @"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..";
+            _textView.text = @"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. Lorem ipsum dolor sit er or Lorem ipsum dolor sit er or Lorem ipsum dolor sit er or Lorem ipsum dolor sit er or";
             _textView.frame = kTextViewFrame;
             [_textView scrollRectToVisible:CGRectMake(0, _textView.contentSize.height/2 * 0, 1, 1) animated:NO]; //random hack
         }];
     }
     else {
-        //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"RemoveCommentView" object:nil];
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.frame = originalFrame;
             bubble.frame = CGRectMake(0, 0, 25, 25);
@@ -109,7 +101,6 @@
     if (![_textView isFirstResponder]) return;
     [_textView resignFirstResponder];
     [self tappedButton];
-    
 }
 
 #pragma mark UITextViewDelegate
@@ -117,13 +108,14 @@
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ScrollToCommentBubble" object:self.superview.superview];
     originalYOffset = self.superview.superview.frame.origin.y;
+    NSLog(@"textViewShouldBeginEditing:%@", NSStringFromCGRect(self.frame));
     return YES;
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
-    float delta = textView.contentSize.height - 32;
-    [self.delegate heightChanged:-delta];
     textView.text = @"";
+    NSLog(@"textViewShouldEndEditing:%@", NSStringFromCGRect(self.frame));
+    //[self.delegate heightChanged:0];
     [textView resignFirstResponder];
     return YES;
 }

@@ -11,11 +11,18 @@
 #import "WMUploadViewController.h"
 #import "WMNotificationViewController.h"
 
-@interface WMViewController : UIViewController {
+#import "FXBlurView.h"
+
+@interface WMViewController : UIViewController <UIScrollViewDelegate> {
     WMFeedViewController *feedViewController;
     WMUploadViewController *uploadViewController;
     WMNotificationViewController *notificationViewController;
+    
+    FXBlurView *blurView;
+    CGPoint initialPoint;
 }
+
+@property (strong, nonatomic) IBOutlet UIImageView *chevron;
 
 @property (strong, nonatomic) IBOutlet UIButton *mainButton;
 @property (strong, nonatomic) IBOutlet UIButton *feedButton;

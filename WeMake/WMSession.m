@@ -17,7 +17,7 @@
     
     dispatch_once(&pred, ^{
         sharedInstance = [[WMSession alloc] init];
-        sharedInstance.user = [[NSUserDefaults standardUserDefaults] objectForKey:@"User"];
+        sharedInstance.user = [[[NSUserDefaults standardUserDefaults] objectForKey:@"User"] intValue];
     });
     
     return sharedInstance;
@@ -28,7 +28,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"username"] forKey:@"Username"];
     [[NSUserDefaults standardUserDefaults] setObject:userInfo[@"password"] forKey:@"Password"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.user = userInfo[@"id"];
+    self.user = [userInfo[@"id"] intValue];
 }
 
 - (void)logout {

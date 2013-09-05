@@ -77,7 +77,7 @@
     if (_tableView.contentOffset.y - cell.frame.origin.y < 235 ) {
         //get delta from how far the tableview has passed the origin.y of the cell, then subtract from 375 to get other half and add it to the current offset
         commentScroll = YES;
-        [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + (235 - (_tableView.contentOffset.y - cell.frame.origin.y))) animated:YES];
+        [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + cell.frame.size.height/2) animated:YES];
     }
 }
 
@@ -97,11 +97,11 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return 28;
+        return 24;
     }
     NSNumber *height = [indexes objectForKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
     if (height) return [height floatValue];
-    return 500;
+    return 568;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -136,6 +136,13 @@
                     completion(NO, nil);
                 });
             }];
+        }];
+        
+        [cell setLiked:^(BOOL like){
+            [[WMModel sharedInstance] like:like video:video.theID success:nil failure:nil];
+        }];
+        [cell setViewed:^{
+            [[WMModel sharedInstance] viewedVideo:video.theID success:nil failure:nil];
         }];
         
         [players addObject:cell.player];

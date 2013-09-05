@@ -18,8 +18,8 @@
 #import "WMCreator.h"
 
 typedef void(^WMHeightChanged)(int, BOOL);
-typedef void(^WMLiked)();
-//typedef void(^WMComment)(NSString *);
+typedef void(^WMViewed)();
+typedef void(^WMLiked)(BOOL);
 
 @interface WMFeedCell : UITableViewCell <WMCommentBubbleDelegate> {
     NSTimer *timer;
@@ -27,14 +27,15 @@ typedef void(^WMLiked)();
     BOOL creatorsShown;
     BOOL liked;
     BOOL commentViewDisplayed;
+    BOOL viewed;
     CAShapeLayer *commentBubble;
     CGRect commentFrame;
     //for disclosure
     NSArray *cleanedCreators;
 }
 @property (nonatomic, copy) WMHeightChanged heightChanged;
+@property (nonatomic, copy) WMViewed viewed;
 @property (nonatomic, copy) WMLiked liked;
-//@property (nonatomic, copy) WMComment comment;
 
 @property (nonatomic, strong) NSURL *url;
 @property (nonatomic, strong) NSArray *creators;

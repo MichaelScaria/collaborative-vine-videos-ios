@@ -272,8 +272,23 @@
     [operation start];
 }
 
-- (void)likeVideo:(int)video success:(void (^)(void))success failure:(void (^)(void))failure {
-    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/videos/%d/like", video] type:@"POST"];
+- (void)viewedVideo:(int)video success:(void (^)(void))success failure:(void (^)(void))failure {
+    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/videos/%d/view", video] type:@"POST"];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = (NSData *)responseObject;
+        if (data){
+            if (success) success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if (failure) failure();
+    }];
+    [operation start];
+}
+
+- (void)like:(BOOL)like video:(int)video success:(void (^)(void))success failure:(void (^)(void))failure {
+    NSMutableURLRequest *req = [self generateMutableRequestForPath:[NSString stringWithFormat:@"/videos/%d/%@", video, like ? @"like" : @"unlike"] type:@"POST"];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:req];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSData *data = (NSData *)responseObject;

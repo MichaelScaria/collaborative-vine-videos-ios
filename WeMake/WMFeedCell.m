@@ -41,6 +41,7 @@
         [_player play];
         timer = [NSTimer scheduledTimerWithTimeInterval:kTimeInterval target:self selector:@selector(time) userInfo:nil repeats:YES];
         [timer fire];
+        _thumbnailView.hidden = YES;
     }
 }
 
@@ -75,11 +76,11 @@
             [aiv stopAnimating];
             [aiv removeFromSuperview];
         }
-        NSMutableArray *times = [[NSMutableArray alloc] initWithCapacity:_player.duration/2];
-        for (int i = 1; i < _player.duration; i += 2) {
-            [times addObject:[NSNumber numberWithInt:i]];
-        }
-        [_player requestThumbnailImagesAtTimes:times timeOption:MPMovieTimeOptionNearestKeyFrame];
+//        NSMutableArray *times = [[NSMutableArray alloc] initWithCapacity:_player.duration/2];
+//        for (int i = 1; i < _player.duration; i += 2) {
+//            [times addObject:[NSNumber numberWithInt:i]];
+//        }
+//        [_player requestThumbnailImagesAtTimes:times timeOption:MPMovieTimeOptionNearestKeyFrame];
     }
     else if ((_player.loadState & MPMovieLoadStateStalled) == MPMovieLoadStateStalled) {
         UIActivityIndicatorView *aiv = (UIActivityIndicatorView *)[self viewWithTag:10];
@@ -91,16 +92,14 @@
         }
     }
     if ((_player.playbackState & MPMoviePlaybackStatePlaying) == MPMoviePlaybackStatePlaying) {
-        if ([_thumbnailView isDescendantOfView:self]) {
-            [_thumbnailView removeFromSuperview];
-        }
+        _thumbnailView.hidden = YES;
     }
     else if ((_player.playbackState & MPMoviePlaybackStatePaused) == MPMoviePlaybackStatePaused) {
         
     }
 }
 
-- (void)imageRequestLoadFinished:(NSNotification *)notification {
+- (void)movieFinished:(NSNotification *)notification {
 //    UIImage *image = notification.userInfo[MPMoviePlayerThumbnailImageKey];
 //    if (image) {
 //        thumbnailImage = image;
@@ -111,6 +110,15 @@
 //            [self next:nil];
 //        }
 //    }
+    if (!viewed) {
+        viewed = YES;
+        [_viewsIcon setImage:[UIImage ipMaskedImageNamed:@"View-Small" color:kColorDark]];
+        int views = [_viewsLabel.text intValue];
+        _viewsLabel.text = [NSString stringWithFormat:@"%d", views + 1];
+        _viewsLabel.textColor = kColorDark;
+        _viewed();
+    }
+    _thumbnailView.hidden = NO;
 }
 
 - (void)setCreators:(NSArray *)creators {
@@ -138,146 +146,167 @@
         //add view for comments if present
         //[_caption sizeToFit];
         _caption.scrollEnabled = NO;
-        if (video.comments.count > 0 || YES) {
-            int height = self.frame.size.height;
-            NSArray *commentPreviews;
-            int offset = 0;
-            int startPointY = _caption.frame.origin.y + _caption.frame.size.height - 10;
-            UIButton *viewComments;
-            if (video.comments.count > 2) {
-                viewComments = [UIButton buttonWithType:UIButtonTypeCustom];
-                [viewComments setTitle:[NSString stringWithFormat:@"view all %d comments", video.comments.count] forState:UIControlStateNormal];
-                [viewComments.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
-                [viewComments setTitleColor:kColorLight forState:UIControlStateNormal];
-                [viewComments addTarget:self action:@selector(viewAllComments) forControlEvents:UIControlEventTouchUpInside];
-                NSRange lastThree = {video.comments.count - 3, 3};
-                commentPreviews = [video.comments subarrayWithRange:lastThree];
-            }
-            else {
-                commentPreviews = video.comments;
-            }
-            if (!_commentViews) {
-                _commentViews = [[NSMutableArray alloc] initWithCapacity:3];
-            }
-            int lastHeight;
-            int initialCommentY = startPointY + offset;
-            for (WMInteraction *comment in commentPreviews) {
-                MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + offset, 310, 35)];
-                NSRange range = {0, [(NSString *)comment.createdBy.username length]};
-                [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
-                [self addSubview:textView];
-                [_commentViews addObject:textView];
-                lastHeight = textView.frame.size.height - 7;
-                offset += textView.frame.size.height - 7;
-                height += textView.frame.size.height - 7;
-            }
-            
-            //add more view comment if neccessary
-            __block int commentOffset = offset - lastHeight;
-            if (viewComments) {
-                viewComments.frame = CGRectMake(20, startPointY + offset + 11, 280, 20);
-                [self addSubview:viewComments];
-                offset += 35;
-                height += 35;
-            }
+        _viewsLabel.text = [NSString stringWithFormat:@"%d", video.views];
+        _likesLabel.text = [NSString stringWithFormat:@"%d", video.likes.count];
+        _commentsLabel.text = [NSString stringWithFormat:@"%d", video.comments.count];
 
-            int x = 125;
-            UIButton *likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            likeButton.frame = CGRectMake(x, startPointY + offset, 24, 24);
-            [likeButton setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:kColorGray] forState:UIControlStateNormal];
-            [likeButton setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:kColorDark] forState:UIControlStateHighlighted];
-            [likeButton addTarget:self action:@selector(like:) forControlEvents:UIControlEventTouchUpInside];
-            [self addSubview:likeButton];
-            
-            bubble = [[WMCommentBubble alloc] initWithOrigin:CGPointMake(x + 38, startPointY + offset)];
-            bubble.delegate = self;
-            [bubble setTapped:^(BOOL commenting){
-                [UIView animateWithDuration:.175 animations:^{
-                    likeButton.alpha = commenting ? 0 : 1;
-                }completion:nil];
-            }];
+        int height = self.frame.size.height;
+        NSArray *commentPreviews;
+        int offset = 0;
+        int startPointY = _caption.frame.origin.y + _caption.frame.size.height - 10;
+        UIButton *viewComments;
+        if (video.comments.count > 2) {
+            viewComments = [UIButton buttonWithType:UIButtonTypeCustom];
+            [viewComments setTitle:[NSString stringWithFormat:@"view all %d comments", video.comments.count] forState:UIControlStateNormal];
+            [viewComments.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:13]];
+            [viewComments setTitleColor:kColorLight forState:UIControlStateNormal];
+            [viewComments addTarget:self action:@selector(viewAllComments) forControlEvents:UIControlEventTouchUpInside];
+            NSRange lastThree = {video.comments.count - 3, 3};
+            commentPreviews = [video.comments subarrayWithRange:lastThree];
+        }
+        else {
+            commentPreviews = video.comments;
+        }
+        if (!_commentViews) {
+            _commentViews = [[NSMutableArray alloc] initWithCapacity:3];
+        }
+        int lastHeight;
+        int initialCommentY = startPointY + offset;
+        for (WMInteraction *comment in commentPreviews) {
+            MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + offset, 310, 35)];
+            NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+            [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
+            [self addSubview:textView];
+            [_commentViews addObject:textView];
+            lastHeight = textView.frame.size.height - 7;
+            offset += textView.frame.size.height - 7;
+            height += textView.frame.size.height - 7;
+        }
+        
+        //add more view comment if neccessary
+        __block int commentOffset = offset - lastHeight;
+        if (viewComments) {
+            viewComments.frame = CGRectMake(20, startPointY + offset + 11, 280, 20);
+            [self addSubview:viewComments];
+            offset += 35;
+            height += 35;
+        }
+
+        int x = 125;
+        UIButton *likeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        likeButton.frame = CGRectMake(x, startPointY + offset, 24, 24);
+        [likeButton setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:kColorGray] forState:UIControlStateNormal];
+        [likeButton setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:kColorDark] forState:UIControlStateHighlighted];
+        [likeButton addTarget:self action:@selector(like:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:likeButton];
+        
+        bubble = [[WMCommentBubble alloc] initWithOrigin:CGPointMake(x + 38, startPointY + offset)];
+        bubble.delegate = self;
+        [bubble setTapped:^(BOOL commenting){
+            [UIView animateWithDuration:.175 animations:^{
+                likeButton.alpha = commenting ? 0 : 1;
+            }completion:nil];
+        }];
 //            
 //            MSTextView *textViewq = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + commentOffset, 310, 35)];
 //            NSRange range = {0, [@"mike" length]};
 //            [textViewq setText:[NSString stringWithFormat:@"%@ %@", @"mike", @"comment.body"] withLinkedRange:range];
 //            [self addSubview:textViewq];
-            
-            
-            __weak WMFeedCell *weakSelf = self;
-            [bubble setCommentCompletion:^(BOOL success, WMInteraction *comment){
-                if (success) {
-                    NSLog(@"Success!");
-                    if (weakSelf.commentViews.count < 3) {
-                        MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + commentOffset, 310, 35)];
-                        NSRange range = {0, [(NSString *)comment.createdBy.username length]};
-                        [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
-                        [weakSelf addSubview:textView];
-                        commentOffset += 35;
-                        
-                        [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                            likeButton.center = CGPointMake(likeButton.center.x, likeButton.center.y + 35);
-                            weakSelf.bubble.center = CGPointMake(weakSelf.bubble.center.x, weakSelf.bubble.center.y + 35);
-                        }completion:^(BOOL completed){
-                            weakSelf.heightChanged(weakSelf.frame.size.height + textView.frame.size.height - 7, YES);
-                        }];
-                        [weakSelf.commentViews addObject:textView];
-                    }
-                    else {
-                        //if the number of comment previews is greater than 3, remove the older comment and add the new one
-                        
-                        
-                        //slide out oldest comment
-                        UIView *view = weakSelf.commentViews[0];
-                        [UIView animateWithDuration:.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                            view.center = CGPointMake(view.center.x - 320, view.center.y);
-                        }completion:^(BOOL finished) {
-                            [weakSelf.commentViews removeObject:view];
-                        }];
-                        
-                        //shift previous comments
-                        //int shiftHeight = weakSelf.frame.size.height;
-                        int shiftOffset = 0;
-                        for (int i = 1; i < weakSelf.commentViews.count; i++) {
-                            UIView *shiftCommentView = weakSelf.commentViews[i];
-                            [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                                //shiftCommentView.center = CGPointMake(shiftCommentView.center.x, shiftCommentView.center.y - 35);
-                                shiftCommentView.frame = CGRectMake(5, initialCommentY + shiftOffset, 310, shiftCommentView.frame.size.height);
-                            }completion:nil];
-                            shiftOffset += shiftCommentView.frame.size.height - 7;
-                        }
-                        
-                        //create new textview
-                        MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5,  startPointY + shiftOffset, 310, 35)];
-                        NSRange range = {0, [(NSString *)comment.createdBy.username length]};
-                        [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
-                        textView.alpha = 0;
-                        [weakSelf addSubview:textView];
-                        [UIView animateWithDuration:.25 animations:^{
-                            textView.alpha = 1;
-                        }completion:nil];
-                        
-                        
-                        //take offset and add to height
-                        [UIView animateWithDuration:.25 animations:^{
-//                            viewComments.center = CGPointMake(viewComments.center.x, viewComments.center.y + shiftOffset  - viewComments.frame.origin.y);
-                            viewComments.frame = CGRectMake(viewComments.frame.origin.x, textView.frame.origin.y + textView.frame.size.height + 4, viewComments.frame.size.width, viewComments.frame.size.height);
-                            likeButton.frame = CGRectMake(likeButton.frame.origin.x, textView.frame.origin.y + textView.frame.size.height + 39, likeButton.frame.size.width, likeButton.frame.size.height);
-                            weakSelf.bubble.frame = CGRectMake(weakSelf.bubble.frame.origin.x, textView.frame.origin.y + textView.frame.size.height + 39, weakSelf.bubble.frame.size.width, weakSelf.bubble.frame.size.height);
-                        }completion:^(BOOL isCompleted){
-                            
-                        }];
-
-                        [weakSelf.commentViews addObject:textView];
-                    }
+        
+        
+        __weak WMFeedCell *weakSelf = self;
+        [bubble setCommentCompletion:^(BOOL success, WMInteraction *comment){
+            if (success) {
+                NSLog(@"Success!");
+                if (weakSelf.commentViews.count < 3) {
+                    MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5, startPointY + commentOffset, 310, 35)];
+                    NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+                    [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
+                    [weakSelf addSubview:textView];
+                    commentOffset += 35;
+                    
+                    [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                        likeButton.center = CGPointMake(likeButton.center.x, likeButton.center.y + 35);
+                        weakSelf.bubble.center = CGPointMake(weakSelf.bubble.center.x, weakSelf.bubble.center.y + 35);
+                    }completion:^(BOOL completed){
+                        weakSelf.heightChanged(weakSelf.frame.size.height + textView.frame.size.height - 7, YES);
+                    }];
+                    [weakSelf.commentViews addObject:textView];
                 }
-            }];
-            [self addSubview:bubble];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .15 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                _heightChanged(height + 100, YES);
-            });
-            
-            
+                else {
+                    //if the number of comment previews is greater than 3, remove the older comment and add the new one
+                    
+                    //slide out oldest comment
+                    UIView *view = weakSelf.commentViews[0];
+                    [UIView animateWithDuration:.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                        view.center = CGPointMake(view.center.x - 320, view.center.y);
+                    }completion:^(BOOL finished) {
+                        [weakSelf.commentViews removeObject:view];
+                    }];
+                    
+                    //shift previous comments
+                    //int shiftHeight = weakSelf.frame.size.height;
+                    int shiftOffset = 0;
+                    for (int i = 1; i < weakSelf.commentViews.count; i++) {
+                        UIView *shiftCommentView = weakSelf.commentViews[i];
+                        [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            //shiftCommentView.center = CGPointMake(shiftCommentView.center.x, shiftCommentView.center.y - 35);
+                            shiftCommentView.frame = CGRectMake(5, initialCommentY + shiftOffset, 310, shiftCommentView.frame.size.height);
+                        }completion:nil];
+                        shiftOffset += shiftCommentView.frame.size.height - 7;
+                    }
+                    
+                    //create new textview
+                    MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(5,  startPointY + shiftOffset, 310, 35)];
+                    NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+                    [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
+                    textView.alpha = 0;
+                    [weakSelf addSubview:textView];
+                    [UIView animateWithDuration:.25 animations:^{
+                        textView.alpha = 1;
+                    }completion:nil];
+                    
+                    //take offset and add to height
+                    int remainingViewOffset = textView.frame.origin.y + textView.frame.size.height + 4 - viewComments.frame.origin.y;
+                    weakSelf.heightChanged(likeButton.center.y + remainingViewOffset + likeButton.frame.size.height/2 + 10, YES);
+                    [UIView animateWithDuration:.25 animations:^{
+                        viewComments.center = CGPointMake(viewComments.center.x, viewComments.center.y + remainingViewOffset);
+                        likeButton.center = CGPointMake(likeButton.center.x, likeButton.center.y + remainingViewOffset);
+                        //weakSelf.bubble.center = CGPointMake(weakSelf.bubble.center.x, weakSelf.bubble.center.y + remainingViewOffset);
+
+                        
+                    }completion:^(BOOL isCompleted){
+//                            weakSelf.heightChanged(likeButton.frame.origin.y + likeButton.frame.size.height + 10, YES);
+                    }];
+                    [UIView animateWithDuration:2 animations:^{
+                        weakSelf.bubble.center = CGPointMake(weakSelf.bubble.center.x, weakSelf.bubble.center.y + remainingViewOffset);
+                    }completion:^(BOOL isCompleted){
+                        NSLog(@"textViewShift:%@", NSStringFromCGRect(weakSelf.bubble.frame));
+                    }];
+                    [weakSelf.commentViews addObject:textView];
+                }
+            }
+        }];
+        
+        if (video.liked) {
+            liked = YES;
+            _likesIcon.image = [UIImage ipMaskedImageNamed:@"Like-Small" color:kColorLight];
+            _likesLabel.textColor = kColorLight;
+            UIImage *purpleLike = [UIImage ipMaskedImageNamed:@"Like-Small" color:kColorDark];
+            [likeButton setImage:purpleLike forState:UIControlStateNormal];
+            [likeButton setImage:purpleLike forState:UIControlStateHighlighted];
         }
+        if (video.viewed) {
+            viewed = YES;
+            [_viewsIcon setImage:[UIImage ipMaskedImageNamed:@"View-Small" color:kColorLight]];
+            _viewsLabel.textColor = kColorLight;
+        }
+        [self addSubview:bubble];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .15 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            _heightChanged(height, YES);
+        });
+        
+            
         //get all users in video except poster
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             if (!cleanedCreators) {
@@ -300,15 +329,15 @@
         _url = url;
         if (!_player) {
             _player = [[MPMoviePlayerController alloc] init];
-            [_player setShouldAutoplay:YES];
-            [_player setRepeatMode:MPMovieRepeatModeOne];
+            //[_player setShouldAutoplay:YES];
+            //[_player setRepeatMode:MPMovieRepeatModeOne];
             [_player setFullscreen:NO];
             [_player setControlStyle:MPMovieControlStyleNone];
             [_player setScalingMode:MPMovieScalingModeAspectFill];
             _player.view.frame = _thumbnailView.frame;
             [self.contentView insertSubview:_player.view atIndex:0];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerLoadStateDidChange:) name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageRequestLoadFinished:) name:MPMoviePlayerThumbnailImageRequestDidFinishNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
         }
         [_player setContentURL:url];
     }
@@ -320,21 +349,22 @@
 
 - (void)like:(UIButton *)sender {
     liked = !liked;
-    UIColor *oldColor, *newColor;
+    _liked(liked);
+    UIColor *newLabelColor, *oldButtonColor, *newButtonColor;
     int i = 1;
     if (liked) {
-        newColor = kColorDark; oldColor = kColorGray;
+        newLabelColor = kColorLight; newButtonColor = kColorDark; oldButtonColor = kColorGray;
     }
     else {
-        newColor = kColorGray; oldColor = kColorDark;
+        newLabelColor = newButtonColor = kColorGray; oldButtonColor = kColorDark;
         i *= -1;
     }
-    _likesIcon.image = [UIImage ipMaskedImageNamed:@"Like-Small" color:newColor];
+    _likesIcon.image = [UIImage ipMaskedImageNamed:@"Like-Small" color:newLabelColor];
     int likes = [_likesLabel.text intValue];
     _likesLabel.text = [NSString stringWithFormat:@"%d", likes + i];
-    _likesLabel.textColor = newColor;
-    [sender setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:newColor] forState:UIControlStateNormal];
-    [sender setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:oldColor] forState:UIControlStateHighlighted];
+    _likesLabel.textColor = newLabelColor;
+    [sender setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:newButtonColor] forState:UIControlStateNormal];
+    [sender setImage:[UIImage ipMaskedImageNamed:@"Like-Small" color:oldButtonColor] forState:UIControlStateHighlighted];
     [UIView animateWithDuration: 0.15 delay: 0 options: UIViewAnimationOptionCurveEaseOut animations:^{
         sender.transform = CGAffineTransformScale(sender.transform, 1.4, 1.4);
     } completion:^(BOOL completed) {

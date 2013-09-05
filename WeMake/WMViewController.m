@@ -8,7 +8,12 @@
 
 #import "WMViewController.h"
 
+#import "Constants.h"
+#import "UIImage+WeMake.h"
+
+
 #define kAnimationTime .2
+#define PULL_THRESHOLD 300
 
 @interface WMViewController ()
 
@@ -28,6 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [_mainButton setImage:[UIImage ipMaskedImageNamed:@"Chevron" color:kColorDark] forState:UIControlStateNormal];
     UIImageView *redCircle = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
     redCircle.image = [UIImage imageNamed:@"redCircle"];
     UIImageView *redCircle2 = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
@@ -55,11 +62,56 @@
     _feedButton.translatesAutoresizingMaskIntoConstraints = YES;
     _cameraButton.translatesAutoresizingMaskIntoConstraints = YES;
     _notificationButton.translatesAutoresizingMaskIntoConstraints = YES;
+    [_mainButton removeFromSuperview];
+    
+    
+    UIPanGestureRecognizer *rightGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragging:)];
+    [self.view addGestureRecognizer:rightGesture];
+}
+
+- (void)dragging:(UIPanGestureRecognizer *)recognizer {
+    CGPoint newPoint = [recognizer locationInView:self.view];
+    
+    if(recognizer.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"Received a pan gesture");
+        initialPoint = newPoint;
+        
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded) {
+        [UIView animateWithDuration:.5 animations:^{
+            _chevron.center = CGPointMake(21, 548);
+        }completion:^(BOOL isCompleted){
+            blurView.alpha = 0;
+        }];
+    }
+    else {
+        if (newPoint.x > PULL_THRESHOLD) {
+            [UIView animateWithDuration:.5 animations:^{
+                _chevron.center = CGPointMake(21, 548);
+            }completion:^(BOOL isCompleted){
+                blurView.alpha = 0;
+            }];
+        }
+        else {
+            float delta = newPoint.x-initialPoint.x;
+            _chevron.center = CGPointMake(_chevron.center.x + delta, _chevron.center.y);
+            initialPoint = newPoint;
+            blurView.alpha = newPoint.x/PULL_THRESHOLD;
+        }
+        
+        
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self feedTappedAnimated:NO];
+    blurView = [[FXBlurView alloc] initWithFrame:self.view.window.bounds];
+    [blurView setBlurRadius:10];
+    blurView.alpha = 0.0;
+    [blurView setDynamic:YES];
+    [self.view addSubview:blurView];
+    //_scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width + 1, _scrollView.frame.size.height);
 //    NSLog(@"BC:%@", NSStringFromCGPoint(_feedButton.center));
 //    [UIView animateWithDuration:.5 animations:^{
 //        [_feedButton setCenter:CGPointMake(_feedButton.center.x + 110, _feedButton.center.y)];
@@ -78,77 +130,79 @@
 }
 
 - (IBAction)mainTapped:(UIButton *)sender {
-    if (sender.tag == 100) {
-        _mainButton.hidden = NO;
-        [UIView animateWithDuration:.4 animations:^{
-            sender.alpha = 0.0;
-            _mainButton.alpha = 1.0;
-        }completion:^(BOOL isCompleted){
-            [sender removeFromSuperview];
-        }];
-        
-        
-        [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _notificationButton.center = CGPointMake(_notificationButton.center.x - 110, _notificationButton.center.y);
-        }completion:nil];
-        
-        [UIView animateWithDuration:kAnimationTime delay:.1 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _cameraButton.center = CGPointMake(_cameraButton.center.x - 110, _cameraButton.center.y);
-        }completion:nil];
-        
-        [UIView animateWithDuration:kAnimationTime delay:.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _feedButton.center = CGPointMake(_feedButton.center.x - 110, _feedButton.center.y);
-        }completion:nil];
-    }
-    else {
-        UIButton *overlay = [UIButton buttonWithType:UIButtonTypeCustom];
-        overlay.backgroundColor = [UIColor colorWithWhite:.7 alpha:.5];
-        overlay.frame = self.view.bounds;
-        overlay.alpha = 0.0;
-        overlay.tag = 100;
-        [overlay addTarget:self action:@selector(mainTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view insertSubview:overlay atIndex:1];
-
-        
-        [UIView animateWithDuration:.4 animations:^{
-            overlay.alpha = 1.0;
-            _mainButton.alpha = 0.0;
-        }completion:^(BOOL isCompleted){
-            _mainButton.hidden = YES;
-        }];
-        
-        int offset = 7;
-        [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _feedButton.center = CGPointMake(_feedButton.center.x + 110 + offset, _feedButton.center.y);
-        }completion:^(BOOL complation){
-             [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                 _feedButton.center = CGPointMake(_feedButton.center.x - offset, _feedButton.center.y);
-             }completion:nil];
-         }];
-        
-        [UIView animateWithDuration:kAnimationTime delay:.1 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _cameraButton.center = CGPointMake(_cameraButton.center.x + 110 + offset, _cameraButton.center.y);
-        }completion:^(BOOL complation){
-            [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                _cameraButton.center = CGPointMake(_cameraButton.center.x - offset, _cameraButton.center.y);
-            }completion:nil];
-        }];
-        
-        [UIView animateWithDuration:kAnimationTime delay:.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _notificationButton.center = CGPointMake(_notificationButton.center.x + 110 + offset, _notificationButton.center.y);
-        }completion:^(BOOL complation){
-            [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                _notificationButton.center = CGPointMake(_notificationButton.center.x - offset, _notificationButton.center.y);
-            }completion:nil];
-        }];
-    }
+//    if (sender.tag == 100) {
+//        _mainButton.hidden = NO;
+//        [UIView animateWithDuration:.4 animations:^{
+//            sender.alpha = 0.0;
+//            _mainButton.alpha = 1.0;
+//        }completion:^(BOOL isCompleted){
+//            [sender removeFromSuperview];
+//        }];
+//        
+//        
+//        [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            _notificationButton.center = CGPointMake(_notificationButton.center.x - 110, _notificationButton.center.y);
+//        }completion:nil];
+//        
+//        [UIView animateWithDuration:kAnimationTime delay:.1 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            _cameraButton.center = CGPointMake(_cameraButton.center.x - 110, _cameraButton.center.y);
+//        }completion:nil];
+//        
+//        [UIView animateWithDuration:kAnimationTime delay:.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            _feedButton.center = CGPointMake(_feedButton.center.x - 110, _feedButton.center.y);
+//        }completion:nil];
+//    }
+//    else {
+//        UIButton *overlay = [UIButton buttonWithType:UIButtonTypeCustom];
+//        overlay.backgroundColor = [UIColor colorWithWhite:.7 alpha:.5];
+//        overlay.frame = self.view.bounds;
+//        overlay.alpha = 0.0;
+//        overlay.tag = 100;
+//        [overlay addTarget:self action:@selector(mainTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.view insertSubview:overlay atIndex:1];
+//
+//        
+//        [UIView animateWithDuration:.4 animations:^{
+//            overlay.alpha = 1.0;
+//            _mainButton.alpha = 0.0;
+//        }completion:^(BOOL isCompleted){
+//            _mainButton.hidden = YES;
+//        }];
+//        
+//        int offset = 7;
+//        [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            _feedButton.center = CGPointMake(_feedButton.center.x + 110 + offset, _feedButton.center.y);
+//        }completion:^(BOOL complation){
+//             [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//                 _feedButton.center = CGPointMake(_feedButton.center.x - offset, _feedButton.center.y);
+//             }completion:nil];
+//         }];
+//        
+//        [UIView animateWithDuration:kAnimationTime delay:.1 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            _cameraButton.center = CGPointMake(_cameraButton.center.x + 110 + offset, _cameraButton.center.y);
+//        }completion:^(BOOL complation){
+//            [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//                _cameraButton.center = CGPointMake(_cameraButton.center.x - offset, _cameraButton.center.y);
+//            }completion:nil];
+//        }];
+//        
+//        [UIView animateWithDuration:kAnimationTime delay:.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            _notificationButton.center = CGPointMake(_notificationButton.center.x + 110 + offset, _notificationButton.center.y);
+//        }completion:^(BOOL complation){
+//            [UIView animateWithDuration:kAnimationTime delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//                _notificationButton.center = CGPointMake(_notificationButton.center.x - offset, _notificationButton.center.y);
+//            }completion:nil];
+//        }];
+//    }
     
     
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
+
+#pragma mark - ViewController Selection
 
 - (void)check {
     if ([feedViewController.view isDescendantOfView:self.view]) {
@@ -257,5 +311,12 @@
     [UIView animateWithDuration:kAnimationTime delay:.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
         _feedButton.center = CGPointMake(_feedButton.center.x - 110, _feedButton.center.y);
     }completion:nil];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"OFF%f", scrollView.contentOffset.x);
+    blurView.alpha = scrollView.contentOffset.x/scrollView.frame.size.width;
 }
 @end

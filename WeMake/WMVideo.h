@@ -18,6 +18,8 @@
 @property (nonatomic, assign) NSInteger views;
 @property (nonatomic, strong) NSArray *likes;
 @property (nonatomic, strong) NSArray *comments;
+@property (nonatomic, assign) BOOL viewed;
+@property (nonatomic, assign) BOOL liked;
 @property (nonatomic, strong) WMUser *poster;
 
 + (NSArray *)videosWithArray:(NSArray *)videosArray;
