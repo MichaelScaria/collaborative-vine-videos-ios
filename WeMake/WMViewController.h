@@ -18,13 +18,16 @@
     WMUploadViewController *uploadViewController;
     WMNotificationViewController *notificationViewController;
     
-    FXBlurView *blurView;
     CGPoint initialPoint;
+    BOOL validPan;
+    BOOL menuDisplayed;
+    BOOL animatingChevron;
 }
 
-@property (strong, nonatomic) IBOutlet UIImageView *chevron;
+@property (strong, nonatomic) IBOutlet UIView *contentView;
+@property (strong, nonatomic) IBOutlet FXBlurView *blurView;
+@property (strong, nonatomic) IBOutlet UIButton *chevron;
 
-@property (strong, nonatomic) IBOutlet UIButton *mainButton;
 @property (strong, nonatomic) IBOutlet UIButton *feedButton;
 @property (strong, nonatomic) IBOutlet UIButton *cameraButton;
 @property (strong, nonatomic) IBOutlet UIButton *notificationButton;

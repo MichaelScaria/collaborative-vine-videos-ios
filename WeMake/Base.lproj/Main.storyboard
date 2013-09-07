@@ -9,15 +9,27 @@
             <objects>
                 <viewController id="xbO-tO-2hg" customClass="WMViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xyY-1X-yhZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="09g-gk-XvN"/>
+                        <viewControllerLayoutGuide type="top" id="Sk2-D8-0Hl"/>
+                        <viewControllerLayoutGuide type="bottom" id="985-BF-sEr"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ITi-CC-OFw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-cG-bes" userLabel="Main">
-                                <rect key="frame" x="28" y="440" width="30" height="30"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="97S-Pq-49g" userLabel="Content View">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r0M-1f-Mm8" customClass="FXBlurView">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-cG-bes" userLabel="Chevron">
+                                <rect key="frame" x="10" y="522" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" image="Chevron.png">
@@ -28,7 +40,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLb-SV-MX4" userLabel="Feed">
-                                <rect key="frame" x="-102" y="458" width="100" height="25"/>
+                                <rect key="frame" x="-105" y="450" width="100" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal">
@@ -40,7 +52,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zB-4d-f5K" userLabel="Camera">
-                                <rect key="frame" x="-102" y="498" width="100" height="25"/>
+                                <rect key="frame" x="-105" y="490" width="100" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal">
@@ -52,7 +64,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysV-HB-nR6" userLabel="Notification">
-                                <rect key="frame" x="-102" y="538" width="100" height="25"/>
+                                <rect key="frame" x="-105" y="530" width="100" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal">
@@ -63,32 +75,29 @@
                                     <action selector="notificationTapped:" destination="xbO-tO-2hg" eventType="touchUpInside" id="lwq-F6-nJj"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blueCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="7Gx-po-sy7">
-                                <rect key="frame" x="6" y="533" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="blurView" destination="r0M-1f-Mm8" id="5EG-fx-ce4"/>
                         <outlet property="cameraButton" destination="6zB-4d-f5K" id="Jer-ev-yeE"/>
-                        <outlet property="chevron" destination="7Gx-po-sy7" id="GD2-7F-T79"/>
+                        <outlet property="chevron" destination="Ej1-cG-bes" id="p6w-Vy-X96"/>
+                        <outlet property="contentView" destination="97S-Pq-49g" id="2W4-dh-mJV"/>
                         <outlet property="feedButton" destination="oLb-SV-MX4" id="5CV-HB-3oH"/>
-                        <outlet property="mainButton" destination="Ej1-cG-bes" id="4sw-2c-gX6"/>
                         <outlet property="notificationButton" destination="ysV-HB-nR6" id="d6B-07-Vxd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eCr-8L-bex" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-790" y="-1506"/>
+            <point key="canvasLocation" x="-777" y="-1499"/>
         </scene>
         <!--Feed View Controller - Item-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController storyboardIdentifier="Feed" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="WMFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bym-fn-GtB"/>
-                        <viewControllerLayoutGuide type="bottom" id="Ytq-oX-B08"/>
+                        <viewControllerLayoutGuide type="top" id="3iw-pM-LkD"/>
+                        <viewControllerLayoutGuide type="bottom" id="UV7-fq-uvd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -223,8 +232,8 @@
             <objects>
                 <viewController storyboardIdentifier="Camera" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cVa-bO-kS4" customClass="WMCameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="OWa-yN-7TY"/>
-                        <viewControllerLayoutGuide type="bottom" id="X5B-3B-dSN"/>
+                        <viewControllerLayoutGuide type="top" id="ohC-c8-FGt"/>
+                        <viewControllerLayoutGuide type="bottom" id="VHI-Ni-ieN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VDo-lM-Db9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -240,17 +249,6 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cnn-oq-Bne">
-                                <rect key="frame" x="10" y="20" width="33" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="X">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="cancel:" destination="cVa-bO-kS4" eventType="touchUpInside" id="9H1-gD-eqa"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjs-gS-pHa">
                                 <rect key="frame" x="265" y="18" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -394,8 +392,8 @@
             <objects>
                 <viewController storyboardIdentifier="Review" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1tk-5V-gFP" customClass="WMReviewViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="rz7-f9-Sh9"/>
-                        <viewControllerLayoutGuide type="bottom" id="SFq-N5-pB8"/>
+                        <viewControllerLayoutGuide type="top" id="zs7-EF-rrh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hpe-TL-1Hy"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sFS-Q6-3En">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -444,8 +442,8 @@
             <objects>
                 <viewController storyboardIdentifier="Request" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NfC-rA-knd" customClass="WMRequestViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="P2b-g5-3lE"/>
-                        <viewControllerLayoutGuide type="bottom" id="i28-Ty-av1"/>
+                        <viewControllerLayoutGuide type="top" id="PEY-A8-pz6"/>
+                        <viewControllerLayoutGuide type="bottom" id="DFg-Yn-vUb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="A1p-86-Tws">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -544,8 +542,8 @@
             <objects>
                 <viewController storyboardIdentifier="Post" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sFY-Md-A5G" customClass="WMPostViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6us-nU-i5w"/>
-                        <viewControllerLayoutGuide type="bottom" id="dfY-ak-0AZ"/>
+                        <viewControllerLayoutGuide type="top" id="KtS-Ub-uf0"/>
+                        <viewControllerLayoutGuide type="bottom" id="fnk-7A-NDJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VF1-8c-cg0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -623,8 +621,8 @@
             <objects>
                 <viewController storyboardIdentifier="Upload" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0z4-H2-NKP" customClass="WMUploadViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MzX-HP-fjx"/>
-                        <viewControllerLayoutGuide type="bottom" id="Fc6-re-JWZ"/>
+                        <viewControllerLayoutGuide type="top" id="Fsy-SQ-Ity"/>
+                        <viewControllerLayoutGuide type="bottom" id="EUx-MJ-D0W"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7Y3-0p-syB" userLabel="View" customClass="UIScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -641,8 +639,8 @@
             <objects>
                 <viewController id="Jov-jq-qaX" customClass="WMLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IJn-K3-ebQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="S7j-my-dsi"/>
+                        <viewControllerLayoutGuide type="top" id="mfa-Zw-xEt"/>
+                        <viewControllerLayoutGuide type="bottom" id="yLN-im-WZl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fqQ-3l-icv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -762,8 +760,8 @@
             <objects>
                 <viewController restorationIdentifier="Notification" storyboardIdentifier="Notification" id="Hxa-wS-fqj" customClass="WMNotificationViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IpL-Ql-htR"/>
-                        <viewControllerLayoutGuide type="bottom" id="kki-mz-ZJg"/>
+                        <viewControllerLayoutGuide type="top" id="4G0-jk-3Dv"/>
+                        <viewControllerLayoutGuide type="bottom" id="rMo-r6-kb7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="I1H-Rx-oEp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -857,7 +855,6 @@
         <image name="Grid" width="56" height="56"/>
         <image name="Like-Small.png" width="40" height="40"/>
         <image name="View-Small.png" width="36" height="20"/>
-        <image name="blueCircle.png" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
