@@ -9,8 +9,8 @@
             <objects>
                 <viewController id="xbO-tO-2hg" customClass="WMViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Sk2-D8-0Hl"/>
-                        <viewControllerLayoutGuide type="bottom" id="985-BF-sEr"/>
+                        <viewControllerLayoutGuide type="top" id="ebV-ep-M2g"/>
+                        <viewControllerLayoutGuide type="bottom" id="cz9-vA-6qA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ITi-CC-OFw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -29,7 +29,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-cG-bes" userLabel="Chevron">
-                                <rect key="frame" x="10" y="522" width="30" height="30"/>
+                                <rect key="frame" x="10" y="519" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" image="Chevron.png">
@@ -96,8 +96,8 @@
             <objects>
                 <viewController storyboardIdentifier="Feed" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vXZ-lx-hvc" customClass="WMFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="3iw-pM-LkD"/>
-                        <viewControllerLayoutGuide type="bottom" id="UV7-fq-uvd"/>
+                        <viewControllerLayoutGuide type="top" id="n05-5v-smN"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Zy-om-QEU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -232,8 +232,8 @@
             <objects>
                 <viewController storyboardIdentifier="Camera" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cVa-bO-kS4" customClass="WMCameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ohC-c8-FGt"/>
-                        <viewControllerLayoutGuide type="bottom" id="VHI-Ni-ieN"/>
+                        <viewControllerLayoutGuide type="top" id="uvd-dS-Nrl"/>
+                        <viewControllerLayoutGuide type="bottom" id="3QR-6s-uuu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VDo-lM-Db9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -250,10 +250,11 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjs-gS-pHa">
-                                <rect key="frame" x="265" y="18" width="46" height="30"/>
+                                <rect key="frame" x="138" y="430" width="46" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Next">
+                                    <color key="titleColor" red="0.61568627450000002" green="0.33725490200000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -261,10 +262,11 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5uf-Y8-hK1">
-                                <rect key="frame" x="265" y="36" width="46" height="30"/>
+                                <rect key="frame" x="138" y="430" width="46" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Done">
+                                    <color key="titleColor" red="0.61568627450000002" green="0.33725490200000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -272,8 +274,9 @@
                                 </connections>
                             </button>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jfg-xq-0W4">
-                                <rect key="frame" x="10" y="20" width="300" height="2"/>
+                                <rect key="frame" x="10" y="30" width="300" height="2"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="progressTintColor" red="0.61568627450980395" green="0.33725490196078434" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XO9-MK-w7B" userLabel="Flip Button">
                                 <rect key="frame" x="68" y="523" width="28" height="21"/>
@@ -392,19 +395,19 @@
             <objects>
                 <viewController storyboardIdentifier="Review" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1tk-5V-gFP" customClass="WMReviewViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zs7-EF-rrh"/>
-                        <viewControllerLayoutGuide type="bottom" id="Hpe-TL-1Hy"/>
+                        <viewControllerLayoutGuide type="top" id="1Lr-CR-mf8"/>
+                        <viewControllerLayoutGuide type="bottom" id="rAa-Pc-yCw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sFS-Q6-3En">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9E7-iY-3m6">
-                                <rect key="frame" x="124" y="489" width="73" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9E7-iY-3m6">
+                                <rect key="frame" x="125" y="438" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Next">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.61568627450000002" green="0.33725490200000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -415,11 +418,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rVn-zu-zcz">
-                                <rect key="frame" x="9" y="20" width="73" height="44"/>
+                                <rect key="frame" x="9" y="22" width="46" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" red="0.61568627450000002" green="0.33725490200000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -430,8 +433,12 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="backButton" destination="rVn-zu-zcz" id="4P1-AR-tnu"/>
+                        <outlet property="nextButton" destination="9E7-iY-3m6" id="Tut-dh-lkO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HG3-Bf-MWa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -442,8 +449,8 @@
             <objects>
                 <viewController storyboardIdentifier="Request" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NfC-rA-knd" customClass="WMRequestViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="PEY-A8-pz6"/>
-                        <viewControllerLayoutGuide type="bottom" id="DFg-Yn-vUb"/>
+                        <viewControllerLayoutGuide type="top" id="CXB-S9-KtO"/>
+                        <viewControllerLayoutGuide type="bottom" id="gT6-gh-pjc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="A1p-86-Tws">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -542,8 +549,8 @@
             <objects>
                 <viewController storyboardIdentifier="Post" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sFY-Md-A5G" customClass="WMPostViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="KtS-Ub-uf0"/>
-                        <viewControllerLayoutGuide type="bottom" id="fnk-7A-NDJ"/>
+                        <viewControllerLayoutGuide type="top" id="5pT-IA-Ame"/>
+                        <viewControllerLayoutGuide type="bottom" id="HAY-Fs-QFx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VF1-8c-cg0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -621,8 +628,8 @@
             <objects>
                 <viewController storyboardIdentifier="Upload" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0z4-H2-NKP" customClass="WMUploadViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Fsy-SQ-Ity"/>
-                        <viewControllerLayoutGuide type="bottom" id="EUx-MJ-D0W"/>
+                        <viewControllerLayoutGuide type="top" id="WqU-PI-ob6"/>
+                        <viewControllerLayoutGuide type="bottom" id="xKw-c0-rcp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7Y3-0p-syB" userLabel="View" customClass="UIScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -639,8 +646,8 @@
             <objects>
                 <viewController id="Jov-jq-qaX" customClass="WMLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mfa-Zw-xEt"/>
-                        <viewControllerLayoutGuide type="bottom" id="yLN-im-WZl"/>
+                        <viewControllerLayoutGuide type="top" id="EL6-ET-qnk"/>
+                        <viewControllerLayoutGuide type="bottom" id="NqB-Nf-omC"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fqQ-3l-icv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -760,8 +767,8 @@
             <objects>
                 <viewController restorationIdentifier="Notification" storyboardIdentifier="Notification" id="Hxa-wS-fqj" customClass="WMNotificationViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4G0-jk-3Dv"/>
-                        <viewControllerLayoutGuide type="bottom" id="rMo-r6-kb7"/>
+                        <viewControllerLayoutGuide type="top" id="H21-cd-QzU"/>
+                        <viewControllerLayoutGuide type="bottom" id="afh-Qe-Qqk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="I1H-Rx-oEp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>

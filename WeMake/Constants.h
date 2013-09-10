@@ -15,7 +15,7 @@
 #define kColorGray [UIColor colorWithRed:212/255.0 green:212/255.0 blue:212/255.0 alpha:1]
 //#define kColorGray [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1]
 
-#define kTotalVideoTime 10.0
+#define kTotalVideoTime 8
 #define kMinimumLength 8.0
 
 #endif

@@ -36,11 +36,14 @@
     
     [_chevron setImage:[UIImage ipMaskedImageNamed:@"Chevron" color:kColorDark] forState:UIControlStateNormal];
     UIImageView *redCircle = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
-    redCircle.image = [UIImage imageNamed:@"feed-menu"];
-    UIImageView *redCircle2 = [[UIImageView alloc] initWithFrame:CGRectMake(0,5,30,21)];
-    redCircle2.image = [UIImage imageNamed:@"camera-menu"];
-    UIImageView *redCircle3 = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,30,30)];
-    redCircle3.image = [UIImage imageNamed:@"redCircle"];
+//    redCircle.image = [UIImage imageNamed:@"feed-menu"];
+    redCircle.image = [UIImage ipMaskedImageNamed:@"feed-menu" color:[UIColor colorWithWhite:.65 alpha:1]];
+    UIImageView *redCircle2 = [[UIImageView alloc] initWithFrame:CGRectMake(0,4,30,21)];
+//    redCircle2.image = [UIImage imageNamed:@"camera-menu"];
+    redCircle2.image = [UIImage ipMaskedImageNamed:@"camera-menu" color:[UIColor colorWithWhite:.65 alpha:1]];
+    UIImageView *redCircle3 = [[UIImageView alloc] initWithFrame:CGRectMake(0,4,30,20)];
+//    redCircle3.image = [UIImage imageNamed:@"notification-menu"];
+    redCircle3.image = [UIImage ipMaskedImageNamed:@"notification-menu" color:[UIColor colorWithWhite:.65 alpha:1]];
     [_feedButton addSubview:redCircle];
     [_cameraButton addSubview:redCircle2];
     [_notificationButton addSubview:redCircle3];
@@ -54,7 +57,7 @@
     camera.textColor = [UIColor blackColor];
     camera.text = @"camera";
     [_cameraButton addSubview:camera];
-    UILabel *notifications = [[UILabel alloc] initWithFrame:CGRectMake(35, -2, 110, 30)];
+    UILabel *notifications = [[UILabel alloc] initWithFrame:CGRectMake(30, -2, 110, 30)];
     notifications.font = [UIFont systemFontOfSize:13];
     notifications.textColor = [UIColor blackColor];
     notifications.text = @"notifications";
@@ -99,6 +102,7 @@
             initialPoint = newPoint;
             validPan = YES;
         }
+        actionForTouch = NO;
     }
     else if (recognizer.state == UIGestureRecognizerStateEnded) {
         if (validPan) {
@@ -118,9 +122,10 @@
     }
     else {
         if (validPan && !animatingChevron) {
-            if (newPoint.x > PULL_THRESHOLD || menuDisplayed) {
+            if ((newPoint.x > PULL_THRESHOLD || menuDisplayed) && !actionForTouch) {
                 animatingChevron = YES;
                 [self menu];
+                actionForTouch = YES;
             }
             else {
                 float delta = newPoint.x-initialPoint.x;

@@ -8,6 +8,8 @@
 
 #import "WMReviewViewController.h"
 
+#import "Constants.h"
+
 @interface WMReviewViewController ()
 
 @end
@@ -22,7 +24,7 @@
     [player setRepeatMode:MPMovieRepeatModeOne];
     [player setFullscreen:NO];
     [player setControlStyle:MPMovieControlStyleNone];
-    [player.view setFrame:CGRectMake(0, 100, 320, 320)];
+    [player.view setFrame:CGRectMake(0, 80, 320, 320)];
     [player setScalingMode:MPMovieScalingModeAspectFill];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerLoadStateDidChange:) name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageRequestLoadFinished:) name:MPMoviePlayerThumbnailImageRequestDidFinishNotification object:nil];
@@ -31,6 +33,15 @@
     aiv.tag = 10;
     [self.view addSubview:aiv];
     [aiv startAnimating];
+    
+    _nextButton.layer.cornerRadius = _nextButton.frame.size.width/2;
+    _nextButton.layer.masksToBounds = YES;
+    _nextButton.layer.borderWidth = 1;
+    _nextButton.layer.borderColor = kColorLight.CGColor;
+    _backButton.layer.cornerRadius = _backButton.frame.size.width/2;
+    _backButton.layer.masksToBounds = YES;
+    _backButton.layer.borderWidth = 1;
+    _backButton.layer.borderColor = kColorLight.CGColor;
 }
 
 - (void)playerLoadStateDidChange:(NSNotification *)notification

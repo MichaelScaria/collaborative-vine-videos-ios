@@ -22,6 +22,7 @@
     BOOL validPan;
     BOOL menuDisplayed;
     BOOL animatingChevron;
+    BOOL actionForTouch;//if the menu has been already presented for the touch, ignore future changes
 }
 
 @property (strong, nonatomic) IBOutlet UIView *contentView;

@@ -21,6 +21,8 @@
 }
 @property (nonatomic, strong) id <WMReviewViewControllerDelegate>delegate;
 @property (nonatomic, strong) NSURL *url;
+@property (strong, nonatomic) IBOutlet UIButton *nextButton;
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
 - (IBAction)next:(id)sender;
 - (IBAction)back:(id)sender;
 @end

@@ -10,7 +10,7 @@
 
 @protocol WMRequestViewControllerDelegate <NSObject>
 - (void)sendToFollowers:(NSString *)followers;
-- (void)cancel;
+- (void)cancelInvites;
 @end
 
 @interface WMRequestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {

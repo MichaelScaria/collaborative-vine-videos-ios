@@ -31,7 +31,7 @@
 }
 
 - (IBAction)cancel:(id)sender {
-    [self.delegate cancel];
+    [self.delegate cancelInvites];
 }
 
 #pragma mark UITableViewDataSource

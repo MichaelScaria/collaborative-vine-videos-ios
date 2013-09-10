@@ -45,7 +45,7 @@
         NSLog(@"Failed to create ES context");
     }
     maxLength = kTotalVideoTime - _lengthOfInitialVideo;
-    _doneButton.hidden = _lengthOfInitialVideo < kMinimumLength;
+    [self displayDone:_lengthOfInitialVideo > kMinimumLength animated:NO];
     if (_creators.count > 0) {
         //creatorsTableViewController = [[WMCreatorsViewController alloc] initWithCreators:_creators];
         creatorsTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Creator"];
@@ -109,7 +109,18 @@
     
     [self.flipButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     [self.focusButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+    
+    [_finishButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     _finishButton.enabled = NO;
+    _finishButton.layer.cornerRadius = _finishButton.frame.size.width/2;
+    _finishButton.layer.masksToBounds = YES;
+    _finishButton.layer.borderWidth = 1;
+    _finishButton.layer.borderColor = [UIColor grayColor].CGColor;
+    
+    _doneButton.layer.cornerRadius = _doneButton.frame.size.width/2;
+    _doneButton.layer.masksToBounds = YES;
+    _doneButton.layer.borderWidth = 1;
+    _doneButton.layer.borderColor = kColorLight.CGColor;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -243,15 +254,38 @@
 
 - (void)time {
     secondsElapsed += kTimeInterval;
-    _finishButton.enabled = secondsElapsed > 1;
+    if (secondsElapsed > 1) {
+        _finishButton.enabled = YES;
+        _finishButton.layer.borderColor = kColorLight.CGColor;
+    }
     if (secondsElapsed > maxLength) {
+        progress.progress = 1;
         [timer invalidate];
         [self stopRecording];
     }
     else
         progress.progress = secondsElapsed/maxLength;
     if (_lengthOfInitialVideo + secondsElapsed >= kMinimumLength) {
+        [self displayDone:YES animated:YES];
+        
+    }
+}
+         
+- (void)displayDone:(BOOL)displayDone animated:(BOOL)animated {
+    if (displayDone) {
+        //animate done button
         _doneButton.hidden = NO;
+        int offset = 5;
+        float radius = _finishButton.frame.size.width/2;
+        
+        [UIView animateWithDuration:animated ? .5 : 0 animations:^{
+            _finishButton.center = CGPointMake(self.view.bounds.size.width/2 - radius - offset, _finishButton.center.y);
+            _doneButton.center = CGPointMake(self.view.bounds.size.width/2 + radius + offset, _doneButton.center.y);
+        }completion:nil];
+        
+    }
+    else {
+        _doneButton.hidden = YES;
     }
 }
 
@@ -309,7 +343,7 @@
 }
 
 - (UIBezierPath*)pathWithRect:(CGRect)rect{
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:rect];
     
     CGFloat offset = rect.size.width/10.0;
     CGPoint origin = rect.origin;
@@ -377,17 +411,6 @@
     
     [self.videoPreviewView.layer addSublayer:focusGrid];
     focusGrid.mask = maskLayert;
-    
-    CABasicAnimation *animationColor = [CABasicAnimation animationWithKeyPath:@"fillColor"];
-    animationColor.duration = 0.50;
-    animationColor.repeatCount = 199;
-    animationColor.removedOnCompletion = NO;
-    animationColor.fillMode = kCAFillModeForwards;
-    animationColor.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    animationColor.fromValue = (id)[UIColor blueColor].CGColor;
-    
-    animationColor.toValue = (id)[UIColor clearColor].CGColor;
-    [focusGrid addAnimation:animationColor forKey:@"animateColor"];
     
     [CATransaction begin];
     
@@ -492,6 +515,8 @@
             self.focusButton.enabled = YES;
             secondsElapsed = 0;
             progress.progress = 0.0;
+            _finishButton.enabled = NO;
+            _finishButton.layer.borderColor = [UIColor grayColor].CGColor;
         });
         dispatch_async(movieWritingQueue, ^{
             recordingWillBeStopped = NO;

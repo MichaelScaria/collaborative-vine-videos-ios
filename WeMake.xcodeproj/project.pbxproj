@@ -69,6 +69,7 @@
 		9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */; };
 		9EAC48F117DBEF970011AD42 /* feed-menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EAC48F017DBEF970011AD42 /* feed-menu@2x.png */; };
 		9EAC48F317DBF1DA0011AD42 /* camera-menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EAC48F217DBF1DA0011AD42 /* camera-menu@2x.png */; };
+		9EAC48F517DC29960011AD42 /* notification-menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EAC48F417DC29960011AD42 /* notification-menu@2x.png */; };
 		9EB31E0E17C0132400A82277 /* WMFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB31E0D17C0132400A82277 /* WMFeedCell.m */; };
 		9EBC0AB417A4A4D8009901BB /* test.mov in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC0AB317A4A4D8009901BB /* test.mov */; };
 		9ED093991782AC0800EA1D90 /* WMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E128178040CB00E403A4 /* WMAppDelegate.m */; };
@@ -204,6 +205,7 @@
 		9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCameraViewController.m; sourceTree = "<group>"; };
 		9EAC48F017DBEF970011AD42 /* feed-menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feed-menu@2x.png"; sourceTree = "<group>"; };
 		9EAC48F217DBF1DA0011AD42 /* camera-menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-menu@2x.png"; sourceTree = "<group>"; };
+		9EAC48F417DC29960011AD42 /* notification-menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification-menu@2x.png"; sourceTree = "<group>"; };
 		9EB31E0C17C0132400A82277 /* WMFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMFeedCell.h; sourceTree = "<group>"; };
 		9EB31E0D17C0132400A82277 /* WMFeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMFeedCell.m; sourceTree = "<group>"; };
 		9EBC0AB317A4A4D8009901BB /* test.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.mov; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				9E94DB5017C2C3C6004B0B3C /* Disclosure.png */,
 				9EAC48F017DBEF970011AD42 /* feed-menu@2x.png */,
 				9EAC48F217DBF1DA0011AD42 /* camera-menu@2x.png */,
+				9EAC48F417DC29960011AD42 /* notification-menu@2x.png */,
 				9E39E1721780424B00E403A4 /* External */,
 				9E39E11F178040CB00E403A4 /* Supporting Files */,
 			);
@@ -588,6 +591,7 @@
 				9EDA15E717C3EF7000421F6D /* View-Small.png in Resources */,
 				9E80C49917C6242500E2B2C1 /* CommentBubble@2x.png in Resources */,
 				9E39E131178040CB00E403A4 /* Images.xcassets in Resources */,
+				9EAC48F517DC29960011AD42 /* notification-menu@2x.png in Resources */,
 				9E39E123178040CB00E403A4 /* InfoPlist.strings in Resources */,
 				9EDBC5EC17BE267000566924 /* redCircle.png in Resources */,
 				9E80C49B17C624F700E2B2C1 /* BlackDots@2x.png in Resources */,

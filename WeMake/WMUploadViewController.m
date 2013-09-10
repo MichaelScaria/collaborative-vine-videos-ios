@@ -203,6 +203,8 @@
                 [requestViewController setFollowers:[followers mutableCopy]];
             }failure:nil];
         }
+        [cameraViewController.view removeFromSuperview];
+        cameraViewController = nil;
     });
     
 }
@@ -216,11 +218,31 @@
 }
 
 - (void)back {
+    //reset camera view controller
+    if (!cameraViewController) {
+        cameraViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Camera"];
+        cameraViewController.delegate = self;
+        if (initialVideo) {
+            CMTime assetLength = [(AVAsset *)[AVAsset assetWithURL:[NSURL URLWithString:initialVideo.url]] duration];
+            startTime = CMTimeGetSeconds(assetLength);
+            cameraViewController.lengthOfInitialVideo = startTime;
+            cameraViewController.creators = initialVideo.creators;
+        }
+        UIScrollView *scrollView = (UIScrollView *)self.view;
+        cameraViewController.view.frame = CGRectMake(0, 0, 320, 568);
+        [scrollView addSubview:cameraViewController.view];
+
+    }
     UIScrollView *scrollView = (UIScrollView *)self.view;
     [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 #pragma mark WMRequestViewControllerDelegate
+
+- (void)cancelInvites {
+    UIScrollView *scrollView = (UIScrollView *)self.view;
+    [scrollView setContentOffset:CGPointMake(320, 0) animated:YES];
+}
 
 - (void)sendToFollowers:(NSString *)followers {
     NSLog(@"F:%@", followers);
