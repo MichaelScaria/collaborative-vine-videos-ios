@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WMFeedCell.h"
 
 
 @interface WMFeedViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
     NSMutableArray *players;
     NSMutableDictionary *indexes;
     BOOL commentScroll;
+    
+    WMFeedCell *displayedCell;
 }
 @property (nonatomic, strong) NSArray *videos;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIView *headerView;
 @end

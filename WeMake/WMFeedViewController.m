@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 michaelscaria. All rights reserved.
 //
 #import <MediaPlayer/MediaPlayer.h>
+#import <QuartzCore/QuartzCore.h>
 
 
 #import "WMFeedViewController.h"
@@ -13,7 +14,6 @@
 #import "WMModel.h"
 #import "WMVideo.h"
 
-#import "WMFeedCell.h"
 
 @interface WMFeedViewController ()
 
@@ -26,11 +26,21 @@
     indexes = [[NSMutableDictionary alloc] init];
     players = [[NSMutableArray alloc] init];
     [[WMModel sharedInstance] getPostsSuccess:^(NSArray *videos) {
-        _videos = videos;
+//        _videos = videos;
+        _videos = @[videos[0], videos[0], videos[0], videos[0]];
         [_tableView reloadData];
     } failure:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollToCommentBubble:) name:@"ScrollToCommentBubble" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollForCommentContent:) name:@"ScrollForCommentContent" object:nil];
+    _headerView.layer.shadowColor = [UIColor blackColor].CGColor;
+    _headerView.layer.masksToBounds = NO;
+    _headerView.layer.shadowOffset = CGSizeMake(0, 1);
+    _headerView.layer.shadowRadius = 3;
+    _headerView.layer.shadowOpacity = .5;;
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 62)];
+    view.backgroundColor = [UIColor whiteColor];
+    _tableView.tableHeaderView = view;
 }
 
 - (void)viewDidUnload {
@@ -42,11 +52,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-//    if (players.count > 0) {
-//        MPMoviePlayerController *player = players[0];
-//        [player play];
-//    }
 	
 }
 
@@ -85,23 +90,55 @@
     [_tableView setContentOffset:CGPointMake(_tableView.contentOffset.x, _tableView.contentOffset.y + [notification.object intValue]) animated:YES];
 }
 
-#pragma mark UITeableViewDataSource
+
+
+- (void)centerTable {
+    NSIndexPath *pathForCenterCell = [self.tableView indexPathForRowAtPoint:CGPointMake(CGRectGetMidX(self.tableView.bounds), CGRectGetMidY(self.tableView.bounds))];
+    
+    [self.tableView scrollToRowAtIndexPath:pathForCenterCell atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//    [_tableView setContentOffset:CGPointMake(0, _tableView.contentOffset.y + 62) animated:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [_tableView setContentOffset:CGPointMake(0, _tableView.contentOffset.y - 62) animated:YES];
+        if (displayedCell) {
+            [displayedCell hide];
+        }
+        displayedCell = (WMFeedCell *)[_tableView cellForRowAtIndexPath:pathForCenterCell];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [displayedCell view];
+        });
+    });
+}
+
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    // if decelerating, let scrollViewDidEndDecelerating: handle it
+    if (decelerate == NO) {
+        [self centerTable];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self centerTable];
+}
+
+#pragma mark UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     [players removeAllObjects];
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _videos.count + 1;
+    return _videos.count;
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        return 24;
+    if (indexPath.row == 0 && NO) {
+        return 62;
     }
     NSNumber *height = [indexes objectForKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
     if (height) return [height floatValue];
-    return 568;
+    return 320;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,13 +146,13 @@
     if (cell == nil) {
         cell = [[WMFeedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Feed"];
     }
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0 && NO) {
         for (UIView *view in cell.subviews) {
             [view removeFromSuperview];
         }
     }
     else {
-        WMVideo *video = _videos[indexPath.row - 1];
+        WMVideo *video = _videos[indexPath.row];
         [cell setHeightChanged:^(int newHeight, BOOL animated) {
             [indexes setObject:[NSNumber numberWithInt:newHeight] forKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
             if (animated) {

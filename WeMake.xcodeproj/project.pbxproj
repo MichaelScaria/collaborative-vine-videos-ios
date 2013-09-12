@@ -45,7 +45,6 @@
 		9E62D2AC17A7541B004F3D0F /* WMTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E62D2AB17A75407004F3D0F /* WMTabBarController.m */; };
 		9E6E54A417A979290029E9A6 /* WMNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */; };
 		9E6E9D6017D83C5500C601BF /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6E9D5F17D83C5500C601BF /* FXBlurView.m */; };
-		9E6E9D6217D83E9F00C601BF /* Chevron.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E6E9D6117D83E9F00C601BF /* Chevron.png */; };
 		9E71B06B17C21F2D00F0F277 /* WMCreatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E71B06A17C21F2D00F0F277 /* WMCreatorView.m */; };
 		9E79B5FA17B834AE00425BFA /* WMCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E79B5F917B834AE00425BFA /* WMCreator.m */; };
 		9E79B5FE17B8460100425BFA /* WMCreatorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E79B5FD17B8460100425BFA /* WMCreatorsViewController.m */; };
@@ -84,6 +83,10 @@
 		9ED093A61782AC7100EA1D90 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1601780423200E403A4 /* AFURLConnectionOperation.m */; };
 		9ED093A71782AC7100EA1D90 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1621780423200E403A4 /* AFXMLRequestOperation.m */; };
 		9ED093A81782AC7100EA1D90 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E39E1641780423200E403A4 /* UIImageView+AFNetworking.m */; };
+		9ED7EAE017E032E000A96935 /* chevron@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9ED7EADF17E032E000A96935 /* chevron@2x.png */; };
+		9ED7EAE517E1736100A96935 /* WMVideoInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ED7EAE417E1736100A96935 /* WMVideoInfoView.m */; };
+		9ED7EAE717E1737B00A96935 /* WMVideoInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9ED7EAE617E1737B00A96935 /* WMVideoInfoView.xib */; };
+		9ED7EAE917E17A3400A96935 /* graffitti.png in Resources */ = {isa = PBXBuildFile; fileRef = 9ED7EAE817E17A3400A96935 /* graffitti.png */; };
 		9EDA15E717C3EF7000421F6D /* View-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EDA15E617C3EF7000421F6D /* View-Small.png */; };
 		9EDBC5E817BE253900566924 /* WMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDBC5E717BE253900566924 /* WMViewController.m */; };
 		9EDBC5EB17BE267000566924 /* blueCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EDBC5E917BE267000566924 /* blueCircle.png */; };
@@ -165,7 +168,6 @@
 		9E6E54A317A979290029E9A6 /* WMNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMNotificationViewController.m; sourceTree = "<group>"; };
 		9E6E9D5E17D83C5500C601BF /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		9E6E9D5F17D83C5500C601BF /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
-		9E6E9D6117D83E9F00C601BF /* Chevron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chevron.png; sourceTree = "<group>"; };
 		9E71B06917C21F2D00F0F277 /* WMCreatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCreatorView.h; sourceTree = "<group>"; };
 		9E71B06A17C21F2D00F0F277 /* WMCreatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCreatorView.m; sourceTree = "<group>"; };
 		9E79B5F817B834AE00425BFA /* WMCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCreator.h; sourceTree = "<group>"; };
@@ -209,6 +211,11 @@
 		9EB31E0C17C0132400A82277 /* WMFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMFeedCell.h; sourceTree = "<group>"; };
 		9EB31E0D17C0132400A82277 /* WMFeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMFeedCell.m; sourceTree = "<group>"; };
 		9EBC0AB317A4A4D8009901BB /* test.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = test.mov; sourceTree = "<group>"; };
+		9ED7EADF17E032E000A96935 /* chevron@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chevron@2x.png"; sourceTree = "<group>"; };
+		9ED7EAE317E1736100A96935 /* WMVideoInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMVideoInfoView.h; sourceTree = "<group>"; };
+		9ED7EAE417E1736100A96935 /* WMVideoInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMVideoInfoView.m; sourceTree = "<group>"; };
+		9ED7EAE617E1737B00A96935 /* WMVideoInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WMVideoInfoView.xib; sourceTree = "<group>"; };
+		9ED7EAE817E17A3400A96935 /* graffitti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graffitti.png; sourceTree = "<group>"; };
 		9EDA15E617C3EF7000421F6D /* View-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "View-Small.png"; sourceTree = "<group>"; };
 		9EDBC5E617BE253900566924 /* WMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMViewController.h; sourceTree = "<group>"; };
 		9EDBC5E717BE253900566924 /* WMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMViewController.m; sourceTree = "<group>"; };
@@ -333,8 +340,8 @@
 				9E39E14D178040DB00E403A4 /* Models */,
 				9E34B4301791403F0052E780 /* Categories */,
 				9E39E130178040CB00E403A4 /* Images.xcassets */,
-				9E6E9D6117D83E9F00C601BF /* Chevron.png */,
 				9E5E363417C40278006CB4C4 /* Like-Small.png */,
+				9ED7EADF17E032E000A96935 /* chevron@2x.png */,
 				9E5E363617C41355006CB4C4 /* Comment-Small.png */,
 				9E80C49A17C624F700E2B2C1 /* BlackDots@2x.png */,
 				9E80C49817C6242500E2B2C1 /* CommentBubble@2x.png */,
@@ -342,6 +349,7 @@
 				9E94DB5017C2C3C6004B0B3C /* Disclosure.png */,
 				9EAC48F017DBEF970011AD42 /* feed-menu@2x.png */,
 				9EAC48F217DBF1DA0011AD42 /* camera-menu@2x.png */,
+				9ED7EAE817E17A3400A96935 /* graffitti.png */,
 				9EAC48F417DC29960011AD42 /* notification-menu@2x.png */,
 				9E39E1721780424B00E403A4 /* External */,
 				9E39E11F178040CB00E403A4 /* Supporting Files */,
@@ -504,6 +512,9 @@
 				9E94DB5317C2C50B004B0B3C /* WMCreatorPhotoView.m */,
 				9E80C49317C6157C00E2B2C1 /* WMCommentBubble.h */,
 				9E80C49417C6157C00E2B2C1 /* WMCommentBubble.m */,
+				9ED7EAE317E1736100A96935 /* WMVideoInfoView.h */,
+				9ED7EAE417E1736100A96935 /* WMVideoInfoView.m */,
+				9ED7EAE617E1737B00A96935 /* WMVideoInfoView.xib */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -588,6 +599,7 @@
 				9EBC0AB417A4A4D8009901BB /* test.mov in Resources */,
 				9EDBC5EB17BE267000566924 /* blueCircle.png in Resources */,
 				9E5E363517C40278006CB4C4 /* Like-Small.png in Resources */,
+				9ED7EAE917E17A3400A96935 /* graffitti.png in Resources */,
 				9EDA15E717C3EF7000421F6D /* View-Small.png in Resources */,
 				9E80C49917C6242500E2B2C1 /* CommentBubble@2x.png in Resources */,
 				9E39E131178040CB00E403A4 /* Images.xcassets in Resources */,
@@ -597,10 +609,11 @@
 				9E80C49B17C624F700E2B2C1 /* BlackDots@2x.png in Resources */,
 				9EF9801717B451CA00FCB950 /* test-2.mov in Resources */,
 				9E94DB5117C2C3C6004B0B3C /* Disclosure.png in Resources */,
-				9E6E9D6217D83E9F00C601BF /* Chevron.png in Resources */,
+				9ED7EAE717E1737B00A96935 /* WMVideoInfoView.xib in Resources */,
 				9EAC48F117DBEF970011AD42 /* feed-menu@2x.png in Resources */,
 				9EAC48F317DBF1DA0011AD42 /* camera-menu@2x.png in Resources */,
 				9E5E363717C41355006CB4C4 /* Comment-Small.png in Resources */,
+				9ED7EAE017E032E000A96935 /* chevron@2x.png in Resources */,
 				9E39E12C178040CB00E403A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +655,7 @@
 				9E39E16C1780423200E403A4 /* AFXMLRequestOperation.m in Sources */,
 				9E1F785117A1E35C001DC68E /* WMReviewViewController.m in Sources */,
 				9EB31E0E17C0132400A82277 /* WMFeedCell.m in Sources */,
+				9ED7EAE517E1736100A96935 /* WMVideoInfoView.m in Sources */,
 				9E39E150178040FA00E403A4 /* WMModel.m in Sources */,
 				9E83C21A17AA2CBE00F7033E /* WMUser.m in Sources */,
 				9E39E129178040CB00E403A4 /* WMAppDelegate.m in Sources */,

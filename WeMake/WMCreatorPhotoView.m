@@ -34,6 +34,7 @@
 
     }
     else {
+        //HACK
         NSString *p = (_user) ? _user.photoURL : @"http://graph.facebook.com/1679449736/picture?type=square&width=100&height=100&width=400&height=400";
         [self setImageWithURL:[NSURL URLWithString:p] placeholderImage:[UIImage imageNamed:@"missingPhoto"]];
     }

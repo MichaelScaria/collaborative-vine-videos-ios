@@ -12,7 +12,7 @@
 #import "WMCreatorView.h"
 #import "WMCreatorPhotoView.h"
 #import "WMCommentBubble.h"
-
+#import "WMVideoInfoView.h"
 
 #import "WMVideo.h"
 #import "WMCreator.h"
@@ -32,6 +32,8 @@ typedef void(^WMLiked)(BOOL);
     CGRect commentFrame;
     //for disclosure
     NSArray *cleanedCreators;
+    
+    WMVideoInfoView *infoView;
 }
 @property (nonatomic, copy) WMHeightChanged heightChanged;
 @property (nonatomic, copy) WMViewed viewed;
@@ -46,16 +48,19 @@ typedef void(^WMLiked)(BOOL);
 
 @property (strong, nonatomic) IBOutlet UIImageView *thumbnailView;
 @property (strong, nonatomic) IBOutlet WMCreatorView *creatorView;
-@property (strong, nonatomic) IBOutlet WMCreatorPhotoView *posterImageView;
-@property (strong, nonatomic) IBOutlet UILabel *posterLabel;
-@property (strong, nonatomic) IBOutlet UIButton *disclosureIndicator;
-@property (strong, nonatomic) IBOutlet UIImageView *viewsIcon;
-@property (strong, nonatomic) IBOutlet UILabel *viewsLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *likesIcon;
-@property (strong, nonatomic) IBOutlet UILabel *likesLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *commentsIcon;
-@property (strong, nonatomic) IBOutlet UILabel *commentsLabel;
-@property (strong, nonatomic) IBOutlet UITextView *caption;
+//@property (strong, nonatomic) IBOutlet WMCreatorPhotoView *posterImageView;
+//@property (strong, nonatomic) IBOutlet UILabel *posterLabel;
+//@property (strong, nonatomic) IBOutlet UIButton *disclosureIndicator;
+//@property (strong, nonatomic) IBOutlet UIImageView *viewsIcon;
+//@property (strong, nonatomic) IBOutlet UILabel *viewsLabel;
+//@property (strong, nonatomic) IBOutlet UIImageView *likesIcon;
+//@property (strong, nonatomic) IBOutlet UILabel *likesLabel;
+//@property (strong, nonatomic) IBOutlet UIImageView *commentsIcon;
+//@property (strong, nonatomic) IBOutlet UILabel *commentsLabel;
+//@property (strong, nonatomic) IBOutlet UITextView *caption;
 
 - (IBAction)disclose:(id)sender;
+
+- (void)view;
+- (void)hide;
 @end

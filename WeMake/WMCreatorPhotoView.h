@@ -5,6 +5,7 @@
 //  Created by Michael Scaria on 8/19/13.
 //  Copyright (c) 2013 michaelscaria. All rights reserved.
 //
+//  Easy user photo view with user instantiation
 
 #import <UIKit/UIKit.h>
 
