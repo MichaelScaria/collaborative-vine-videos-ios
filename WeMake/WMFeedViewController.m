@@ -27,7 +27,7 @@
     players = [[NSMutableArray alloc] init];
     [[WMModel sharedInstance] getPostsSuccess:^(NSArray *videos) {
 //        _videos = videos;
-        _videos = @[videos[0], videos[0], videos[0], videos[0]];
+        _videos = @[videos[0], videos[0], videos[0]];
         [_tableView reloadData];
     } failure:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollToCommentBubble:) name:@"ScrollToCommentBubble" object:nil];
@@ -39,7 +39,7 @@
     _headerView.layer.shadowOpacity = .5;;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 62)];
-    view.backgroundColor = [UIColor whiteColor];
+    view.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
     _tableView.tableHeaderView = view;
 }
 
@@ -47,12 +47,6 @@
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ScrollToCommentBubble" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ScrollForCommentContent" object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-	
 }
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -92,35 +86,35 @@
 
 
 
-- (void)centerTable {
-    NSIndexPath *pathForCenterCell = [self.tableView indexPathForRowAtPoint:CGPointMake(CGRectGetMidX(self.tableView.bounds), CGRectGetMidY(self.tableView.bounds))];
-    
-    [self.tableView scrollToRowAtIndexPath:pathForCenterCell atScrollPosition:UITableViewScrollPositionTop animated:YES];
-//    [_tableView setContentOffset:CGPointMake(0, _tableView.contentOffset.y + 62) animated:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [_tableView setContentOffset:CGPointMake(0, _tableView.contentOffset.y - 62) animated:YES];
-        if (displayedCell) {
-            [displayedCell hide];
-        }
-        displayedCell = (WMFeedCell *)[_tableView cellForRowAtIndexPath:pathForCenterCell];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [displayedCell view];
-        });
-    });
-}
-
-#pragma mark UIScrollViewDelegate
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    // if decelerating, let scrollViewDidEndDecelerating: handle it
-    if (decelerate == NO) {
-        [self centerTable];
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self centerTable];
-}
+//- (void)centerTable {
+//    NSIndexPath *pathForCenterCell = [self.tableView indexPathForRowAtPoint:CGPointMake(CGRectGetMidX(self.tableView.bounds), CGRectGetMidY(self.tableView.bounds))];
+//    
+//    [self.tableView scrollToRowAtIndexPath:pathForCenterCell atScrollPosition:UITableViewScrollPositionTop animated:YES];
+////    [_tableView setContentOffset:CGPointMake(0, _tableView.contentOffset.y + 62) animated:YES];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//        [_tableView setContentOffset:CGPointMake(0, _tableView.contentOffset.y - 62) animated:YES];
+//        if (displayedCell) {
+//            [displayedCell hide];
+//        }
+//        displayedCell = (WMFeedCell *)[_tableView cellForRowAtIndexPath:pathForCenterCell];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+//            [displayedCell view];
+//        });
+//    });
+//}
+//
+//#pragma mark UIScrollViewDelegate
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+//    // if decelerating, let scrollViewDidEndDecelerating: handle it
+//    if (decelerate == NO) {
+//        [self centerTable];
+//    }
+//}
+//
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    [self centerTable];
+//}
 
 #pragma mark UITableViewDataSource
 
@@ -133,12 +127,9 @@
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0 && NO) {
-        return 62;
-    }
     NSNumber *height = [indexes objectForKey:[NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row]];
     if (height) return [height floatValue];
-    return 320;
+    return 506;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

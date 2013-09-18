@@ -24,26 +24,28 @@
 @synthesize bubble;
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
     UIView *aView = [[UIView alloc] initWithFrame:_player.view.bounds];
     [aView addGestureRecognizer:tapGesture];
-    [_player.view addSubview:aView];
-    
-    _thumbnailView.layer.shadowColor = [UIColor blackColor].CGColor;
-    _thumbnailView.layer.masksToBounds = NO;
-    _thumbnailView.layer.shadowOffset = CGSizeMake(0, 1);
-    _thumbnailView.layer.shadowRadius = 3;
-    _thumbnailView.layer.shadowOpacity = .65;
-    
-    _player.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    _player.view.layer.masksToBounds = NO;
-    _player.view.layer.shadowOffset = CGSizeMake(0, 1);
-    _player.view.layer.shadowRadius = 3;
-    _player.view.layer.shadowOpacity = .65;
+//    _player.view.layer.shadowColor = [UIColor blackColor].CGColor;
+//    _player.view.layer.masksToBounds = NO;
+//    _player.view.layer.shadowOffset = CGSizeMake(0, 1);
+//    _player.view.layer.shadowRadius = 3;
+//    _player.view.layer.shadowOpacity = .65;
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(commentContentSizeChanged:) name:@"CommentContentSizeChanged" object:nil];
 }
 
-- (void)tapped:(UIGestureRecognizer *)gestureRecognizer {
+//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+//    if (CGRectContainsPoint(_player.view.frame, point)) {
+//        [self tapped];
+//    }
+//    else if (CGRectContainsPoint(CGRectMake(infoView.likesButton.frame.origin.x, infoView.likesButton.frame.origin.y + 320, infoView.likesButton.frame.size.width, infoView.likesButton.frame.size.height), point)) {
+//        return [infoView hitTest:point withEvent:event];
+//    }
+//    return [super hitTest:point withEvent:event];
+//}
+
+- (void)tapped {
     
     if ((_player.playbackState & MPMoviePlaybackStatePlaying) == MPMoviePlaybackStatePlaying) {
         [_player pause];
@@ -148,6 +150,14 @@
         
         [_thumbnailView setImageWithURL:[NSURL URLWithString:video.thumbnailUrl]];
         self.creators = video.creators;
+        if (!infoView) {
+            infoView = [[NSBundle mainBundle] loadNibNamed:@"WMVideoInfoView" owner:self options:nil][0];
+            [infoView setVideo:_video];
+            infoView.frame = CGRectMake(0, 320, 320, 185);
+        }
+        [self addSubview:infoView];
+//        [self addSubview:infoView];
+        //[self insertSubview:infoView belowSubview:_player.view];
 //        [_posterImageView setUser:video.poster];
 //        _posterLabel.translatesAutoresizingMaskIntoConstraints =
 //        _disclosureIndicator.translatesAutoresizingMaskIntoConstraints = YES;
@@ -466,19 +476,19 @@
  
  */
 
-- (void)view {
-    if (!infoView) {
-        infoView = [[NSBundle mainBundle] loadNibNamed:@"WMVideoInfoView" owner:self options:nil][0];
-        [infoView setUser:_video.poster];
-        infoView.frame = CGRectMake(0, 320, 320, 185);
-    }
-    [self insertSubview:infoView atIndex:0];
-    _heightChanged(self.frame.size.height + 200, YES);
-}
-
-
-- (void)hide {
-    [infoView removeFromSuperview];
-    _heightChanged(self.frame.size.height - 200, YES);
-}
+//- (void)view {
+//    if (!infoView) {
+//        infoView = [[NSBundle mainBundle] loadNibNamed:@"WMVideoInfoView" owner:self options:nil][0];
+//        [infoView setUser:_video.poster];
+//        infoView.frame = CGRectMake(0, 320, 320, 185);
+//    }
+//    [self insertSubview:infoView atIndex:0];
+//    _heightChanged(self.frame.size.height + 200, YES);
+//}
+//
+//
+//- (void)hide {
+//    [infoView removeFromSuperview];
+//    _heightChanged(self.frame.size.height - 200, YES);
+//}
 @end

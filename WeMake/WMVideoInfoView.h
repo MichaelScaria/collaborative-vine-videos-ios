@@ -9,15 +9,28 @@
 #import <UIKit/UIKit.h>
 
 #import "WMUser.h"
+#import "WMVideo.h"
 
 #import "WMCreatorPhotoView.h"
 
 @interface WMVideoInfoView : UIView {
     WMCreatorPhotoView *photo;
+    BOOL liked;
+    UILabel *viewsLabel;
+    UILabel *likesLabel;
+    UILabel *commentLabel;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *coverPhoto;
+@property (strong, nonatomic) IBOutlet UILabel *username;
+@property (strong, nonatomic) IBOutlet UILabel *othersLabel;
+@property (strong, nonatomic) IBOutlet UIButton *viewsButton;
+@property (strong, nonatomic) IBOutlet UIButton *likesButton;
+@property (strong, nonatomic) IBOutlet UIButton *commentsButton;
 
-- (void)setUser:(WMUser *)user;
+
+- (void)setVideo:(WMVideo *)video;
+- (void)like;
+- (IBAction)like:(UIButton *)sender;
 
 @end

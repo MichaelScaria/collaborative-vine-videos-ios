@@ -28,17 +28,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej1-cG-bes" userLabel="Chevron">
-                                <rect key="frame" x="10" y="519" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" image="Chevron.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="mainTapped:" destination="xbO-tO-2hg" eventType="touchUpInside" id="lFR-y7-ZXc"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLb-SV-MX4" userLabel="Feed">
                                 <rect key="frame" x="-105" y="450" width="100" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -81,7 +70,6 @@
                     <connections>
                         <outlet property="blurView" destination="r0M-1f-Mm8" id="5EG-fx-ce4"/>
                         <outlet property="cameraButton" destination="6zB-4d-f5K" id="Jer-ev-yeE"/>
-                        <outlet property="chevron" destination="Ej1-cG-bes" id="p6w-Vy-X96"/>
                         <outlet property="contentView" destination="97S-Pq-49g" id="2W4-dh-mJV"/>
                         <outlet property="feedButton" destination="oLb-SV-MX4" id="5CV-HB-3oH"/>
                         <outlet property="notificationButton" destination="ysV-HB-nR6" id="d6B-07-Vxd"/>
@@ -103,20 +91,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="321" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RrJ-M8-EO6">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="506" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="RrJ-M8-EO6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="Feed" selectionStyle="default" indentationWidth="10" reuseIdentifier="Feed" rowHeight="321" id="XbH-df-9BD" customClass="WMFeedCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="321"/>
+                                    <tableViewCell contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="Feed" selectionStyle="default" indentationWidth="10" reuseIdentifier="Feed" rowHeight="506" id="XbH-df-9BD" customClass="WMFeedCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="506"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="XbH-df-9BD" id="jOe-wn-cwM">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="321"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="506"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hPm-G2-Pba">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="321"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qMh-bN-3Y6" customClass="WMCreatorView">
@@ -158,7 +146,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.70000000000000007" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Item" id="Jbp-q7-7Vx"/>
