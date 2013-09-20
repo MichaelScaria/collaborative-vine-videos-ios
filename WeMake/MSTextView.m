@@ -25,8 +25,8 @@
 
 - (void)setText:(NSString *)text withLinkedRange:(NSRange)range {
     //self.text = text;
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName : kColorGray}];
-    [attrString setAttributes:@{@"type": @"username", NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:13], NSForegroundColorAttributeName : kColorLight} range:range];
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName : kColorGray, NSFontAttributeName : [UIFont fontWithName:@"Roboto-Light" size:12]}];
+    [attrString setAttributes:@{@"type": @"username", NSFontAttributeName : [UIFont fontWithName:@"Roboto-Light" size:13], NSForegroundColorAttributeName : kColorLight} range:range];
     self.attributedText = attrString;
     NSLog(@"self.h:%f", self.frame.size.height);
     [self sizeToFit];

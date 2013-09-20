@@ -9,8 +9,12 @@
 #import "WMVideoInfoView.h"
 
 #import "UIImage+WeMake.h"
-#import "FXBlurView.h"
 #import "Constants.h"
+#import "WMInteraction.h"
+
+#import "FXBlurView.h"
+#import "MSTextView.h"
+
 
 @implementation WMVideoInfoView
 
@@ -18,12 +22,10 @@
 {
     _coverPhoto.image = [[UIImage imageNamed:@"graffitti"] blurredImageWithRadius:15 iterations:3];
     photo = [[WMCreatorPhotoView alloc] initWithUser:video.poster];
-    photo.frame = CGRectMake(10, 10, 70, 70);
-    [self addSubview:photo];
+    photo.frame = CGRectMake(8, 10, 70, 70);
+    [_scrollView addSubview:photo];
     
     _username.font = [UIFont fontWithName:@"Roboto-Light" size:26];
-//    _username.backgroundColor = [UIColor greenColor];
-//    _othersLabel.backgroundColor = [UIColor redColor];
     [_username sizeToFit];
     if (video.creators.count > 1) {
         _othersLabel.translatesAutoresizingMaskIntoConstraints = YES;
@@ -44,17 +46,27 @@
     viewsLabel.text = [NSString stringWithFormat:@"%d", video.views + 998];
     likesLabel.text = [NSString stringWithFormat:@"%d", video.likes.count];
     commentLabel.text = [NSString stringWithFormat:@"%d", video.comments.count];
-    [self addSubview:viewsLabel];
-    [self addSubview:likesLabel];
-    [self addSubview:commentLabel];
+    [_scrollView addSubview:viewsLabel];
+    [_scrollView addSubview:likesLabel];
+    [_scrollView addSubview:commentLabel];
 
-//    [_likesButton addTarget:self action:@selector(like:) forControlEvents:UIControlEventTouchUpInside];
     if (video.liked) {
         liked = YES;
         [_likesButton setTitleColor:kColorLight forState:UIControlStateNormal];
         [_likesButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     }
     
+    _likesButton.translatesAutoresizingMaskIntoConstraints = YES;
+    _commentsButton.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    int offset = 122;
+    for (WMInteraction *comment in video.comments) {
+        MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(70, offset, 240, 35)];
+        NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+        [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
+        [_scrollView addSubview:textView];
+        offset += textView.frame.size.height - 7;
+    }
 }
 
 
@@ -74,13 +86,15 @@
     likesLabel.text = [NSString stringWithFormat:@"%d", likes + i];
     [_likesButton setTitleColor:newLabelColor forState:UIControlStateNormal];
     [_likesButton setTitleColor:oldLabelColor forState:UIControlStateHighlighted];
-    
     [UIView animateWithDuration: 0.15 delay: 0 options: UIViewAnimationOptionCurveEaseOut animations:^{
-        _likesButton.transform = CGAffineTransformScale(_likesButton.transform, 1.4, 1.4);
+        _likesButton.transform = CGAffineTransformScale(_likesButton.transform, 1.5, 1.5);
     } completion:^(BOOL completed) {
         [UIView animateWithDuration: 0.15 delay: 0 options: UIViewAnimationOptionCurveEaseInOut animations:^{
             _likesButton.transform = CGAffineTransformIdentity;
         } completion:nil];
     }];
+}
+
+- (IBAction)comment:(UIButton *)sender {
 }
 @end

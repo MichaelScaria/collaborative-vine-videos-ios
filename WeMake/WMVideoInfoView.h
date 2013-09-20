@@ -27,10 +27,12 @@
 @property (strong, nonatomic) IBOutlet UIButton *viewsButton;
 @property (strong, nonatomic) IBOutlet UIButton *likesButton;
 @property (strong, nonatomic) IBOutlet UIButton *commentsButton;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 
 - (void)setVideo:(WMVideo *)video;
 - (void)like;
 - (IBAction)like:(UIButton *)sender;
+- (IBAction)comment:(UIButton *)sender;
 
 @end
