@@ -10,20 +10,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="4je-IX-jr0">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                </imageView>
-                <view hidden="YES" contentMode="scaleToFill" id="jP8-rd-gKs">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="calibratedWhite"/>
-                </view>
-                <view contentMode="scaleToFill" id="ATl-IF-I8b">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
-                </view>
                 <view contentMode="scaleToFill" id="oj2-au-CgR" customClass="UIScrollView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -79,12 +65,11 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="commentsButton" destination="wob-MQ-8GW" id="jG7-SK-KX9"/>
-                <outlet property="coverPhoto" destination="4je-IX-jr0" id="c3E-MV-xnb"/>
                 <outlet property="likesButton" destination="doy-Tn-wg0" id="ntv-JN-tdL"/>
                 <outlet property="othersLabel" destination="IqY-7b-KBz" id="PGi-3h-ZDQ"/>
                 <outlet property="scrollView" destination="oj2-au-CgR" id="DZB-vc-ahb"/>

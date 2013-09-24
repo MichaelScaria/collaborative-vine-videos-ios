@@ -39,7 +39,8 @@
     _headerView.layer.shadowOpacity = .5;;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 62)];
-    view.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
+//    view.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
+    view.backgroundColor = [UIColor clearColor];
     _tableView.tableHeaderView = view;
 }
 
@@ -154,17 +155,17 @@
         //set video last because  some objects need to be initialized i.e.^
         [cell setVideo:video];
 
-        [cell.bubble setComment:^(NSString *comment, WMCommentCompletion completion) {
-            [[WMModel sharedInstance] comment:comment onVideo:video.theID success:^(WMInteraction *interaction){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(YES, interaction);
-                });
-            }failure:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, nil);
-                });
-            }];
-        }];
+//        [cell.bubble setComment:^(NSString *comment, WMCommentCompletion completion) {
+//            [[WMModel sharedInstance] comment:comment onVideo:video.theID success:^(WMInteraction *interaction){
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    completion(YES, interaction);
+//                });
+//            }failure:^{
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    completion(NO, nil);
+//                });
+//            }];
+//        }];
         
         [cell setLiked:^(BOOL like){
             [[WMModel sharedInstance] like:like video:video.theID success:nil failure:nil];

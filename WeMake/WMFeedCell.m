@@ -21,13 +21,13 @@
 #define kDisclosurePadding 5
 
 @implementation WMFeedCell
-@synthesize bubble;
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
-//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
-//    UIView *aView = [[UIView alloc] initWithFrame:_player.view.frame];
-//    [aView addGestureRecognizer:tapGesture];
-//    [self addSubview:aView];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+    UIView *aView = [[UIView alloc] initWithFrame:_player.view.frame];
+    aView.backgroundColor = [UIColor clearColor];
+    [aView addGestureRecognizer:tapGesture];
+    [self addSubview:aView];
 ////    _player.view.layer.shadowColor = [UIColor blackColor].CGColor;
 //    _player.view.layer.masksToBounds = NO;
 //    _player.view.layer.shadowOffset = CGSizeMake(0, 1);
@@ -46,12 +46,12 @@
 //    return [super hitTest:point withEvent:event];
 //}
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    if (CGRectContainsPoint(CGRectMake(0, 0, 320, 320), point)) {
-        [self tapped];
-    }
-    return [super hitTest:point withEvent:event];
-}
+//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+//    if (CGRectContainsPoint(CGRectMake(0, 0, 320, 320), point)) {
+//        [self tapped];
+//    }
+//    return [super hitTest:point withEvent:event];
+//}
 
 - (void)tapped {
     
@@ -70,6 +70,7 @@
 - (void)time {
     if (_player.playbackState & MPMoviePlaybackStatePlaying) {
         NSTimeInterval currentTime = _player.currentPlaybackTime;
+        WMCreator *currentCreator;
         for (WMCreator *creator in _creators) {
             if (creator.startTime <= currentTime && currentTime  <= creator.startTime + creator.length) {
                 currentCreator = creator;
@@ -163,7 +164,60 @@
             [infoView setVideo:_video];
             infoView.frame = CGRectMake(0, 320, 320, 185);
         }
-        [self addSubview:infoView];
+        WMCreatorPhotoView *photo = [[WMCreatorPhotoView alloc] initWithUser:video.poster];
+        photo.frame = CGRectMake(8, 330, 70, 70);
+        [self addSubview:photo];
+        
+        _usernameLabel.font = [UIFont fontWithName:@"Roboto-Light" size:26];
+        [_usernameLabel sizeToFit];
+        if (video.creators.count > 1) {
+            _othersLabel.translatesAutoresizingMaskIntoConstraints = YES;
+            _othersLabel.font = [UIFont fontWithName:@"Roboto-Light" size:12];
+            _othersLabel.text = [NSString stringWithFormat:@"with %d other%@", video.creators.count - 1, video.creators.count > 2 ? @"s" : @""];
+            [_othersLabel sizeToFit];
+            _othersLabel.center = CGPointMake(_usernameLabel.center.x, 380);
+        }
+        else {
+            [_othersLabel removeFromSuperview];
+        }
+        int space = 5;
+        viewsLabel = [[UILabel alloc] initWithFrame:CGRectMake(_viewsImage.frame.origin.x + _viewsImage.frame.size.width + space, _likesButton.frame.origin.y, 30, 17)];
+        likesLabel = [[UILabel alloc] initWithFrame:CGRectMake(_likesButton.frame.origin.x + _likesButton.frame.size.width + space, _likesButton.frame.origin.y, 30, 17)];
+        commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_commentsButton.frame.origin.x + _commentsButton.frame.size.width + space, _likesButton.frame.origin.y, 30, 17)];
+        viewsLabel.font = likesLabel.font = commentLabel.font = [UIFont fontWithName:@"Roboto-Light" size:12];
+        viewsLabel.textColor = likesLabel.textColor = commentLabel.textColor = [UIColor whiteColor];
+        viewsLabel.text = [NSString stringWithFormat:@"%d", video.views + 998];
+        likesLabel.text = [NSString stringWithFormat:@"%d", video.likes.count];
+        commentLabel.text = [NSString stringWithFormat:@"%d", video.comments.count];
+        [self addSubview:viewsLabel];
+        [self addSubview:likesLabel];
+        [self addSubview:commentLabel];
+        
+        if (video.liked) {
+            liked = YES;
+            [_likesButton setTitleColor:kColorLight forState:UIControlStateNormal];
+            [_likesButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        }
+        
+        _likesButton.translatesAutoresizingMaskIntoConstraints = YES;
+        _commentsButton.translatesAutoresizingMaskIntoConstraints = YES;
+        
+        int offset = 435;
+        int limit = 3;
+        for (WMInteraction *comment in video.comments) {
+            if (limit > 0) {
+                MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(70, offset, 240, 35)];
+                NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+                [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
+                [self addSubview:textView];
+                offset += textView.frame.size.height - 7;
+                limit--;
+            }
+            else break;
+            
+        }
+        _heightChanged(offset + 10, YES);
+        //[self addSubview:infoView];
         //[self insertSubview:infoView belowSubview:_player.view];
 //        [_posterImageView setUser:video.poster];
 //        _posterLabel.translatesAutoresizingMaskIntoConstraints =
@@ -498,4 +552,9 @@
 //    [infoView removeFromSuperview];
 //    _heightChanged(self.frame.size.height - 200, YES);
 //}
+- (IBAction)like:(id)sender {
+}
+
+- (IBAction)comment:(id)sender {
+}
 @end

@@ -66,6 +66,7 @@
 		9E94DB5117C2C3C6004B0B3C /* Disclosure.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E94DB5017C2C3C6004B0B3C /* Disclosure.png */; };
 		9E94DB5417C2C50B004B0B3C /* WMCreatorPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E94DB5317C2C50B004B0B3C /* WMCreatorPhotoView.m */; };
 		9E99B7FD17928C090034B1C9 /* WMCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */; };
+		9EA4EC3017F141C200F75E37 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA4EC2F17F141C200F75E37 /* Accelerate.framework */; };
 		9EAC48F117DBEF970011AD42 /* feed-menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EAC48F017DBEF970011AD42 /* feed-menu@2x.png */; };
 		9EAC48F317DBF1DA0011AD42 /* camera-menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EAC48F217DBF1DA0011AD42 /* camera-menu@2x.png */; };
 		9EAC48F517DC29960011AD42 /* notification-menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EAC48F417DC29960011AD42 /* notification-menu@2x.png */; };
@@ -222,6 +223,7 @@
 		9E94DB5317C2C50B004B0B3C /* WMCreatorPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCreatorPhotoView.m; sourceTree = "<group>"; };
 		9E99B7FB17928C090034B1C9 /* WMCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMCameraViewController.h; sourceTree = "<group>"; };
 		9E99B7FC17928C090034B1C9 /* WMCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMCameraViewController.m; sourceTree = "<group>"; };
+		9EA4EC2F17F141C200F75E37 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		9EAC48F017DBEF970011AD42 /* feed-menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feed-menu@2x.png"; sourceTree = "<group>"; };
 		9EAC48F217DBF1DA0011AD42 /* camera-menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-menu@2x.png"; sourceTree = "<group>"; };
 		9EAC48F417DC29960011AD42 /* notification-menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification-menu@2x.png"; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA4EC3017F141C200F75E37 /* Accelerate.framework in Frameworks */,
 				9E1F785317A1FB23001DC68E /* MediaPlayer.framework in Frameworks */,
 				9E8709A4178E48F200FB6A46 /* MobileCoreServices.framework in Frameworks */,
 				9E8709A2178E488700FB6A46 /* AssetsLibrary.framework in Frameworks */,
@@ -329,6 +332,7 @@
 		9E39E117178040CB00E403A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9EA4EC2F17F141C200F75E37 /* Accelerate.framework */,
 				9E1F785217A1FB23001DC68E /* MediaPlayer.framework */,
 				9E8709A3178E48F200FB6A46 /* MobileCoreServices.framework */,
 				9E8709A1178E488700FB6A46 /* AssetsLibrary.framework */,

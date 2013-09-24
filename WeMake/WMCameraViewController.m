@@ -8,6 +8,7 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Accelerate/Accelerate.h>
 
 #import "WMCreator.h"
 
@@ -121,6 +122,14 @@
     _doneButton.layer.masksToBounds = YES;
     _doneButton.layer.borderWidth = 1;
     _doneButton.layer.borderColor = kColorLight.CGColor;
+    
+    _topOverlay.translatesAutoresizingMaskIntoConstraints = YES;
+    _bottomOverlay.translatesAutoresizingMaskIntoConstraints = YES;
+    
+    _topOverlay.frame = CGRectMake(0, (screenSize.height - 320)/-2 - kCameraViewOffset, 320, (screenSize.height - 320)/2 - kCameraViewOffset);
+    _bottomOverlay.frame = CGRectMake(0, screenSize.height, 320, (screenSize.height - 320)/2 + kCameraViewOffset);
+    [self hide:nil];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -131,7 +140,6 @@
     [self.flipButton setImage:[UIImage ipMaskedImageNamed:@"Flip" color:(isFrontCamera) ? kColorLight :kColorNeutral] forState:UIControlStateNormal];
     [self.gridButton setImage:[UIImage ipMaskedImageNamed:@"Grid" color:(displayingGrid) ? kColorLight :kColorNeutral] forState:UIControlStateNormal];
     [self.focusButton setImage:[UIImage ipMaskedImageNamed:@"Crosshairs" color:(tapToFocus) ? kColorLight :kColorNeutral] forState:UIControlStateNormal];
-    [self display:nil];
 }
 
 -(void)setupCGContext {
@@ -309,7 +317,7 @@
 }
 
 - (void)touchesBegan:(NSSet *)touchSet withEvent:(UIEvent *)event {
-    
+    if (hasOverlay) return;
     [touchSet enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         UITouch *touch = obj;
         CGPoint locationPoint = [touch locationInView:self.view];
@@ -445,18 +453,9 @@
 - (void)display:(void (^)(void))completion {
     hasOverlay = NO;
     flipButton.hidden = gridButton.hidden = focusButton.hidden = NO;
-    UIView *topOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, (screenSize.height - 320)/-2 - kCameraViewOffset, 320, (screenSize.height - 320)/2 - kCameraViewOffset)];
-    topOverlay.backgroundColor = [UIColor colorWithWhite:0 alpha:.9];
-    topOverlay.tag = 11;
-    [self.videoPreviewView addSubview:topOverlay];
-    UIView *bottomOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, screenSize.height, 320, (screenSize.height - 320)/2 + kCameraViewOffset)];
-    bottomOverlay.tag = 12;
-    bottomOverlay.backgroundColor = [UIColor colorWithWhite:0 alpha:1];
-    [self.videoPreviewView addSubview:bottomOverlay];
-    
     [UIView animateWithDuration:.5 animations:^{
-        topOverlay.frame = CGRectMake(0, 0, 320, topOverlay.frame.size.height);
-        bottomOverlay.frame = CGRectMake(0, screenSize.height - bottomOverlay.frame.size.height, 320, bottomOverlay.frame.size.height);
+        _topOverlay.frame = CGRectMake(0, 0, 320, _topOverlay.frame.size.height);
+        _bottomOverlay.frame = CGRectMake(0, screenSize.height - _bottomOverlay.frame.size.height, 320, _bottomOverlay.frame.size.height);
     }completion:^(BOOL isCompleted){
         dispatch_async(dispatch_get_main_queue(), ^{
             [self focusAtPoint:CGPointMake(self.videoPreviewView.center.x, self.videoPreviewView.center.y - kCameraViewOffset)];
@@ -468,16 +467,12 @@
 - (void)hide:(void (^)(void))completion {
     hasOverlay = YES;
     flipButton.hidden = gridButton.hidden = focusButton.hidden = YES;
-    UIView *topOverlay = [self.videoPreviewView viewWithTag:11];
-    UIView *bottomOverlay= [self.videoPreviewView viewWithTag:12];
     [UIView animateWithDuration:.5 animations:^{
-        topOverlay.frame = CGRectMake(0, (screenSize.height - 320)/2 * -1, 320, (screenSize.height - 320)/2);
-        bottomOverlay.frame = CGRectMake(0, screenSize.height, 320, (screenSize.height - 320)/2);
+        _topOverlay.frame = CGRectMake(0, (screenSize.height - 320)/2 * -1, 320, (screenSize.height - 320)/2);
+        _bottomOverlay.frame = CGRectMake(0, screenSize.height, 320, (screenSize.height - 320)/2);
     }completion:^(BOOL isCompleted){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (completion) completion();
-            [topOverlay removeFromSuperview];
-            [bottomOverlay removeFromSuperview];
         });
     }];
 }
@@ -724,6 +719,7 @@
     focusButton.enabled = NO;
 }
 
+
 #pragma mark Capture
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
@@ -735,9 +731,9 @@
         if (self.videoType == 0) self.videoType = CMFormatDescriptionGetMediaSubType( formatDescription );
         CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)CMSampleBufferGetImageBuffer(sampleBuffer);
         CIImage *image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
-        if (hasOverlay) {
+        if (hasOverlay && NO) {
             CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-            [filter setValue:image forKey:kCIInputImageKey]; [filter setValue:@15.0f forKey:@"inputRadius"];
+            [filter setValue:image forKey:kCIInputImageKey]; [filter setValue:@22.0f forKey:@"inputRadius"];
             image = [filter valueForKey:kCIOutputImageKey];
         }
         CGAffineTransform transform = CGAffineTransformMakeRotation(-M_PI_2);

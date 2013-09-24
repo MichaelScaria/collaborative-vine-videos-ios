@@ -75,6 +75,8 @@
 @property (nonatomic, assign) BOOL videoIsFinished;
 
 @property (nonatomic,retain) IBOutlet GLKView *videoPreviewView;
+@property (strong, nonatomic) IBOutlet UIView *topOverlay;
+@property (strong, nonatomic) IBOutlet UIView *bottomOverlay;
 @property (strong, nonatomic) IBOutlet UIButton *flipButton;
 @property (strong, nonatomic) IBOutlet UIButton *focusButton;
 @property (strong, nonatomic) IBOutlet UIButton *gridButton;

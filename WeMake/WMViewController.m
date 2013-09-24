@@ -74,6 +74,10 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self feedTappedAnimated:NO];
+    if (!uploadViewController) {
+        uploadViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Upload"];
+    }
+    [_contentView insertSubview:uploadViewController.view atIndex:0];
     [_blurView setBlurRadius:10];
     _blurView.alpha = 0.0;
     [_blurView setDynamic:NO];

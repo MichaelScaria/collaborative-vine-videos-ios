@@ -20,7 +20,7 @@
 
 - (void)setVideo:(WMVideo *)video
 {
-    _coverPhoto.image = [[UIImage imageNamed:@"graffitti"] blurredImageWithRadius:20 iterations:3];
+//    _coverPhoto.image = [[UIImage imageNamed:@"graffitti"] blurredImageWithRadius:20 iterations:3];
     photo = [[WMCreatorPhotoView alloc] initWithUser:video.poster];
     photo.frame = CGRectMake(8, 10, 70, 70);
     [_scrollView addSubview:photo];
