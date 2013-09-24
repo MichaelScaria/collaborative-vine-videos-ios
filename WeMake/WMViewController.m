@@ -67,8 +67,8 @@
     _notificationButton.translatesAutoresizingMaskIntoConstraints = YES;
     _chevron.translatesAutoresizingMaskIntoConstraints = YES;
     
-    UIPanGestureRecognizer *rightGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragging:)];
-    [self.view addGestureRecognizer:rightGesture];
+//    UIPanGestureRecognizer *rightGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragging:)];
+//    [self.view addGestureRecognizer:rightGesture];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

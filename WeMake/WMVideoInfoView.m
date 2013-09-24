@@ -20,7 +20,7 @@
 
 - (void)setVideo:(WMVideo *)video
 {
-    _coverPhoto.image = [[UIImage imageNamed:@"graffitti"] blurredImageWithRadius:15 iterations:3];
+    _coverPhoto.image = [[UIImage imageNamed:@"graffitti"] blurredImageWithRadius:20 iterations:3];
     photo = [[WMCreatorPhotoView alloc] initWithUser:video.poster];
     photo.frame = CGRectMake(8, 10, 70, 70);
     [_scrollView addSubview:photo];
@@ -38,7 +38,7 @@
         [_othersLabel removeFromSuperview];
     }
     int space = 5;
-    viewsLabel = [[UILabel alloc] initWithFrame:CGRectMake(_viewsButton.frame.origin.x + _viewsButton.frame.size.width + space, _likesButton.frame.origin.y, 30, 17)];
+    viewsLabel = [[UILabel alloc] initWithFrame:CGRectMake(_viewsImage.frame.origin.x + _viewsImage.frame.size.width + space, _likesButton.frame.origin.y, 30, 17)];
     likesLabel = [[UILabel alloc] initWithFrame:CGRectMake(_likesButton.frame.origin.x + _likesButton.frame.size.width + space, _likesButton.frame.origin.y, 30, 17)];
     commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(_commentsButton.frame.origin.x + _commentsButton.frame.size.width + space, _likesButton.frame.origin.y, 30, 17)];
     viewsLabel.font = likesLabel.font = commentLabel.font = [UIFont fontWithName:@"Roboto-Light" size:12];
@@ -59,16 +59,49 @@
     _likesButton.translatesAutoresizingMaskIntoConstraints = YES;
     _commentsButton.translatesAutoresizingMaskIntoConstraints = YES;
     
-    int offset = 122;
+    int offset = 115;
+    int limit = 3;
     for (WMInteraction *comment in video.comments) {
-        MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(70, offset, 240, 35)];
-        NSRange range = {0, [(NSString *)comment.createdBy.username length]};
-        [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
-        [_scrollView addSubview:textView];
-        offset += textView.frame.size.height - 7;
+        if (limit > 0) {
+            MSTextView *textView = [[MSTextView alloc] initWithFrame:CGRectMake(70, offset, 240, 35)];
+            NSRange range = {0, [(NSString *)comment.createdBy.username length]};
+            [textView setText:[NSString stringWithFormat:@"%@ %@", comment.createdBy.username, comment.body] withLinkedRange:range];
+            [_scrollView addSubview:textView];
+            offset += textView.frame.size.height - 7;
+            limit--;
+        }
+        else break;
+        
     }
+    _scrollView.contentSize = CGSizeMake(0, offset + 50);
+    _scrollView.delegate = self;
+    
 }
 
+
+
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    [super willMoveToSuperview:newSuperview];
+    _scrollView.scrollEnabled = YES;
+    
+    UIView *clearView = [[UIView alloc] initWithFrame:self.bounds];
+    clearView.backgroundColor = [UIColor clearColor];
+    clearView.userInteractionEnabled = NO;
+    [self addSubview:clearView];
+    
+    CAGradientLayer *l = [CAGradientLayer layer];
+    l.frame = self.bounds;
+    l.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
+    l.startPoint = CGPointMake(0.5f, 0.75f);
+    l.endPoint = CGPointMake(0.5f, -0.25f);
+    clearView.layer.mask = l;
+}
+
+
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    
+}
 
 - (IBAction)like:(UIButton *)sender {
     liked = !liked;

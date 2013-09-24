@@ -24,10 +24,11 @@
 @synthesize bubble;
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
-    UIView *aView = [[UIView alloc] initWithFrame:_player.view.bounds];
-    [aView addGestureRecognizer:tapGesture];
-//    _player.view.layer.shadowColor = [UIColor blackColor].CGColor;
+//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+//    UIView *aView = [[UIView alloc] initWithFrame:_player.view.frame];
+//    [aView addGestureRecognizer:tapGesture];
+//    [self addSubview:aView];
+////    _player.view.layer.shadowColor = [UIColor blackColor].CGColor;
 //    _player.view.layer.masksToBounds = NO;
 //    _player.view.layer.shadowOffset = CGSizeMake(0, 1);
 //    _player.view.layer.shadowRadius = 3;
@@ -44,6 +45,13 @@
 //    }
 //    return [super hitTest:point withEvent:event];
 //}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if (CGRectContainsPoint(CGRectMake(0, 0, 320, 320), point)) {
+        [self tapped];
+    }
+    return [super hitTest:point withEvent:event];
+}
 
 - (void)tapped {
     
@@ -156,7 +164,6 @@
             infoView.frame = CGRectMake(0, 320, 320, 185);
         }
         [self addSubview:infoView];
-//        [self addSubview:infoView];
         //[self insertSubview:infoView belowSubview:_player.view];
 //        [_posterImageView setUser:video.poster];
 //        _posterLabel.translatesAutoresizingMaskIntoConstraints =

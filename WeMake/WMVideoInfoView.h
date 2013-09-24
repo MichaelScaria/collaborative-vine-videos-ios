@@ -13,18 +13,19 @@
 
 #import "WMCreatorPhotoView.h"
 
-@interface WMVideoInfoView : UIView {
+@interface WMVideoInfoView : UIView <UIScrollViewDelegate> {
     WMCreatorPhotoView *photo;
     BOOL liked;
     UILabel *viewsLabel;
     UILabel *likesLabel;
     UILabel *commentLabel;
+    CGPoint initialPoint;
 }
 
 @property (strong, nonatomic) IBOutlet UIImageView *coverPhoto;
 @property (strong, nonatomic) IBOutlet UILabel *username;
 @property (strong, nonatomic) IBOutlet UILabel *othersLabel;
-@property (strong, nonatomic) IBOutlet UIButton *viewsButton;
+@property (strong, nonatomic) IBOutlet UIImageView *viewsImage;
 @property (strong, nonatomic) IBOutlet UIButton *likesButton;
 @property (strong, nonatomic) IBOutlet UIButton *commentsButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
